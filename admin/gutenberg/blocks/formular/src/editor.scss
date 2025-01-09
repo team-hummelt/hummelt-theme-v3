@@ -1,0 +1,34 @@
+.theme-formular-wrapper {
+  border: 2px dashed #007cba; /* Farbe und Stil der Border */
+  padding: 15px; /* Abstand innerhalb des Blocks */
+  margin: 10px 0; /* Abstand zu anderen Elementen */
+  border-radius: 5px; /* Abgerundete Ecken */
+  background-color: #f9f9f9; /* Optionaler Hintergrund */
+  max-width: 280px;
+  width: 100%;
+  .theme-form-inner {
+    //padding: .5rem .75rem;
+    h5 {
+      font-family: var(--bs-font-sans-serif);
+      text-align: center;
+      color: #007cba!important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+    hr {
+      margin: .75rem 0!important;
+    }
+  }
+}
+
+.custom-border-forms {
+  border: 2px dashed #007cba; /* Farbe und Stil der Border */
+  padding: 15px; /* Abstand innerhalb des Blocks */
+  margin: 10px 0; /* Abstand zu anderen Elementen */
+  border-radius: 5px; /* Abgerundete Ecken */
+  background-color: #f9f9f9; /* Optionaler Hintergrund */
+}
+
+

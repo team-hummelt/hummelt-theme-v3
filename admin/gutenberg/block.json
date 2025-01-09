@@ -1,0 +1,5 @@
+{
+  "apiVersion": 2,
+  "name": "theme-v3-sidebar/sidebar",
+  "editorStyle": "file:./sidebar/build/index.css"
+}

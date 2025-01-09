@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hupa/accordion",
+  "title": "Accordion",
+  "category": "layout",
+  "icon": "feedback",
+  "description": "Ein Akkordeon-Container, der mehrere auf- und zuklappbare Accordion-Items enthält.",
+  "keywords": ["accordion", "toggle", "faq"],
+  "supports": {
+    "anchor": true
+  },
+  "editorScript": "file:./accordion-container/build/index.js",
+  "editorStyle": "file:./accordion-container/build/index.css",
+  "style": "file:./accordion-container/build/style-index.css"
+}

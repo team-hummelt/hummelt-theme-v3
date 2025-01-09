@@ -1,0 +1,68 @@
+{
+  "apiVersion": 2,
+  "name": "custom/cover-block",
+  "title": "Custom Cover",
+  "category": "design",
+  "icon": "cover-image",
+  "description": "Ein benutzerdefinierter Cover-Block mit Hintergrundbild und Text.",
+  "supports": {
+    "align": ["wide", "full"],
+    "color": {
+      "background": true,
+      "text": true
+    }
+  },
+  "attributes": {
+    "backgroundImage": {
+      "type": "string",
+      "default": ""
+    },
+    "imageId": {
+      "type": "number",
+      "default": 0
+    },
+    "overlayColor": {
+      "type": "string",
+      "default": "#00000088"
+    },
+    "content": {
+      "type": "string",
+      "source": "html",
+      "selector": "div.cover-content"
+    },
+    "height": {
+      "type": "number",
+      "default": 300
+    },
+    "imageSize": {
+      "type": "string",
+      "default": "full"
+    },
+    "parallax_active" : {
+      "type": "bool",
+      "default": false
+    },
+    "parallax_fixiert" : {
+      "type": "bool",
+      "default": false
+    },
+    "parallax_type" : {
+      "type": "string",
+      "default": "scroll"
+    },
+    "parallax_speed" : {
+      "type": "number",
+      "default": 1.2
+    },
+    "position_left" : {
+      "type": "number",
+      "default": 50
+    },
+    "position_oben" : {
+      "type": "number",
+      "default": 50
+    }
+  },
+  "style": "custom-cover-block-style",
+  "editorStyle": "custom-cover-block-editor-style"
+}

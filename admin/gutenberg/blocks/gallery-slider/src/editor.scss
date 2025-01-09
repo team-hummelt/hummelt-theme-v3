@@ -1,0 +1,43 @@
+/* Styles for draggable items */
+
+.slideshow-editor {
+  border: 2px dashed #007cba; /* Farbe und Stil der Border */
+  padding: 15px; /* Abstand innerhalb des Blocks */
+  margin: 10px 0; /* Abstand zu anderen Elementen */
+  border-radius: 5px; /* Abgerundete Ecken */
+  background-color: #f9f9f9; /* Optionaler Hintergrund */
+}
+.slideshow-preview li {
+  cursor: grab;
+  transition: transform 0.2s ease-in-out;
+  position: relative;
+}
+
+.slideshow-preview li:active {
+  cursor: grabbing;
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+/* Visual feedback when dragging over a drop target */
+.slideshow-preview li.drag-over {
+  border: 2px dashed #007cba;
+  background-color: #f0f8ff;
+  transform: scale(1.05);
+}
+
+/* Prevent text selection during dragging */
+.slideshow-preview li img {
+  user-select: none;
+}
+
+.sortable-item {
+  cursor: move;
+  margin: 5px 0;
+}
+
+.sortable-item.ui-sortable-helper {
+  opacity: 0.8;
+  background: #f0f8ff;
+  border: 1px dashed #007cba;
+}

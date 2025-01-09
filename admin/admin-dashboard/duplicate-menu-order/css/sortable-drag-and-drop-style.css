@@ -1,0 +1,57 @@
+﻿#the-list.hupa-sortable td:nth-child(1n+3):hover {
+    cursor: move
+}
+
+#the-list.hupa-sortable .sortable-ghost {
+    background-color: #b9ff2b;
+    border-radius: .25rem;
+    border: 4px solid #a1a1a1;
+    padding: 1rem;
+    width: 100%;
+    z-index: 9999 !important
+}
+
+.hupa-post-duplicate-item {
+    display: inline-block;
+    cursor: pointer;
+    color: #2271b1;
+    padding-bottom: .2rem
+}
+
+.hupa-post-duplicate-item:hover {
+    color: #135e96
+}
+
+.drag-sortable tr {
+    user-select: none;
+}
+
+#sortable_set {
+    width: 2.4rem
+}
+
+.sortable_set.column-sortable_set {
+    vertical-align: middle;
+    text-align: center
+}
+
+.sortable_set.column-sortable_set .post-list-arrow {
+    transition: all 350ms linear;
+    cursor: move
+}
+
+.sortable_set.column-sortable_set .post-list-arrow:before {
+    content: "";
+    font-family: "FontAwesome", sans-serif;
+    font-size: 1.4rem;
+    color: #2271b1;
+    transition: all 350ms linear
+}
+
+.sortable_set.column-sortable_set .post-list-arrow:hover {
+    color: #135e96;
+    transform: scale(1.4);
+    transition: all 350ms linear
+}
+
+/*# sourceMappingURL=sortable-drag-and-drop-style.css.map */

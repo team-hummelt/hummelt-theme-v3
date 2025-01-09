@@ -1,0 +1,770 @@
+{
+    "id": "FB676c3f2026fda",
+    "bu_version": "1.0.0",
+    "app_version": "3.0.0",
+    "name": "Multi Page",
+    "builder": [
+        {
+            "id": "6769ac32b1424",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "6769ac32b1425",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676a7061baf8b",
+                            "label": "HTML",
+                            "form_type": "html",
+                            "slug": "html_957316",
+                            "show_msg": false,
+                            "type": "html",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "HTML",
+                            "icon": "bi bi-code-square",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "\u003Cdiv class=\u0022col-12\u0022\u003E\n        \u003Ch1 class=\u0022fw-light\u0022\u003EFormular example\u003C/h1\u003E\n        \u003Cp class=\u0022lead text-body-secondary\u0022\u003ESomething short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.\u003C/p\u003E\n      \u003C/div\u003E",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "chosen": false,
+                            "selected": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a721560160",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "676a721560161",
+                    "col": 6,
+                    "forms": [
+                        {
+                            "id": "676a7220c41b1",
+                            "label": "Name",
+                            "form_type": "textfeld",
+                            "slug": "name",
+                            "show_msg": true,
+                            "err_msg": "Dieses Feld muss ausgefüllt werden.",
+                            "type": "text",
+                            "required": true,
+                            "hide_label": false,
+                            "select": "Text",
+                            "icon": "bi bi-card-text",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true
+                        }
+                    ]
+                },
+                {
+                    "id": "676a721d32c2f",
+                    "col": 6,
+                    "forms": [
+                        {
+                            "id": "676a72321e354",
+                            "label": "E-Mail",
+                            "form_type": "textfeld",
+                            "slug": "email",
+                            "show_msg": true,
+                            "err_msg": "Die eingegebene E-Mail-Adresse ist ungültig.",
+                            "type": "email",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "E-Mail",
+                            "icon": "bi bi-envelope",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676967f594faa",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "676967f594fab",
+                    "col": 12,
+                    "css": "row g-2",
+                    "forms": [
+                        {
+                            "id": "67697849c8ecb",
+                            "label": "Beschreibung",
+                            "form_type": "textfeld",
+                            "slug": "beschreibung",
+                            "show_msg": true,
+                            "err_msg": "Dieses Feld muss ausgefüllt werden.",
+                            "type": "textarea",
+                            "required": true,
+                            "hide_label": false,
+                            "select": "Textarea",
+                            "icon": "bi bi-textarea-t",
+                            "condition": [],
+                            "config": {
+                                "rows": 4,
+                                "height": "150",
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true,
+                            "chosen": false,
+                            "selected": false
+                        }
+                    ],
+                    "chosen": false,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "id": "676a726bc361e",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "676a726bc361f",
+                    "col": 6,
+                    "forms": [],
+                    "chosen": false,
+                    "selected": false
+                },
+                {
+                    "id": "676a72fbeb641",
+                    "col": 6,
+                    "forms": [
+                        {
+                            "id": "676a72ff97402",
+                            "label": "nächste Seite",
+                            "form_type": "textfeld",
+                            "slug": "button_391746",
+                            "show_msg": false,
+                            "err_msg": "",
+                            "type": "button",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Button",
+                            "icon": "bi bi-hand-index",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": false,
+                                "custom_class": "text-end",
+                                "btn_type": "next",
+                                "btn_class": "btn btn-secondary"
+                            },
+                            "options": [
+                                {
+                                    "type": "submit",
+                                    "name": "Submit"
+                                },
+                                {
+                                    "type": "button",
+                                    "name": "Button"
+                                },
+                                {
+                                    "type": "next",
+                                    "name": "nächste Seite"
+                                },
+                                {
+                                    "type": "prev",
+                                    "name": "Vorherige Seite"
+                                },
+                                {
+                                    "type": "reset",
+                                    "name": "Reset"
+                                }
+                            ],
+                            "message": [],
+                            "chosen": false,
+                            "selected": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a73d186c35",
+            "page": 2,
+            "grid": [
+                {
+                    "id": "676a73d186c36",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676a73d6ca05c",
+                            "label": "HTML",
+                            "form_type": "html",
+                            "slug": "html_875614",
+                            "show_msg": false,
+                            "type": "html",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "HTML",
+                            "icon": "bi bi-code-square",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "\u003Cdiv class=\u0022col-12\u0022\u003E\n        \u003Ch1 class=\u0022fw-light\u0022\u003EFormular example Seite 2\u003C/h1\u003E\n        \u003Cp class=\u0022lead text-body-secondary\u0022\u003ESomething short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.\u003C/p\u003E\n        \n      \u003C/div\u003E",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "chosen": false,
+                            "selected": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a75fc17260",
+            "page": 2,
+            "grid": [
+                {
+                    "id": "676a75fc17261",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676a7600b516a",
+                            "label": "Beschreibung 2",
+                            "form_type": "textfeld",
+                            "slug": "message_564821",
+                            "show_msg": true,
+                            "err_msg": "Dieses Feld muss ausgefüllt werden.",
+                            "type": "textarea",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Textarea",
+                            "icon": "bi bi-textarea-t",
+                            "condition": [],
+                            "config": {
+                                "rows": 4,
+                                "height": "150",
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a73263ccef",
+            "page": 2,
+            "grid": [
+                {
+                    "id": "676a73263ccf1",
+                    "col": 6,
+                    "forms": [
+                        {
+                            "id": "676a73353feb8",
+                            "label": "Telefon",
+                            "form_type": "textfeld",
+                            "slug": "phone_172953",
+                            "show_msg": true,
+                            "err_msg": "Das Format ist ungültig.",
+                            "type": "phone",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Telefon",
+                            "icon": "bi bi-telephone",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true
+                        }
+                    ]
+                },
+                {
+                    "id": "676a732ed2deb",
+                    "col": 6,
+                    "forms": [
+                        {
+                            "id": "676a734333d28",
+                            "label": "Mobil",
+                            "form_type": "textfeld",
+                            "slug": "mobil",
+                            "show_msg": true,
+                            "err_msg": "Das Format ist ungültig.",
+                            "type": "phone",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Telefon",
+                            "icon": "bi bi-telephone",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a739504209",
+            "page": 2,
+            "grid": [
+                {
+                    "id": "676a73950420a",
+                    "col": 6,
+                    "forms": [
+                        {
+                            "id": "676a73a1cc2fc",
+                            "label": "vorherige Seite",
+                            "form_type": "textfeld",
+                            "slug": "button_396752",
+                            "show_msg": false,
+                            "err_msg": "",
+                            "type": "button",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Button",
+                            "icon": "bi bi-hand-index",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": false,
+                                "custom_class": "text-start",
+                                "btn_type": "prev",
+                                "btn_class": "btn btn-secondary"
+                            },
+                            "options": [
+                                {
+                                    "type": "submit",
+                                    "name": "Submit"
+                                },
+                                {
+                                    "type": "button",
+                                    "name": "Button"
+                                },
+                                {
+                                    "type": "next",
+                                    "name": "nächste Seite"
+                                },
+                                {
+                                    "type": "prev",
+                                    "name": "Vorherige Seite"
+                                },
+                                {
+                                    "type": "reset",
+                                    "name": "Reset"
+                                }
+                            ],
+                            "message": [],
+                            "chosen": false,
+                            "selected": false
+                        }
+                    ]
+                },
+                {
+                    "id": "676a739659eb4",
+                    "col": 6,
+                    "forms": [
+                        {
+                            "id": "676a73faf1427",
+                            "label": "letzte Seite",
+                            "form_type": "textfeld",
+                            "slug": "last_548297",
+                            "show_msg": false,
+                            "err_msg": "",
+                            "type": "button",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Button",
+                            "icon": "bi bi-hand-index",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": false,
+                                "custom_class": "text-end",
+                                "btn_type": "next",
+                                "btn_class": "btn btn-secondary"
+                            },
+                            "options": [
+                                {
+                                    "type": "submit",
+                                    "name": "Submit"
+                                },
+                                {
+                                    "type": "button",
+                                    "name": "Button"
+                                },
+                                {
+                                    "type": "next",
+                                    "name": "nächste Seite"
+                                },
+                                {
+                                    "type": "prev",
+                                    "name": "Vorherige Seite"
+                                },
+                                {
+                                    "type": "reset",
+                                    "name": "Reset"
+                                }
+                            ],
+                            "message": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a742329dc1",
+            "page": 3,
+            "grid": [
+                {
+                    "id": "676a742329dc3",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676a7430e8746",
+                            "label": "HTML",
+                            "form_type": "html",
+                            "slug": "html_469513",
+                            "show_msg": false,
+                            "type": "html",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "HTML",
+                            "icon": "bi bi-code-square",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "\u003Cdiv class=\u0022col-12\u0022\u003E\n        \u003Ch1 class=\u0022fw-light\u0022\u003EFormular example Seite 3\u003C/h1\u003E\n        \u003Cp class=\u0022lead text-body-secondary\u0022\u003ESomething short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.\u003C/p\u003E\n        \n      \u003C/div\u003E",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a750558c24",
+            "page": 3,
+            "grid": [
+                {
+                    "id": "676a750558c25",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676a750b9cc79",
+                            "label": "Nachricht",
+                            "form_type": "textfeld",
+                            "slug": "message_457136",
+                            "show_msg": true,
+                            "err_msg": "Dieses Feld muss ausgefüllt werden.",
+                            "type": "textarea",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Textarea",
+                            "icon": "bi bi-textarea-t",
+                            "condition": [],
+                            "config": {
+                                "rows": 4,
+                                "height": "150",
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a743fcd49a",
+            "page": 3,
+            "grid": [
+                {
+                    "id": "676a743fcd49b",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676a744463c6e",
+                            "label": "vorherige Seite",
+                            "form_type": "textfeld",
+                            "slug": "button_197435",
+                            "show_msg": false,
+                            "err_msg": "",
+                            "type": "button",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Button",
+                            "icon": "bi bi-hand-index",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": false,
+                                "custom_class": "text-start",
+                                "btn_type": "prev",
+                                "btn_class": "btn btn-secondary"
+                            },
+                            "options": [
+                                {
+                                    "type": "submit",
+                                    "name": "Submit"
+                                },
+                                {
+                                    "type": "button",
+                                    "name": "Button"
+                                },
+                                {
+                                    "type": "next",
+                                    "name": "nächste Seite"
+                                },
+                                {
+                                    "type": "prev",
+                                    "name": "Vorherige Seite"
+                                },
+                                {
+                                    "type": "reset",
+                                    "name": "Reset"
+                                }
+                            ],
+                            "message": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a745dd0851",
+            "page": 3,
+            "grid": [
+                {
+                    "id": "676a745dd0852",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676a74627610e",
+                            "label": "Datenschutz",
+                            "form_type": "select",
+                            "slug": "privacy_check",
+                            "show_msg": true,
+                            "err_msg": "Sie müssen dieser Bedingung zustimmen.",
+                            "type": "privacy-check",
+                            "required": true,
+                            "hide_label": false,
+                            "select": "Datenschutz",
+                            "icon": "bi bi-toggle-off",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "selected": false,
+                                "placeholder": "",
+                                "new_tab": true,
+                                "default": "{Datenschutzinformation} gelesen und akzeptiert.",
+                                "link": "\u003Ca href=\u0022./404-2/\u0022\u003EDatenschutzinformation\u003C/a\u003E gelesen und akzeptiert.",
+                                "url": "./404-2/",
+                                "id": "357",
+                                "custom_class": "",
+                                "switch": false,
+                                "inline": false,
+                                "animated": true,
+                                "animated_color": "#0165E7"
+                            },
+                            "options": [],
+                            "message": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676a74649c708",
+            "page": 3,
+            "grid": [
+                {
+                    "id": "676a74649c709",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676a746b54d2c",
+                            "label": "Senden",
+                            "form_type": "textfeld",
+                            "slug": "button_923865",
+                            "show_msg": false,
+                            "err_msg": "",
+                            "type": "button",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Button",
+                            "icon": "bi bi-hand-index",
+                            "condition": {
+                                "type": "676978e3beb4f"
+                            },
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": false,
+                                "custom_class": "",
+                                "btn_type": "submit",
+                                "btn_class": "btn btn-primary"
+                            },
+                            "options": [
+                                {
+                                    "type": "submit",
+                                    "name": "Submit"
+                                },
+                                {
+                                    "type": "button",
+                                    "name": "Button"
+                                },
+                                {
+                                    "type": "next",
+                                    "name": "nächste Seite"
+                                },
+                                {
+                                    "type": "prev",
+                                    "name": "Vorherige Seite"
+                                },
+                                {
+                                    "type": "reset",
+                                    "name": "Reset"
+                                }
+                            ],
+                            "message": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "type": "builder",
+    "send_email": {
+        "email": {
+            "recipient": "email@jenswiecker.de",
+            "subject": "Nachricht von Test",
+            "cc": "",
+            "bcc": "",
+            "message": "Diese Nachricht wurde vom \u003Ca target=\u0022_blank\u0022 href=\u0022https://localhost\u0022\u003ETest\u003C/a\u003E-Kontaktformular gesendet."
+        },
+        "responder": {
+            "subject": "Nachricht von Test",
+            "active": false,
+            "message": "Diese Nachricht wurde vom \u003Ca target=\u0022_blank\u0022 href=\u0022https://localhost\u0022\u003ETest\u003C/a\u003E-Kontaktformular gesendet."
+        }
+    },
+    "settings": {
+        "col": "lg",
+        "gutter": "g-3",
+        "individuell": "",
+        "redirection_active": false,
+        "page_id": "",
+        "js_data_active": false,
+        "url": ""
+    },
+    "message": {
+        "email_sent": [
+            {
+                "id": 1,
+                "label": "Die Nachricht des Absenders wurde erfolgreich gesendet",
+                "value": "Die Nachricht wurde erfolgreich gesendet."
+            },
+            {
+                "id": 2,
+                "label": "Die Nachricht des Absenders konnte nicht gesendet werden",
+                "value": "Beim Versuch, Ihre Nachricht zu senden, ist ein Fehler aufgetreten."
+            },
+            {
+                "id": 3,
+                "label": "Fehler beim Ausfüllen des Formulars",
+                "value": "Ein oder mehrere Felder haben einen Fehler. Bitte überprüfen Sie es und versuchen Sie es erneut."
+            },
+            {
+                "id": 4,
+                "label": "Eingabe wurde als Spam erkannt",
+                "value": "Beim Versuch, Ihre Nachricht zu senden, ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal."
+            },
+            {
+                "id": 5,
+                "label": "Das Formular wird gesendet",
+                "value": "Das Formular wird gesendet"
+            },
+            {
+                "id": 6,
+                "label": "Überschrift Fehlermeldung",
+                "value": "Das Formular konnte nicht gesendet werden!"
+            }
+        ]
+    },
+    "conditions": [
+        {
+            "id": "676978e3beb4f",
+            "type": "activate",
+            "name": "Datenschutz",
+            "fields": [],
+            "group": [
+                {
+                    "id": "676978e771878",
+                    "rules": [
+                        {
+                            "id": "676978e771875",
+                            "compare": "is",
+                            "is_select": false,
+                            "field": "676a74627610e",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

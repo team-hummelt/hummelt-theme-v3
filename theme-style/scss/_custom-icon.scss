@@ -1,0 +1,697 @@
+$dark: #1D1D1B;
+@mixin btn($left, $top) {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: $top;
+  left: $left;
+  transition-duration: 0.5s;
+}
+
+@mixin icon($height, $width) {
+  transition-duration: 0.5s;
+  position: absolute;
+  height: $height;
+  width: $width;
+  top: 30px;
+  background-color: $dark;
+}
+
+@mixin icon-before($height, $width, $top) {
+  transition-duration: 0.5s;
+  position: absolute;
+  width: $width;
+  height: $height;
+  background-color: $dark;
+  content: "";
+  top: $top;
+}
+
+@mixin icon-after($height, $width, $top) {
+  transition-duration: 0.5s;
+  position: absolute;
+  width: $width;
+  height: $height;
+  background-color: $dark;
+  content: "";
+  top: $top;
+}
+
+@mixin icon-circle($height, $width) {
+  transition-duration: 0.5s;
+  position: absolute;
+  height: $height;
+  width: $width;
+  top: 2px;
+  border-radius: 100%;
+  background: transparent;
+  border: 4px solid black;
+  left: -15px;
+}
+
+
+.btn1{
+  @include btn(0px, 100px);
+
+  .icon-left {
+    @include icon(8px, 30px);
+    left: 0px;
+
+    &:before{
+      @include icon-before(8px, 30px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 30px, 20px);
+    }
+
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  .icon-right {
+    @include icon(8px, 30px);
+    left: 30px;
+
+    &:before{
+      @include icon-before(8px, 30px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 30px, 20px);
+    }
+  }
+
+  &.open {
+    .icon-left {
+      transition-duration: 0.5s;
+      background: transparent;
+
+      &:before{
+        transform: rotateZ(45deg) scaleX(1.4) translate(4px, 4px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(1.4) translate(4px, -4px);
+      }
+    }
+
+    .icon-right {
+      transition-duration: 0.5s;
+      background: transparent;
+
+      &:before{
+        transform: rotateZ(-45deg) scaleX(1.4) translate(-4px, 4px);
+      }
+
+      &:after{
+        transform: rotateZ(45deg) scaleX(1.4) translate(-4px, -4px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn2{
+  @include btn(120px, 100px);
+
+  .icon {
+    @include icon(8px, 60px);
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+    }
+  }
+
+  &.open {
+    .icon {
+      transition-duration: 0.5s;
+      background: transparent;
+
+      &:before{
+        transform: rotateZ(45deg) scaleX(1.25) translate(13px, 13px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(1.25) translate(12px, -12px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn3{
+  @include btn(240px, 100px);
+
+  .icon {
+    @include icon(0px, 60px);
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+    }
+  }
+
+  &.open {
+    .icon {
+      transition-duration: 0.5s;
+
+      &:before{
+        transform: rotateZ(135deg) scaleX(1.25) translate(13px, -13px);
+      }
+
+      &:after{
+        transform: rotateZ(-135deg) scaleX(1.25) translate(12px, 12px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn4{
+  @include btn(360px, 100px);
+
+  .icon {
+    @include icon(0px, 60px);
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+    }
+  }
+
+  &.open {
+    .icon {
+      transition: 0.5s;
+
+      &:before{
+        transform: rotateZ(45deg) scaleX(1.25) translate(12px, 12px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(1.25) translate(12px, -12px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn5{
+  @include btn(0px, 200px);
+
+  .icon {
+    @include icon(8px, 60px);
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+    }
+  }
+
+  &.open {
+    .icon {
+      transition: 0.5s;
+
+      &:before{
+        transform: rotateZ(-45deg) scaleX(0.75) translate(-20px, -6px);
+      }
+
+      &:after{
+        transform: rotateZ(45deg) scaleX(0.75) translate(-20px, 6px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn6{
+  @include btn(120px, 200px);
+
+  .icon {
+    @include icon(8px, 60px);
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+    }
+  }
+
+  &.open {
+    .icon {
+      transition-duration: 0.5s;
+      transform: rotateZ(180deg);
+
+      &:before{
+        transform: rotateZ(45deg) scaleX(0.75) translate(20px, -6px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(0.75) translate(20px, 6px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn7{
+  @include btn(240px, 200px);
+
+  .icon-E {
+    @include icon(8px, 60px);
+    transition-delay: 0.5s;
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+    }
+  }
+
+  .icon-X {
+    @include icon(0px, 200px);
+    transform: scaleX(0);
+    transform-origin: 30px 0px;
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+      transform: rotateZ(45deg) scaleX(1.25) translate(12px, 12px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+      transform: rotateZ(-45deg) scaleX(1.25) translate(12px, -12px);
+    }
+
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  &.open {
+    .icon-E {
+      transition-duration: 0.5s;
+      transform: scaleX(0);
+      transition-delay: 0s;
+    }
+
+    .icon-X {
+      transition: 0.5s;
+      transition-delay: 0.5s;
+      transform: scaleX(1);
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn8{
+  @include btn(360px, 200px);
+
+  .icon-E {
+    @include icon(8px, 60px);
+    transform-origin: 0px 0px;
+    transition-delay: 0.5s;
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+    }
+  }
+
+  .icon-X {
+    @include icon(0px, 60px);
+    transform-origin: 0px 0px;
+    transform: scaleY(0);
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+      transform: rotateZ(45deg) scaleX(1.25) translate(12px, 12px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+      transform: rotateZ(-45deg) scaleX(1.25) translate(12px, -12px);
+    }
+  }
+
+  &.open {
+    .icon-E {
+      transition-duration: 0.5s;
+      transform: scaleY(0);
+      transition-delay: 0s;
+    }
+
+    .icon-X {
+      transition: 0.5s;
+      transition-delay: 0.5s;
+      transform: scaleY(1);
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn9{
+  @include btn(0px, 305px);
+
+  .icon {
+    @include icon(0px, 60px);
+    transform: rotateZ(90deg);
+    transform-origin: 30px 30px;
+    left: -15;
+    top: 0;
+
+    &:before{
+      @include icon-before(60px, 30px, 20px);
+      top: 0;
+    }
+
+    &:after{
+      @include icon-after(60px, 30px, 20px);
+      top: 0;
+      left: 30px;
+    }
+  }
+
+  &.open {
+    .icon {
+      transition: all 0.5s;
+      transform: rotateZ(0deg);
+
+      &:before{
+        width: 22.5px;
+      }
+
+      &:after{
+        transform-origin: 30px 60px;
+        transform: scaleX(0.75);
+      }
+    }
+  }
+
+  &.play {
+    .icon {
+      transition: all 0.5s;
+      transform: rotateZ(0deg);
+
+      &:before{
+        width: 500px;
+      }
+
+      &:after{
+        transform-origin: 30px 60px;
+        transform: scaleX(2);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn10{
+  @include btn(120px, 300px);
+
+  .icon {
+    @include icon(8px, 60px);
+
+    &:before{
+      @include icon-before(8px, 60px, -20px);
+    }
+
+    &:after{
+      @include icon-after(8px, 60px, 20px);
+    }
+  }
+
+  &.open {
+    .icon {
+      transition-duration: 0.5s;
+      transform: rotateZ(-180deg);
+
+      &:before{
+        transform: rotateZ(-45deg) scaleX(0.75) translate(-20px, -6px);
+      }
+
+      &:after{
+        transform: rotateZ(45deg) scaleX(0.75) translate(-20px, 6px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn11{
+  @include btn(240px, 300px);
+
+  .icon-left {
+    @include icon(4px, 15px);
+
+    &:before{
+      @include icon-before(4px, 15px, -10px);
+    }
+
+    &:after{
+      @include icon-after(4px, 15px, 10px);
+    }
+
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  .icon-right {
+    @include icon(4px, 15px);
+    left: 15px;
+
+    &:before{
+      @include icon-before(4px, 15px, -10px);
+    }
+
+    &:after{
+      @include icon-after(4px, 15px, 10px);
+    }
+  }
+
+  &.open {
+    .icon-left {
+      transition-duration: 0.5s;
+      background: transparent;
+
+      &:before{
+        transform: rotateZ(45deg) scaleX(1.4) translate(2px, 2px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(1.4) translate(2px, -2px);
+      }
+    }
+
+    .icon-right {
+      transition-duration: 0.5s;
+      background: transparent;
+
+      &:before{
+        transform: rotateZ(-45deg) scaleX(1.4) translate(-2px, 2px);
+      }
+
+      &:after{
+        transform: rotateZ(45deg) scaleX(1.4) translate(-2px, -2px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn12{
+  @include btn(315px, 300px);
+
+  .icon {
+    @include icon(4px, 30px);
+
+    &:before{
+      @include icon-before(4px, 30px, -10px);
+    }
+
+    &:after{
+      @include icon-after(4px, 30px, 10px);
+    }
+  }
+
+  &.open {
+    .icon {
+      transition-duration: 0.5s;
+      background: transparent;
+
+      &:before{
+        transform: rotateZ(45deg) scaleX(1.25) translate(6.5px, 6.5px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(1.25) translate(6px, -6px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn13{
+  @include btn(390px, 300px);
+
+  .icon {
+    @include icon(4px, 30px);
+
+    &:before{
+      @include icon-before(4px, 30px, -10px);
+    }
+
+    &:after{
+      @include icon-after(4px, 30px, 10px);
+    }
+  }
+
+  &.open {
+    .icon {
+      transition: 0.5s;
+
+      &:before{
+        transform: rotateZ(-45deg) scaleX(0.75) translate(-10px, -3px);
+      }
+
+      &:after{
+        transform: rotateZ(45deg) scaleX(0.75) translate(-10px, 3px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn14{
+  @include btn(15px, 400px);
+
+  .icon-circle {
+    @include icon-circle(60px, 60px);
+    &:hover {
+      background: #fff;
+    }
+  }
+
+  .icon {
+    @include icon(4px, 30px);
+    border-radius: 4px;
+
+    &:before{
+      @include icon-before(4px, 30px, -10px);
+      border-radius: 4px;
+    }
+
+    &:after{
+      @include icon-after(4px, 30px, 10px);
+      border-radius: 4px;
+    }
+  }
+
+  &.open {
+    .icon-circle {
+      background: #fff;
+    }
+    .icon {
+      transition-duration: 0.5s;
+      background: transparent;
+
+      &:before{
+        transform: rotateZ(45deg) scaleX(1.25) translate(6.5px, 6.5px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(1.25) translate(6px, -6px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn15{
+  @include btn(120px, 400px);
+
+  .icon {
+    @include icon(4px, 30px);
+    border-radius: 4px;
+    left: 15px;
+
+    &:before{
+      @include icon-before(4px, 30px, -10px);
+      border-radius: 4px;
+    }
+
+    &:after{
+      @include icon-after(4px, 30px, 10px);
+      border-radius: 4px;
+    }
+  }
+
+  &.open {
+    .icon {
+      transition-duration: 0.5s;
+      background: transparent;
+
+      &:before{
+        transform: rotateZ(45deg) scaleX(1.25) translate(6.5px, 6.5px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(1.25) translate(6px, -6px);
+      }
+    }
+  }
+  &:hover {
+    background: #fff;
+    cursor: pointer;
+  }
+}

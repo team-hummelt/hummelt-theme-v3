@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hupa/accordion-item",
+  "title": "Accordion Item",
+  "category": "layout",
+  "icon": "feedback",
+  "description": "Ein einzelnes Akkordeon-Element, das innerhalb des Accordion-Blocks verwendet wird.",
+  "parent": ["hupa/accordion"],
+  "supports": {
+    "anchor": true
+  },
+  "editorScript": "file:./accordion-item/build/index.js",
+  "editorStyle": "file:./accordion-item/build/index.css",
+  "style": "file:./accordion-item/build/style-index.css"
+}

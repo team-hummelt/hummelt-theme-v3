@@ -1,0 +1,45 @@
+.hupa-video-carousel-item {
+  width: 100%;
+  .video-item {
+    .video-cover {
+      img {
+        min-width: 100% !important;
+        height: 160px!important;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.video-upload-wrapper {
+  margin-top: 2em;
+  .components-base-control {
+    margin-bottom: 16px!important;
+  }
+
+  .block-none {
+    display: none;
+  }
+  .btn-sidebar {
+    &.active {
+      background-color: #007cba;
+      color: #fff;
+      &:hover {
+        background-color: #007cba;
+        color: #fff;
+      }
+    }
+    &:hover {
+      background-color: #007cba;
+      color: #fff!important;
+    }
+  }
+  .videoBtnSelect {
+    background-color: #f0f0f0;
+    padding: 1em;
+  }
+
+  .remove-wrapper, .replace-wrapper {
+    margin-top: 1em;
+  }
+}

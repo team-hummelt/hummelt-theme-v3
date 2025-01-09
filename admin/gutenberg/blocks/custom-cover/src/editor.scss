@@ -1,0 +1,58 @@
+.cover-upload-button {
+  margin-bottom: .75rem;
+}
+.custom-cover-block {
+  padding: .5rem;
+  border: 2px dashed #ccc;
+  overflow: hidden;
+  position: relative;
+}
+.wp-block-custom-cover-block {
+  .block-editor-inserter__toggle {
+    //background-color: white!important;
+  }
+
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: .5rem;
+
+  .inner-block-cover {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #fff;
+
+    p {
+      color: #fff;
+    }
+  }
+
+  .custom-cover-block {
+
+  }
+
+  .custom-cover-block .cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    margin: .5rem;
+  }
+
+  .custom-cover-block .cover-content, .inner-block-cover {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+
+  }
+}

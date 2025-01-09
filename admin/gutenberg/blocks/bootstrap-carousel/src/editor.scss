@@ -1,0 +1,85 @@
+.editor-controls {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.editor-controls button {
+  margin: 5px;
+}
+
+.custom-border-editor {
+  border: 2px dashed #007cba; /* Farbe und Stil der Border */
+  padding: 15px; /* Abstand innerhalb des Blocks */
+  margin: 10px 0; /* Abstand zu anderen Elementen */
+  border-radius: 5px; /* Abgerundete Ecken */
+  background-color: #f9f9f9; /* Optionaler Hintergrund */
+}
+
+.carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  background-color: #007cba!important; /* Bootstrap-Blau */
+  border: none;
+  margin: 0 4px;
+}
+.carousel-indicators button.active {
+  background-color: #005a9c; /* Dunkleres Blau */
+}
+
+.carousel .carousel-caption {
+  position: absolute;
+  right: 15%;
+  bottom: 3rem!important;
+  left: 15%;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  color: #fff;
+  text-align: center;
+}
+
+.carousel-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 10;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.d-none {
+  display: none !important;
+}
+
+.media-upload-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.add-image-button {
+  display: inline-block;
+  margin: 10px auto;
+  z-index: 11; /* Höherer z-Index als der Loader */
+}
+

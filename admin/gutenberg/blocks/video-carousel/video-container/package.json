@@ -1,0 +1,26 @@
+{
+  "name": "theme-video-container",
+  "version": "1.0.0",
+  "description": "Hupa Starter Theme Google Maps",
+  "main": "index.js",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "lint:pkg-json": "wp-scripts lint-pkg-json package.json ./*-esnext/package.json",
+    "format:js": "wp-scripts format-js",
+    "lint:js:fix": "npm run lint:js -- --fix",
+    "test": "wp-scripts test-unit-js",
+    "env:start": "docker-compose up -d",
+    "env:stop": "docker-compose stop",
+    "packages-update": "wp-scripts packages-update"
+  },
+  "author": "Jens Wiecker",
+  "license": "GPL-2.0-only",
+  "devDependencies": {
+    "@wordpress/block-editor": "^14.8.0",
+    "@wordpress/components": "^28.13.0",
+    "@wordpress/data": "^10.13.0",
+    "@wordpress/scripts": "^30.6.0"
+  },
+  "type": "module"
+}

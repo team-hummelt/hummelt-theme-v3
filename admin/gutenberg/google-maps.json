@@ -1,0 +1,25 @@
+{
+  "apiVersion": 2,
+  "name": "hupa-v3/theme-google-maps",
+  "title": "Google Maps",
+  "category": "media",
+  "icon": "google",
+  "description": "Gutenberg Google Maps",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "selectedMap": {
+      "type": "string"
+    },
+    "cardWidth": {
+      "type": "string"
+    },
+    "cardHeight": {
+      "type": "string"
+    }
+  },
+  "editorScript": "file:./blocks/google-maps/build/index.js",
+  "editorStyle": "file:./blocks/google-maps/build/index.css",
+  "style": "file:./blocks/google-maps/build/style-index.css"
+}

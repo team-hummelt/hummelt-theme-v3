@@ -1,0 +1,20 @@
+{
+    "require": {
+        "twbs/bootstrap-icons": "^1.11",
+        "yahnis-elsts/plugin-update-checker": "^5.5",
+        "components/font-awesome": "4.7.0",
+        "behat/transliterator": "^1.5",
+        "symfony/string": "^5.4",
+        "phenx/php-font-lib": "^1.0"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "rm -rf vendor/twbs/bootstrap-icons/icons/*.svg",
+            "rm -rf vendor/twbs/bootstrap-icons/docs/content/icons/*.md"
+        ],
+        "post-update-cmd": [
+            "rm -rf vendor/twbs/bootstrap-icons/icons/*.svg",
+            "rm -rf vendor/twbs/bootstrap-icons/docs/content/icons/*.md"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "react-form-builder-public",
+  "version": "1.0.0",
+  "description": "Hummelt Theme v3 Forms",
+  "main": "index.js",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "lint:pkg-json": "wp-scripts lint-pkg-json ./package.json ./*-esnext/package.json",
+    "format:js": "wp-scripts format-js",
+    "lint:js:fix": "npm run lint:js -- --fix",
+    "test": "wp-scripts test-unit-js",
+    "env:start": "docker-compose up -d",
+    "env:stop": "docker-compose stop",
+    "packages-update": "wp-scripts packages-update"
+  },
+  "author": "Jens Wiecker",
+  "license": "GPL-2.0-only",
+  "devDependencies": {
+    "@wordpress/scripts": "^25.4.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dropzone": "^6.0.0-beta.2",
+    "html-react-parser": "^5.2.1",
+    "react-bootstrap": "^2.10.6",
+    "sweetalert2": "^11.14.5",
+    "sweetalert2-react-content": "^5.0.7",
+    "underscore": "^1.13.7",
+    "uuid": "^11.0.3"
+  }
+}

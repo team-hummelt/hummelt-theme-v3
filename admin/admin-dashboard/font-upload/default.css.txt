@@ -1,0 +1,8 @@
+@font-face {
+    font-family: '###FAMILY###';
+    src: local('###FULL_NAME###'), local('###LOCAL_NAME###'),
+    ###URL_LOOP###
+    font-weight: ###FONT_WEIGHT###;
+    font-style: ###FONT_STYLE###;
+    font-display: swap;
+}

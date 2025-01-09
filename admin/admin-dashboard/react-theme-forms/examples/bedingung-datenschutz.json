@@ -1,0 +1,472 @@
+{
+    "id": "FB676bda9563c3c",
+    "bu_version": "1.0.0",
+    "app_version": "3.0.0",
+    "name": "Bedingung Datenschutz",
+    "builder": [
+        {
+            "id": "676be2b96108a",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "676be2b96108b",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676be2c2b1720",
+                            "label": "HTML",
+                            "form_type": "html",
+                            "slug": "html_476158",
+                            "show_msg": false,
+                            "type": "html",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "HTML",
+                            "icon": "bi bi-code-square",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "\u003Cdiv class=\u0022col-12\u0022\u003E\n        \u003Ch1 class=\u0022fw-light\u0022\u003EFormular example\u003C/h1\u003E\n        \u003Cp class=\u0022lead text-body-secondary\u0022\u003ESomething short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.\u003C/p\u003E\n      \u003C/div\u003E",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676bd61e1d032",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "676bd61e1d033",
+                    "col": 3,
+                    "forms": [
+                        {
+                            "id": "676bd6337680f",
+                            "label": "Vorname",
+                            "form_type": "textfeld",
+                            "slug": "vorname",
+                            "show_msg": true,
+                            "err_msg": "Dieses Feld muss ausgefüllt werden.",
+                            "type": "text",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Text",
+                            "icon": "bi bi-card-text",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true
+                        }
+                    ]
+                },
+                {
+                    "id": "676bd6249eeee",
+                    "col": 3,
+                    "forms": [
+                        {
+                            "id": "676bd648e8a86",
+                            "label": "Nachname",
+                            "form_type": "textfeld",
+                            "slug": "nachname",
+                            "show_msg": true,
+                            "err_msg": "Dieses Feld muss ausgefüllt werden.",
+                            "type": "text",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Text",
+                            "icon": "bi bi-card-text",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true
+                        }
+                    ]
+                },
+                {
+                    "id": "676bd622e3c2f",
+                    "col": 6,
+                    "forms": [
+                        {
+                            "id": "676bd65c0327c",
+                            "label": "E-Mail",
+                            "form_type": "textfeld",
+                            "slug": "email",
+                            "show_msg": true,
+                            "err_msg": "Die eingegebene E-Mail-Adresse ist ungültig.",
+                            "type": "email",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "E-Mail",
+                            "icon": "bi bi-envelope",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676bd66f70153",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "676bd66f70154",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676bd719e45f8",
+                            "label": "HR Tag",
+                            "form_type": "html",
+                            "slug": "hr_763218",
+                            "type": "hr",
+                            "show_msg": false,
+                            "required": false,
+                            "hide_label": false,
+                            "floating": false,
+                            "select": "HR Tag",
+                            "icon": "bi bi-code-square",
+                            "condition": [],
+                            "options": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": 100,
+                                "custom_class": ""
+                            }
+                        },
+                        {
+                            "id": "676bd6750c6d9",
+                            "label": "File upload",
+                            "form_type": "upload",
+                            "slug": "upload_627138",
+                            "show_msg": false,
+                            "err_msg": "Die ausgewählte Datei ist ungültig.",
+                            "type": "upload",
+                            "required": false,
+                            "hide_label": true,
+                            "select": "File upload",
+                            "icon": "bi bi-upload",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": {
+                                    "files": []
+                                },
+                                "custom_class": "mx-auto",
+                                "show_btn": false,
+                                "datei_select_txt": "Datei auswählen",
+                                "chunk_upload": true,
+                                "allowFileSizeValidation": true,
+                                "minFileSize": "",
+                                "maxTotalFileSize": 10,
+                                "maxFileSize": 2,
+                                "maxFiles": 5,
+                                "accept": ".jpg,.jpeg,.png,.gif,.pdf"
+                            },
+                            "options": [],
+                            "message": {
+                                "drag_file_label": "Upload Text",
+                                "drag_file_txt": "Dateien hier per Drag & Drop ablegen oder klicken.",
+                                "file_large_label": "Datei ist zu groß",
+                                "file_large_txt": "Datei ist zu groß ({{filesize}} MB). Maximale Dateigröße {{maxFilesize}} MB.",
+                                "max_filesize_label": "Maximale Dateigröße {{maxFilesize}} MB.",
+                                "max_filesize_txt": "Maximale Dateigröße ist {{maxFiles}}",
+                                "max_total_file_label": "Maximale Gesamtgröße der Datei",
+                                "max_total_file_txt": "Maximale Uploads ({{maxFiles}}) überschritten.",
+                                "invalid_type_label": "Ungültiger Dateityp",
+                                "invalid_type_txt": "Ungültiger Dateityp"
+                            },
+                            "chosen": false,
+                            "selected": false
+                        },
+                        {
+                            "id": "676bd722df8b4",
+                            "label": "HR Tag",
+                            "form_type": "html",
+                            "slug": "hr_735642",
+                            "type": "hr",
+                            "show_msg": false,
+                            "required": false,
+                            "hide_label": false,
+                            "floating": false,
+                            "select": "HR Tag",
+                            "icon": "bi bi-code-square",
+                            "condition": [],
+                            "options": [],
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": 100,
+                                "custom_class": ""
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676967f594faa",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "676967f594fab",
+                    "col": 12,
+                    "css": "row g-2",
+                    "forms": [
+                        {
+                            "id": "67697849c8ecb",
+                            "label": "Nachricht",
+                            "form_type": "textfeld",
+                            "slug": "message_843271",
+                            "show_msg": true,
+                            "err_msg": "Dieses Feld muss ausgefüllt werden.",
+                            "type": "textarea",
+                            "required": true,
+                            "hide_label": false,
+                            "select": "Textarea",
+                            "icon": "bi bi-textarea-t",
+                            "condition": [],
+                            "config": {
+                                "rows": 4,
+                                "height": 100,
+                                "caption": "",
+                                "placeholder": "",
+                                "default": "",
+                                "custom_class": ""
+                            },
+                            "options": [],
+                            "message": [],
+                            "floating": true,
+                            "chosen": false,
+                            "selected": false
+                        }
+                    ],
+                    "chosen": false,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "id": "676978927a55d",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "676978927a55e",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "6769789555e0a",
+                            "label": "Datenschutz",
+                            "form_type": "select",
+                            "slug": "privacy_check",
+                            "show_msg": true,
+                            "err_msg": "Sie müssen dieser Bedingung zustimmen.",
+                            "type": "privacy-check",
+                            "required": true,
+                            "hide_label": true,
+                            "select": "Datenschutz",
+                            "icon": "bi bi-toggle-off",
+                            "condition": [],
+                            "config": {
+                                "caption": "",
+                                "selected": false,
+                                "placeholder": "",
+                                "new_tab": true,
+                                "default": "{Datenschutzinformation} gelesen und akzeptiert.",
+                                "link": "\u003Ca href=\u0022./404-2/\u0022\u003EDatenschutzinformation\u003C/a\u003E gelesen und akzeptiert.",
+                                "url": "./404-2/",
+                                "id": "357",
+                                "custom_class": "col-12",
+                                "switch": false,
+                                "inline": false,
+                                "animated": true,
+                                "animated_color": "#0165E7"
+                            },
+                            "options": [],
+                            "message": [],
+                            "chosen": false,
+                            "selected": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "676978b1d7215",
+            "page": 1,
+            "grid": [
+                {
+                    "id": "676978b1d7216",
+                    "col": 12,
+                    "forms": [
+                        {
+                            "id": "676978b6088f9",
+                            "label": "Senden",
+                            "form_type": "textfeld",
+                            "slug": "button_492365",
+                            "show_msg": false,
+                            "err_msg": "",
+                            "type": "button",
+                            "required": false,
+                            "hide_label": false,
+                            "select": "Button",
+                            "icon": "bi bi-hand-index",
+                            "condition": {
+                                "type": "676978e3beb4f"
+                            },
+                            "config": {
+                                "caption": "",
+                                "placeholder": "",
+                                "default": false,
+                                "custom_class": "",
+                                "btn_type": "submit",
+                                "btn_class": "btn btn-secondary"
+                            },
+                            "options": [
+                                {
+                                    "type": "submit",
+                                    "name": "Submit"
+                                },
+                                {
+                                    "type": "button",
+                                    "name": "Button"
+                                },
+                                {
+                                    "type": "next",
+                                    "name": "nächste Seite"
+                                },
+                                {
+                                    "type": "prev",
+                                    "name": "Vorherige Seite"
+                                },
+                                {
+                                    "type": "reset",
+                                    "name": "Reset"
+                                }
+                            ],
+                            "message": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "type": "builder",
+    "send_email": {
+        "email": {
+            "recipient": "email@jenswiecker.de",
+            "subject": "Nachricht von Test",
+            "cc": "",
+            "bcc": "",
+            "message": "&lt;p&gt;{summary}&lt;/p&gt;&lt;p&gt;Diese Nachricht wurde vom &lt;a href=&quot;https://localhost&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Test&lt;/a&gt;-Kontaktformular gesendet.&lt;/p&gt;"
+        },
+        "responder": {
+            "subject": "Nachricht von Test",
+            "active": true,
+            "message": "&lt;p&gt;{summary}&lt;/p&gt;&lt;p&gt;Diese Nachricht wurde vom &lt;a href=&quot;https://localhost&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Test&lt;/a&gt;-Kontaktformular gesendet.&lt;/p&gt;"
+        }
+    },
+    "settings": {
+        "col": "lg",
+        "gutter": "g-3",
+        "individuell": "",
+        "redirection_active": false,
+        "page_id": "2",
+        "js_data_active": false,
+        "url": ""
+    },
+    "message": {
+        "email_sent": [
+            {
+                "id": 1,
+                "label": "Die Nachricht des Absenders wurde erfolgreich gesendet",
+                "value": "Die Nachricht wurde erfolgreich gesendet."
+            },
+            {
+                "id": 2,
+                "label": "Die Nachricht des Absenders konnte nicht gesendet werden",
+                "value": "Beim Versuch, Ihre Nachricht zu senden, ist ein Fehler aufgetreten."
+            },
+            {
+                "id": 3,
+                "label": "Fehler beim Ausfüllen des Formulars",
+                "value": "Ein oder mehrere Felder haben einen Fehler. Bitte überprüfen Sie es und versuchen Sie es erneut."
+            },
+            {
+                "id": 4,
+                "label": "Eingabe wurde als Spam erkannt",
+                "value": "Beim Versuch, Ihre Nachricht zu senden, ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal."
+            },
+            {
+                "id": 5,
+                "label": "Das Formular wird gesendet",
+                "value": "Das Formular wird gesendet"
+            },
+            {
+                "id": 6,
+                "label": "Überschrift Fehlermeldung",
+                "value": "Das Formular konnte nicht gesendet werden!"
+            }
+        ]
+    },
+    "conditions": [
+        {
+            "id": "676978e3beb4f",
+            "type": "activate",
+            "name": "Datenschutz",
+            "fields": [],
+            "group": [
+                {
+                    "id": "676978e771878",
+                    "rules": [
+                        {
+                            "id": "676978e771875",
+                            "compare": "is",
+                            "is_select": false,
+                            "field": "6769789555e0a",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "id": "676be45b214b6",
+                    "rules": [
+                        {
+                            "id": "676be45b214b4",
+                            "compare": "is",
+                            "is_select": false,
+                            "field": "676bd6337680f",
+                            "value": "Jens"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

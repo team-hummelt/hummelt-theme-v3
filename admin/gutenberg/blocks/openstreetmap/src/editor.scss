@@ -1,0 +1,53 @@
+.openstreetmap-iframe {
+  //#007cba
+  border: 2px dashed #b7b7b7 !important;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  max-width: 100%;
+}
+
+.osm-iframe {
+  position: relative;
+  width: fit-content;
+}
+  .openstreetmap-iframe-wrapper {
+
+    .iframe-osm-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      &.scroll {
+        cursor: pointer;
+        &:after {
+          transition: all 300ms ease-in-out;
+          content: 'Zum Zoomen klicken';
+          color: #fff;
+          font-family: var(--bs-font-sans-serif);
+          font-size: 18px;
+          font-weight: 600;
+          justify-content: center;
+          display: flex;
+          align-items: center;
+
+          position: absolute;
+          top: 10px;
+          left: 0;
+          right: 0;
+          bottom: 15px;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 9999;
+          pointer-events: none;
+        }
+
+        &.focus {
+          outline: none;
+          transition: box-shadow 0.2s;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+      }
+
+    }
+  }

@@ -1,0 +1,26 @@
+.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column {
+  flex-basis: unset!important;
+  flex-grow: unset!important;
+}
+:root :where(.is-layout-flex) {
+  gap: unset!important;
+}
+
+.wp-block-columns {
+  flex-wrap: wrap!important;
+}
+
+.wp-block-column {
+  flex-grow: unset!important;
+  min-width: unset!important;
+  overflow-wrap: unset!important;
+  align-items: unset!important;
+}
+.wp-block-columns {
+  align-items: unset!important;
+  box-sizing: unset;
+
+}
+:where(.wp-block-columns) {
+  margin-bottom: unset!important;
+}

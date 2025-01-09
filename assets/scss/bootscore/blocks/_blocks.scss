@@ -1,0 +1,64 @@
+/*--------------------------------------------------------------
+Block Widgets
+--------------------------------------------------------------*/
+
+// Reset WP margin-top
+.is-layout-flow > {
+  * {
+    margin-block-start: 0;
+  }
+
+  p {
+    margin-block-end: $spacer;
+  }
+}
+
+
+// Add rounded to block img if class added to img block
+.rounded img {
+  border-radius: var(--#{$prefix}border-radius);
+}
+
+// Add card-img-top to block img if class added to img block
+.card-img-top img {
+  border-top-left-radius: $card-inner-border-radius;
+  border-top-right-radius: $card-inner-border-radius;
+}
+
+
+// Separator
+.wp-block-separator {
+  border-top: var(--#{$prefix}border-width) solid;
+}
+
+
+// List-groups
+.bs-list-group {
+  .list-group-item-action {
+    a {
+      color: $list-group-color;
+    }
+
+    &:hover {
+      a {
+        color: $list-group-action-hover-color;
+      }
+    }
+
+    &.active {
+      a {
+        color: $list-group-active-color;
+      }
+    }
+  }
+}
+
+// List-group in card
+.card {
+  .bs-list-group.list-group-flush {
+    .list-group-item:last-child {
+      border-bottom-left-radius: $card-inner-border-radius;
+      border-bottom-right-radius: $card-inner-border-radius;
+    }
+  }
+}

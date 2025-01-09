@@ -1,0 +1,83 @@
+/* XXL Modal Styling */
+.components-modal__frame.xxl-modal {
+  .components-button.pe-none {
+     pointer-events: none!important;
+  }
+  .components-modal__content {  }
+    width: 100vw!important;
+    height: 100vh!important;
+    max-width: 100%;
+    max-height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: white; /* Hintergrund des Modals */
+    padding: 20px;
+    box-shadow: none;
+    overflow: auto;
+  .components-modal__screen-overlay {
+    z-index: 9999;
+  }
+
+  .icons-modal-button-group {
+    position: fixed;
+    z-index: 10;
+    top: 1.5rem;
+    width: auto;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .icon-wrapper {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+     .info-icon-item {
+      align-items: center;
+      background-color: var(--bg-icon-color);
+      border: 1px solid #787878;
+      border-radius: .2rem;
+      color: var(--icon-color);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      height: 7rem;
+      justify-content: center;
+      margin: .3rem;
+      overflow: hidden;
+      transition: all .3s;
+      width: 7rem;
+       small.sm-icon {
+         display: block;
+         font-size: .675rem;
+         font-weight: 400;
+         line-height: 1;
+         padding: .5rem .2rem;
+         text-align: center;
+       }
+       &:hover {
+         background-color: var(--bg-icon-hover-color);
+         border: 1px solid #b5b5b5;
+         color: var(--icon-hover-color);
+       }
+
+       i {
+         font-size: 35.2px;
+       }
+    }
+
+  }
+}
+
+
+.components-popover {
+  z-index: 9999; /* Stelle sicher, dass es über allem liegt */
+}
+
+.components-color-picker {
+  width: 200px; /* Optional: Breite anpassen */
+  padding: 10px;
+}
+
+

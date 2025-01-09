@@ -1,0 +1,41 @@
+.wp-block-custom-cover-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+  .custom-cover-content {
+    z-index: 2;
+    position: relative;
+    .cover-content-headline {
+      color: var(--bs-light);
+    }
+  }
+
+  .jarallax {
+    position: relative;
+    z-index: 0;
+  }
+
+  .jarallax > .jarallax-img,
+  picture.jarallax-img img {
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+}
