@@ -106,6 +106,20 @@ class hummelt_theme_v3_generate_auto_css
 
         $menuBreak = $this->menu_breakpoints_select($themeWpGeneral['menu_breakpoint']);
         $menuUppercase = $themeColor['menu_uppercase'] ? 'uppercase' : 'none';
+        $vertikal = '';
+        if($themeWpGeneral['menu_vertical'] == 'center') {
+            $vertikal .= 'top: 50%;';
+            $vertikal .= 'transform: translateX(-50%) translateY(-50%);';
+        }
+        if($themeWpGeneral['menu_vertical'] == 'start') {
+            $vertikal .= 'top: 0;';
+            $vertikal .= 'transform: translateX(-50%);';
+        }
+        if($themeWpGeneral['menu_vertical'] == 'end') {
+            $vertikal .= 'bottom: 0;';
+            $vertikal .= 'transform: translateX(-50%);';
+        }
+
 
         //print_r($themeColor);
 
@@ -266,7 +280,13 @@ class hummelt_theme_v3_generate_auto_css
             .navbar {
                 --bs-navbar-padding-y: 0!important;
             }
-            .navbar.navbar-root {
+               .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) {
+                 position: relative;
+                 .navbar-nav.navbar-center  {
+                 position: absolute;
+                 left: 50%; 
+                 '.$vertikal.'
+               }
                ul.navbar-nav li.menu-item:not(ul.navbar-nav li.menu-item ul li) {
                   padding-top: 0;
                   padding-bottom: .0;

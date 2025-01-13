@@ -312,6 +312,17 @@ class register_hummelt_theme_v3_optionen
         wp_send_json($publicAjaxHandle->formular_ajax_handle());
     }
 
+    /**
+     * @throws Exception
+     */
+    public function public_ajax_HummeltThemeV3AJAX(): void
+    {
+        check_ajax_referer('hummelt_theme_v3_public_ajax');
+        require 'Ajax/class_child_theme_public_ajax.php';
+        $publicAjaxHandle = Child_Theme_Public_Ajax::child_theme_ajax_instance($this->main);
+        wp_send_json($publicAjaxHandle->theme_ajax_handle());
+    }
+
     public function fn_hummelt_theme_v3_activation_hook(): void
     {
         if (!get_option(HUMMELT_THEME_V3_SLUG . '/db_version') || get_option(HUMMELT_THEME_V3_SLUG . '/db_version') != HUMMELT_THEME_V3_DB_VERSION) {

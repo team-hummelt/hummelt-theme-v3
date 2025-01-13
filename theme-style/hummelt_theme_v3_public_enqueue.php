@@ -50,6 +50,12 @@ class hummelt_theme_v3_public_enqueue
             wp_enqueue_style('font-awesome-icons-style', HUMMELT_THEME_V3_VENDOR_URL . '/components/font-awesome/css/font-awesome.min.css', array(), $modificatedFa47Icons);
         }
 
+        global $wp_filesystem;
+        $file = 'theme-font-face.css';
+        $cssFilePath = HUMMELT_THEME_V3_FONTS_DIR . $file;
+        if($wp_filesystem->is_file($cssFilePath)) {
+            wp_enqueue_style('hummelt-theme-v3-custom-fonts', HUMMELT_THEME_V3_FONTS_URL. 'theme-font-face.css', array(), HUMMELT_THEME_V3_VERSION, false);
+        }
 
         wp_enqueue_script('wp-api-fetch');
         $formBuilderAssets = require_once get_template_directory() . '/theme-style/form-builder/build/index.asset.php';
@@ -125,6 +131,7 @@ class hummelt_theme_v3_public_enqueue
         // $form_redirect = get_option(HUMMELT_THEME_V3_SLUG . '/form_redirect');
         $form_nonce = wp_create_nonce('hummelt_theme_v3_formular_handle');
         $public_nonce = wp_create_nonce('hummelt_theme_v3_public_handle');
+        $theme_nonce = wp_create_nonce('hummelt_theme_v3_public_ajax');
         wp_register_script('hummelt-theme-v3-public-localize', '', [], HUMMELT_THEME_V3_VERSION, false);
         wp_enqueue_script('hummelt-theme-v3-public-localize');
         wp_localize_script('hummelt-theme-v3-public-localize',
@@ -137,7 +144,9 @@ class hummelt_theme_v3_public_enqueue
                 'form_nonce' => $form_nonce,
                 'form_handle' => 'HummeltThemeV3Formular',
                 'public_handle' => 'HummeltThemeV3Public',
+                'theme_handle' => 'HummeltThemeV3AJAX',
                 'public_nonce' => $public_nonce,
+                'theme_nonce' => $theme_nonce,
                 'theme_slider' => $splide
             )
         );
