@@ -269,7 +269,7 @@ class hummelt_theme_v3_bootscore_filter
         $menuAlign = $this->themeWpGeneral['menu'];
         if ($location == 'main') {
             if ($menuAlign == 1) {
-                return 'navbar-nav mx-auto %2$s';
+                return 'navbar-nav navbar-center %2$s';
             }
             if ($menuAlign == 2) {
                 return 'navbar-nav %2$s';
@@ -371,12 +371,12 @@ class hummelt_theme_v3_bootscore_filter
             $meta = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_post_meta', $id);
         }
         if($location == '404') {
-           if($this->themeWpGeneral['hupa_select_404']) {
-               $meta = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_post_meta', $this->themeWpGeneral['hupa_select_404']);
-               $id = $this->themeWpGeneral['hupa_select_404'];
-           } else {
-               return '<h1>404</h1>';
-           }
+            if($this->themeWpGeneral['hupa_select_404']) {
+                $meta = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_post_meta', $this->themeWpGeneral['hupa_select_404']);
+                $id = $this->themeWpGeneral['hupa_select_404'];
+            } else {
+                return '<h1>404</h1>';
+            }
         }
         if(!$meta) {
             return '';
@@ -391,22 +391,22 @@ class hummelt_theme_v3_bootscore_filter
 
     public function theme_get_page_by_type($type, $location): string
     {
-       if($type == '404') {
-           if ($location == '404-body') {
-               if($this->themeWpGeneral['hupa_select_404']) {
-                   $post_content = get_post_field('post_content', $this->themeWpGeneral['hupa_select_404']);
-                   $content = do_blocks($post_content);
-                   return do_shortcode($content);
-               }
-               return '<p class="alert alert-info mb-4">' . esc_html__('Page not found.', 'bootscore') . '</p>';
-           }
-           if ($location == '404-button') {
-               if($this->themeWpGeneral['hupa_select_404']) {
-                   return '';
-               }
-               return '<a class="btn btn-outline-primary" href="' . esc_url(home_url()) . '" role="button">' . esc_html__('Back Home &raquo;', 'bootscore') . '</a>';
-           }
-       }
+        if($type == '404') {
+            if ($location == '404-body') {
+                if($this->themeWpGeneral['hupa_select_404']) {
+                    $post_content = get_post_field('post_content', $this->themeWpGeneral['hupa_select_404']);
+                    $content = do_blocks($post_content);
+                    return do_shortcode($content);
+                }
+                return '<p class="alert alert-info mb-4">' . esc_html__('Page not found.', 'bootscore') . '</p>';
+            }
+            if ($location == '404-button') {
+                if($this->themeWpGeneral['hupa_select_404']) {
+                    return '';
+                }
+                return '<a class="btn btn-outline-primary" href="' . esc_url(home_url()) . '" role="button">' . esc_html__('Back Home &raquo;', 'bootscore') . '</a>';
+            }
+        }
         return '';
     }
 
@@ -438,7 +438,7 @@ class hummelt_theme_v3_bootscore_filter
         if(is_404()) {
             if($this->themeWpGeneral['hupa_select_404']) {
                 $meta = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_post_meta', $this->themeWpGeneral['hupa_select_404']);
-                if ($meta['theme_header']) {
+                if ($meta['theme_footer']) {
                     $post_content = get_post_field('post_content', $meta['theme_footer']);
                     $content = do_blocks($post_content);
                     return do_shortcode($content);
@@ -451,7 +451,7 @@ class hummelt_theme_v3_bootscore_filter
         }
         if ($id) {
             $meta = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_post_meta', $id);
-            if ($meta['theme_header']) {
+            if ($meta['theme_footer']) {
                 $post_content = get_post_field('post_content', $meta['theme_footer']);
                 $content = do_blocks($post_content);
                 return do_shortcode($content);

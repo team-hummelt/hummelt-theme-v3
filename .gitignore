@@ -24,3 +24,4 @@ admin/gutenberg/blocks/openstreetmap/package-lock.json
 admin/gutenberg/blocks/video/package-lock.json
 admin/gutenberg/blocks/video-carousel/video-container/package-lock.json
 admin/gutenberg/blocks/video-carousel/video-item/package-lock.json
+theme-style/form-builder/node_modules

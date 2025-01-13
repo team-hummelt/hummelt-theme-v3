@@ -307,6 +307,9 @@ class Hummelt_Theme_V3
         $this->loader->add_action('wp_ajax_nopriv_HummeltThemeV3Formular', $hummelt_theme_v3_options, 'public_ajax_HummeltThemeV3Formular');
         $this->loader->add_action('wp_ajax_HummeltThemeV3Formular', $hummelt_theme_v3_options, 'public_ajax_HummeltThemeV3Formular');
 
+        $this->loader->add_action('wp_ajax_nopriv_HummeltThemeV3AJAX', $hummelt_theme_v3_options, 'public_ajax_HummeltThemeV3AJAX');
+        $this->loader->add_action('wp_ajax_HummeltThemeV3AJAX', $hummelt_theme_v3_options, 'public_ajax_HummeltThemeV3AJAX');
+
         //Query
         $this->loader->add_action('init', $hummelt_theme_v3_options, 'fn_init_hummelt_theme_rewrite_rule');
         $this->loader->add_filter('query_vars', $hummelt_theme_v3_options, 'fn_hummelt_theme_query_whitelist');

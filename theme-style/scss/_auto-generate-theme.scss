@@ -176,28 +176,37 @@ body h6 {
 .navbar {
   --bs-navbar-padding-y: 0!important;
 }
-.navbar.navbar-root ul.navbar-nav li.menu-item:not(ul.navbar-nav li.menu-item ul li) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) {
+  position: relative;
+}
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .navbar-nav.navbar-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) ul.navbar-nav li.menu-item:not(ul.navbar-nav li.menu-item ul li) {
   padding-top: 0;
   padding-bottom: 0;
 }
 @media (max-width: 992px) {
-  .navbar.navbar-root ul.navbar-nav li.menu-item:not(ul.navbar-nav li.menu-item ul li) {
+  .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) ul.navbar-nav li.menu-item:not(ul.navbar-nav li.menu-item ul li) {
     padding-top: 0;
     padding-bottom: 0;
   }
 }
-.navbar.navbar-root.navbar-small ul.navbar-nav li.menu-item:not(ul.navbar-nav li.menu-item ul li) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root).navbar-small ul.navbar-nav li.menu-item:not(ul.navbar-nav li.menu-item ul li) {
   padding-top: 0;
   padding-bottom: 0;
 }
-.navbar.navbar-root .open .dropdown-toggle, .navbar.navbar-root .dropdown-toggle:focus:not(.mega-menu-wrapper .dropdown-toggle:focus) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .open .dropdown-toggle, .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-toggle:focus:not(.mega-menu-wrapper .dropdown-toggle:focus) {
   background-color: #E6E6E600;
 }
-.navbar.navbar-root .dropdown-toggle.show, .navbar.navbar-root .menu-item.menu-item-has-children ~ .nav-link.dropdown-toggle.show:not(.mega-menu-wrapper .dropdown-toggle.show) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-toggle.show, .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .menu-item.menu-item-has-children ~ .nav-link.dropdown-toggle.show:not(.mega-menu-wrapper .dropdown-toggle.show) {
   background-color: #E6E6E600 !important;
   color: #50575E !important;
 }
-.navbar.navbar-root .navbar-nav .nav-link:not(.mega-menu-wrapper .nav-link) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .navbar-nav .nav-link:not(.mega-menu-wrapper .nav-link) {
   margin: 0 0.1rem;
   padding: 0.5rem;
   text-transform: none;
@@ -212,30 +221,30 @@ body h6 {
   transition: all 350ms;
 }
 @media (min-width: 1920px) {
-  .navbar.navbar-root .navbar-nav .nav-link:not(.mega-menu-wrapper .nav-link) {
+  .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .navbar-nav .nav-link:not(.mega-menu-wrapper .nav-link) {
     font-size: 16px;
   }
 }
-.navbar.navbar-root .navbar-nav .nav-link:not(.mega-menu-wrapper .nav-link):not(.nav-link.dropdown-toggle.active):not(li.current-menu-item a.active):not(.navbar-nav .nav-link:hover) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .navbar-nav .nav-link:not(.mega-menu-wrapper .nav-link):not(.nav-link.dropdown-toggle.active):not(li.current-menu-item a.active):not(.navbar-nav .nav-link:hover) {
   color: #50575e;
   background-color: #FFFFFF00;
 }
-.navbar.navbar-root .navbar-nav .nav-link.show:not(.mega-menu-wrapper .nav-link.show):not(.nav-link.dropdown-toggle.active), .navbar.navbar-root .navbar-nav .show > .nav-link:not(.mega-menu-wrapper .nav-link.show):not(.nav-link.dropdown-toggle.active) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .navbar-nav .nav-link.show:not(.mega-menu-wrapper .nav-link.show):not(.nav-link.dropdown-toggle.active), .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .navbar-nav .show > .nav-link:not(.mega-menu-wrapper .nav-link.show):not(.nav-link.dropdown-toggle.active) {
   color: #50575E !important;
   font-weight: normal;
 }
-.navbar.navbar-root .dropdown-menu {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu {
   -webkit-transition: all 350ms;
   -moz-transition: all 350ms;
   -o-transition: all 350ms;
   transition: all 350ms;
   margin: 0.1rem 0 0;
 }
-.navbar.navbar-root .dropdown-menu:not(.mega-menu-wrapper):not(.mega-menu-wrapper .dropdown-menu) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu:not(.mega-menu-wrapper):not(.mega-menu-wrapper .dropdown-menu) {
   background-color: #FFFFFF;
   font-weight: normal;
 }
-.navbar.navbar-root .dropdown-menu .dropdown-item {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu .dropdown-item {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: calc(16px + (16 - 16) * ((100vw - 320px) / (1920 - 320))) !important;
   font-style: normal;
@@ -247,61 +256,61 @@ body h6 {
   background-color: #FFFFFF;
 }
 @media (min-width: 1920px) {
-  .navbar.navbar-root .dropdown-menu .dropdown-item {
+  .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu .dropdown-item {
     font-size: 16px;
   }
 }
-.navbar.navbar-root .dropdown-menu li.menu-item {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu li.menu-item {
   border-top: 1px solid #50575e70;
 }
-.navbar.navbar-root .dropdown-menu li.menu-item:first-child {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu li.menu-item:first-child {
   border-top: none;
 }
-.navbar.navbar-root .dropdown-menu li.menu-item a.dropdown-item.active {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu li.menu-item a.dropdown-item.active {
   border-bottom: none;
 }
-.navbar.navbar-root .dropdown-menu .dropdown-item:hover:not(.mega-menu-wrapper .dropdown-item:hover:hover), .navbar.navbar-root .dropdown-menu .menu-item:hover:not(.mega-menu-wrapper .menu-item:hover) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu .dropdown-item:hover:not(.mega-menu-wrapper .dropdown-item:hover:hover), .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu .menu-item:hover:not(.mega-menu-wrapper .menu-item:hover) {
   background-color: #ededed;
   color: #E11D2A;
 }
-.navbar.navbar-root .navbar-nav .nav-link:hover:not(.mega-menu-wrapper .nav-link:hover) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .navbar-nav .nav-link:hover:not(.mega-menu-wrapper .nav-link:hover) {
   background-color: #E6E6E600;
 }
-.navbar.navbar-root .nav-link.dropdown-toggle.active, .navbar.navbar-root li.current_page_item a, .navbar.navbar-root li.current-menu-parent.active a, .navbar.navbar-root li.current-menu-item.active a, .navbar.navbar-root li.current-menu-item a.active {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .nav-link.dropdown-toggle.active, .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) li.current_page_item a, .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) li.current-menu-parent.active a, .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) li.current-menu-item.active a, .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) li.current-menu-item a.active {
   background-color: #E6E6E600;
   color: #E11D2A;
 }
-.navbar.navbar-root .navbar-toggler {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .navbar-toggler {
   color: #474747;
 }
-.navbar.navbar-root .navbar-toggler:hover {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .navbar-toggler:hover {
   color: #474747;
 }
-.navbar.navbar-root button.navbar-toggler span.fa {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) button.navbar-toggler span.fa {
   font-size: 1.6rem;
   color: #474747;
 }
-.navbar.navbar-root .dropdown-menu a.dropdown-item.active, .navbar.navbar-root .dropdown-menu .menu-item.current-menu-item {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu a.dropdown-item.active, .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu .menu-item.current-menu-item {
   color: #E11D2A;
   background-color: #d4d4d4;
 }
-.navbar.navbar-root:hover .navbar-nav:hover .nav-link:hover:not(.mega-menu-wrapper .nav-link:hover) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root):hover .navbar-nav:hover .nav-link:hover:not(.mega-menu-wrapper .nav-link:hover) {
   background-color: #E6E6E600;
   color: #50575E;
 }
-.navbar.navbar-root:hover .navbar-nav:hover .nav-link.active:hover:not(.mega-menu-wrapper .nav-link:hover) {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root):hover .navbar-nav:hover .nav-link.active:hover:not(.mega-menu-wrapper .nav-link:hover) {
   background-color: #E6E6E600;
   color: #E11D2A;
 }
 @media (max-width: 992px) {
-  .navbar.navbar-root .dropdown-menu-slide {
+  .site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu-slide {
     animation-duration: 2.3s;
     -webkit-animation-duration: 0.3s;
     animation-fill-mode: both;
     -webkit-animation-fill-mode: both;
   }
 }
-.navbar.navbar-root .slideIn {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .slideIn {
   -webkit-animation-name: slideIn;
   animation-name: slideIn;
 }
@@ -332,7 +341,7 @@ body h6 {
     -webkit-opacity: 0;
   }
 }
-.navbar.navbar-root .dropdown-menu-slide {
+.site-header .navbar.navbar-root:not(.site-header.resize-small .navbar.navbar-root) .dropdown-menu-slide {
   -webkit-animation-name: slideIn;
   animation-name: slideIn;
   animation-duration: 450ms;

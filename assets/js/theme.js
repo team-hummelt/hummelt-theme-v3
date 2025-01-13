@@ -82,7 +82,7 @@ jQuery(function ($) {
     let lastStateScroll = null; // Merkt sich den letzten Zustand (kleiner/größer als Schwelle)
     const thresholdScroll = 400; // Die Schwelle für den Scrollwert
     const toleranceScroll = 30; // Schwellenzone von ±10 Pixel
-
+    let navbarRoot = $('.navbar-root');
     $(window).on('scroll', function () {
         let windowWidth = $(window).width();
         let scroll = $(window).scrollTop();
@@ -96,7 +96,6 @@ jQuery(function ($) {
                     width: `${hummeltPublicObj.logo.logo_size_scroll}px`
                 });
                 bgNav.addClass('header-scroll')
-
                 bgNav.stop().css({
                     paddingTop: '0.25rem',
                     paddingBottom: '0.25rem'
@@ -104,10 +103,10 @@ jQuery(function ($) {
                 lastStateScroll = 'small';
             } else if (scroll < thresholdScroll - toleranceScroll && lastStateScroll !== 'large') {
                 // Zustand wechseln: Bild größer machen
-                bgNav.removeClass('header-scroll')
                 navImg.stop().css({
                     width: `${hummeltPublicObj.logo.logo_size}px`
                 });
+                bgNav.removeClass('header-scroll')
                 bgNav.stop().css({
                     paddingTop: '1rem',
                     paddingBottom: '1rem'
@@ -131,6 +130,7 @@ jQuery(function ($) {
             navImg.stop().css({
                 width: `${hummeltPublicObj.logo.logo_size}px`
             });
+            bgNav.removeClass('resize-small')
             bgNav.stop().css({
                 paddingTop: '1rem',
                 paddingBottom: '1rem'
@@ -140,11 +140,56 @@ jQuery(function ($) {
             navImg.stop().css({
                 width: `${hummeltPublicObj.logo.logo_size_mobil}px`
             });
+            bgNav.addClass('resize-small')
             bgNav.stop().css({
                 paddingTop: '0.25rem',
                 paddingBottom: '0.25rem'
             });
         }
+        let width = document.getElementById('masthead').getBoundingClientRect().width;
+        let leftBox;
+        let rightBox
+        leftBox = $('.left-box');
+        rightBox = $('.right-box');
+
+        let w = 0;
+        if (leftBox.length !== 0) {
+            if (width > 1400) {
+                w = (width - 1332) / 2 + 30
+                leftBox.css('marginLeft', (w) + 'px')
+            }
+            if (width < 1400 && width > 1200) {
+                w = (width - 1152) / 2 + 30
+                leftBox.css('marginLeft', (w) + 'px')
+            }
+        }
+        if (rightBox.length !== 0) {
+            if (width > 1400) {
+                w = (width - 1332) / 2 + 30
+                rightBox.css('marginRight', w + 'px')
+            }
+            if (width < 1400 && width > 1200) {
+                w = (width - 1152) / 2 + 30
+                rightBox.css('marginRight', w + 'px')
+            }
+        }
+
+        let content = $('.site-content');
+        if (width < 1400) {
+            content.addClass('page-mobil')
+        } else {
+            content.removeClass('page-mobil')
+        }
+
+        let containerWidth = $('.container-width');
+        if (containerWidth.length !== 0) {
+            if (width <= 1199) {
+                containerWidth.addClass('container');
+            } else {
+                containerWidth.removeClass('container')
+            }
+        }
+
     }
 
     let resizeTimeout;
@@ -205,6 +250,7 @@ jQuery(function ($) {
     let themeAnimate = $('.theme-wow-animation');
 
     initializeAnimateIfNeeded().then()
+
     async function initializeAnimateIfNeeded() {
         if (appParallaxOption.length !== 0) {
             try {
