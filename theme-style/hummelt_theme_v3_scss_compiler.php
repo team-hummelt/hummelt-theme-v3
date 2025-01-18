@@ -1,9 +1,12 @@
 <?php
+
 namespace Hummelt\ThemeV3;
+
 use Exception;
 use ScssPhp\ScssPhp\Compiler;
 use Hummelt_Theme_V3;
 use ScssPhp\ScssPhp\OutputStyle;
+use ScssPhp\ScssPhp\Exception\SassException;
 
 class hummelt_theme_v3_scss_compiler
 {
@@ -30,9 +33,9 @@ class hummelt_theme_v3_scss_compiler
     public function __construct(Hummelt_Theme_V3 $main)
     {
         $this->main = $main;
-        $this->compiler               = new Compiler();
-        $this->theme_directory        = ($this->shouldProcessChild()) ? get_stylesheet_directory() : get_template_directory();
-        $this->is_environment_dev     = in_array(wp_get_environment_type(), array('development', 'local'), true);
+        $this->compiler = new Compiler();
+        $this->theme_directory = ($this->shouldProcessChild()) ? get_stylesheet_directory() : get_template_directory();
+        $this->is_environment_dev = in_array(wp_get_environment_type(), array('development', 'local'), true);
 
     }
 
@@ -88,7 +91,7 @@ class hummelt_theme_v3_scss_compiler
 
     public function addModifiedCheckDir($dir, $prefix_theme_directory = true): static
     {
-        $dir   = ($prefix_theme_directory) ? $this->theme_directory . $dir : $dir;
+        $dir = ($prefix_theme_directory) ? $this->theme_directory . $dir : $dir;
         $files = glob($dir . '/*');
         foreach ($files as $file) {
             // check if file is a scss file
@@ -132,20 +135,53 @@ class hummelt_theme_v3_scss_compiler
 
     private function setOutputStyle(): void
     {
-        if ($this->is_environment_dev) {
+        if(HUMMELT_THEME_V3_SCSS_COMPILER_MAP) {
+            if ($this->is_environment_dev) {
+                $this->compiler->setOutputStyle(OutputStyle::EXPANDED);
+            } else {
+                $this->compiler->setOutputStyle(OutputStyle::COMPRESSED);
+            }
+
+            if(HUMMELT_THEME_V3_SCSS_COMPILER_MAP_TYPE == 'file') {
+                $this->compiler->setSourceMap(Compiler::SOURCE_MAP_FILE);
+                $source_map_url = site_url('', 'relative') . '/' . ltrim(str_replace(ABSPATH, '', $this->getCssFile()), '/');
+                $src_map_dir = ABSPATH . $source_map_url . '.map';
+
+                $source_map_url .= '.map';
+                $this->compiler->setSourceMapOptions([
+                    'sourceMapWriteTo' => $src_map_dir,
+                    'sourceMapURL' =>  $source_map_url,
+                    'sourceMapBasepath' => ABSPATH,
+                    'sourceMapFilename' => basename($source_map_url),
+                ]);
+            } else {
+
+                $source_map_url = site_url('', 'relative') . '/' . ltrim(str_replace(ABSPATH, '', $this->getCssFile()), '/');
+                $source_map_url .= '.map';
+                $this->compiler->setSourceMapOptions([
+                    'sourceMapURL' => $source_map_url,
+                    'sourceMapBasepath' => rtrim(str_replace('\\', '/', ABSPATH), '/'),
+                    'sourceRoot' => site_url('', 'relative') . '/',
+                ]);
+                $this->compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+            }
+        } else {
+            $this->compiler->setSourceMap(Compiler::SOURCE_MAP_NONE);
+        }
+      /*  if ($this->is_environment_dev) {
             $source_map_url = site_url('', 'relative') . '/' . ltrim(str_replace(ABSPATH, '', $this->getCssFile()), '/');
             $source_map_url .= '.map';
 
             $this->compiler->setSourceMap(Compiler::SOURCE_MAP_FILE);
             $this->compiler->setSourceMapOptions([
-                'sourceMapURL'      => $source_map_url,
+                'sourceMapURL' => $source_map_url,
                 'sourceMapBasepath' => rtrim(str_replace('\\', '/', ABSPATH), '/'),
-                'sourceRoot'        => site_url('', 'relative') . '/',
+                'sourceRoot' => site_url('', 'relative') . '/',
             ]);
             $this->compiler->setOutputStyle(OutputStyle::EXPANDED);
         } else {
             $this->compiler->setOutputStyle(OutputStyle::COMPRESSED);
-        }
+        }*/
     }
 
     private function getModifiedTime(): void
@@ -177,7 +213,7 @@ class hummelt_theme_v3_scss_compiler
             $this->should_compile = true;
         }
 
-        if (defined('HUMMELT_THEME_V3_SCSS_DISABLE_COMPILER') && HUMMELT_THEME_V3_SCSS_DISABLE_COMPILER ) {
+        if (defined('HUMMELT_THEME_V3_SCSS_DISABLE_COMPILER') && HUMMELT_THEME_V3_SCSS_DISABLE_COMPILER) {
             $this->should_compile = false;
         }
     }
@@ -213,6 +249,12 @@ class hummelt_theme_v3_scss_compiler
             }
 
             file_put_contents($this->getCssFile(), $compiled->getCss());
+            if(HUMMELT_THEME_V3_SCSS_COMPILER_MAP) {
+                if(HUMMELT_THEME_V3_SCSS_COMPILER_MAP_TYPE == 'file') {
+                    file_put_contents($this->getCssFile() . '.map', $compiled->getSourceMap());
+                }
+            }
+
             if ($this->is_environment_dev) {
                 file_put_contents($this->getCssFile() . '.map', $compiled->getSourceMap());
             }
@@ -220,12 +262,8 @@ class hummelt_theme_v3_scss_compiler
             if (!empty($this->file_mtime_check)) {
                 set_theme_mod('hummelt_theme_v3_scss_modified_timestamp_' . $this->file_id, $this->files_mtime);
             }
-        } catch (Exception $e) {
-            if ($this->is_environment_dev) {
-                wp_die('<b>Hummelt Theme v3 SCSS Compiler - Caught exception:</b><br><br> ' . $e->getMessage());
-            } else {
-                wp_die('Something went wrong with the SCSS compiler.');
-            }
+        } catch (Exception|SassException $e) {
+            echo '<div class="d-flex justify-content-center flex-column position-absolute start-50 translate-middle bg-light p-3" style="z-index: 99999;width:95%;top:10rem;min-height: 150px; border: 2px solid #dc3545; border-radius: .5rem"> <span class="text-danger fs-5 fw-bolder d-flex align-items-center"><i class="bi bi-cpu fs-4 me-1"></i>SCSS Compiler Error:</span>   ' . esc_html($e->getMessage()) . '</div>';
         }
     }
 }

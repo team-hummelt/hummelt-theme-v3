@@ -336,6 +336,233 @@ jQuery(function ($) {
         }
     }
 
+    // JOB WARNING Ankerlink DropDown Click Function
+    let path = location.hash;
+    const regex = /#.*?/gm;
+    let m;
+    if ((m = regex.exec(path)) !== null) {
+        m.forEach((match, groupIndex) => {
+            if (match) {
+                let dropDown = $('.nav-link.active.dropdown-toggle').next();
+                $('li a', dropDown).removeClass('active');
+            }
+        });
+    }
+
+    // JOB WARNING Ankerlink DropDown Click Function
+    // Smooth Scroll
+    $(function () {
+        $('a[href*="#"]:not([href="#"]):not(a.comment-reply-link):not([href="#tab-reviews"]):not([href="#tab-additional_information"]):not([href="#tab-description"]):not([href="#reviews"]):not([href="#carouselExampleIndicators"]):not([data-smoothscroll="false"])').click(function (e) {
+            if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
+                let target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+
+                    //JOB WARNING Ankerlink DropDown Click Function
+                    let x = $(this).parents('.menu-item-has-children.dropdown').children();
+                    x.toggleClass('show');
+                    let dropUl = $(this).parents('ul.dropdown-menu');
+                    $('li a', dropUl).removeClass('active');
+                    $(this).addClass('active');
+                    //JOB WARNING Ankerlink DropDown Click Function
+
+                    $('html, body').animate({
+                        // Change your offset according to your navbar height
+                        scrollTop: target.offset().top - 150
+                    }, 1000);
+                    return !1
+                }
+            }
+
+            if (window.location.hash) {
+                // Entferne den Anker aus der URL
+                history.replaceState(null, null, window.location.pathname + window.location.search);
+            }
+        })
+    });
+
+    // Scroll to ID from external url
+    if (window.location.hash) scroll(0, 0);
+    setTimeout(function () {
+        scroll(0, 0)
+    }, 1);
+    $(function () {
+        $('.scroll').on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: $(this).attr('href').offset().top - 170
+            }, 1000, 'swing')
+
+        });
+        if (window.location.hash) {
+            $('html, body').animate({
+                scrollTop: $(window.location.hash).offset().top -170
+            }, 1000, 'swing')
+        }
+        if (window.location.hash) {
+            // Entferne den Anker aus der URL
+            history.replaceState(null, null, window.location.pathname + window.location.search);
+        }
+    });
+
+    WhatAnimation("fadeScroll");
+    WhatAnimation("fadeScroll100");
+    WhatAnimation("fadeScroll25");
+    WhatAnimation("moveLeft");
+    WhatAnimation("moveLeft25");
+    WhatAnimation("moveLeft100");
+    WhatAnimation("moveRight");
+    WhatAnimation("moveRight25");
+    WhatAnimation("moveRight100");
+    WhatAnimation("moveTop");
+    WhatAnimation("moveTop25");
+    WhatAnimation("moveTop100");
+    WhatAnimation("moveBottom");
+    WhatAnimation("moveBottom25");
+    WhatAnimation("moveBottom100");
+    $(window).on("scroll", function () {
+        WhatAnimation("fadeScroll");
+        WhatAnimation("fadeScroll100");
+        WhatAnimation("fadeScroll25");
+        WhatAnimation("moveLeft");
+        WhatAnimation("moveLeft25");
+        WhatAnimation("moveLeft100");
+        WhatAnimation("moveRight");
+        WhatAnimation("moveRight25");
+        WhatAnimation("moveRight100");
+        WhatAnimation("moveTop");
+        WhatAnimation("moveTop25");
+        WhatAnimation("moveTop100");
+        WhatAnimation("moveBottom");
+        WhatAnimation("moveBottom25");
+        WhatAnimation("moveBottom100");
+    });
+
+    function WhatAnimation(name) {
+        $("." + name).each(function () {
+            let moveRemove;
+            let aniTop;
+            let aniBottom;
+            let ani = hummeltPublicObj.animation;
+            switch (name) {
+                case "fadeScroll":
+                    if ($(this).attr('data-animation-top')) {
+                        aniTop = $(this).attr('data-animation-top');
+                        aniBottom = $(this).attr('data-animation-bottom');
+                    } else {
+                        aniTop = ani.fadeTop;
+                        aniBottom = ani.fadeBottom;
+                    }
+                    $(this).hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "aniFade", parseInt(aniTop), parseInt(aniBottom), moveRemove);
+                    break;
+                case "fadeScroll100":
+                    $('.fadeScroll100').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "aniFade", parseInt(ani.fadeTop100), parseInt(ani.fadeBottom100), moveRemove);
+                    break;
+                case "fadeScroll25":
+                    $('.fadeScroll25').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "aniFade", parseInt(ani.fadeTop25), parseInt(ani.fadeBottom25), moveRemove);
+                    break;
+                case "moveLeft":
+                    if ($(this).attr('data-animation-top')) {
+                        aniTop = $(this).attr('data-animation-top');
+                        aniBottom = $(this).attr('data-animation-bottom');
+                    } else {
+                        aniTop = ani.fadeTop;
+                        aniBottom = ani.fadeBottom;
+                    }
+                    $(this).hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "left", parseInt(aniTop), parseInt(aniBottom), moveRemove);
+                    break;
+                case "moveLeft25":
+                    $('.moveLeft25').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "left", parseInt(ani.moveLeftTop25), parseInt(ani.moveLeftBottom25), moveRemove);
+                    break;
+                case "moveLeft100":
+                    $('.moveLeft100').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "left", parseInt(ani.moveLeftTop100), parseInt(ani.moveLeftBottom100), moveRemove);
+                    break;
+                case "moveRight":
+                    if ($(this).attr('data-animation-top')) {
+                        aniTop = $(this).attr('data-animation-top');
+                        aniBottom = $(this).attr('data-animation-bottom');
+                    } else {
+                        aniTop = ani.fadeTop;
+                        aniBottom = ani.fadeBottom;
+                    }
+                    $(this).hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "right", parseInt(aniTop), parseInt(aniBottom), moveRemove);
+                    break
+                case "moveRight25":
+                    $('.moveRight25').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "right", parseInt(ani.moveRightTop25), parseInt(ani.moveRightBottom25), moveRemove);
+                    break
+                case "moveRight100":
+                    $('.moveRight100').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "right", (ani.moveRightTop100), parseInt(ani.moveRightBottom100), moveRemove);
+                    break
+                case "moveTop":
+                    if ($(this).attr('data-animation-top')) {
+                        aniTop = $(this).attr('data-animation-top');
+                        aniBottom = $(this).attr('data-animation-bottom');
+                    } else {
+                        aniTop = ani.fadeTop;
+                        aniBottom = ani.fadeBottom;
+                    }
+                    $(this).hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "top", parseInt(aniTop), parseInt(aniBottom), moveRemove);
+                    break;
+                case "moveTop25":
+                    $('.moveTop25').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "top", parseInt(ani.moveTopTop25), parseInt(ani.moveTopBottom25), moveRemove);
+                    break;
+                case "moveTop100":
+                    $('.moveTop100').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "top", parseInt(ani.moveTopTop100), parseInt(ani.moveTopBottom100), moveRemove);
+                    break;
+                case "moveBottom":
+                    if ($(this).attr('data-animation-top')) {
+                        aniTop = $(this).attr('data-animation-top');
+                        aniBottom = $(this).attr('data-animation-bottom');
+                    } else {
+                        aniTop = ani.fadeTop;
+                        aniBottom = ani.fadeBottom;
+                    }
+                    $(this).hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "bottom", parseInt(aniTop), parseInt(aniBottom), moveRemove);
+                    break;
+                case "moveBottom25":
+                    $('.moveBottom25').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "bottom", parseInt(ani.moveBottomTop25), parseInt(ani.moveBottomBottom25), moveRemove);
+                    break;
+                case "moveBottom100":
+                    $('.moveBottom100').hasClass('notRepeat') ? moveRemove = false : moveRemove = true;
+                    AddClass(this, "bottom", parseInt(ani.moveBottomTop100), parseInt(ani.moveBottomBottom100), moveRemove);
+                    break;
+            }
+        });
+    }
+
+    function AddClass(object, name, top, bottom, remove) {
+        if (IsVisible(object, top, bottom)) {
+            $(object).addClass(name);
+        } else {
+            if (remove) {
+                $(object).removeClass(name);
+            }
+        }
+    }
+
+    function IsVisible(object, top, bottom) {
+        let viewport = $(window).scrollTop() + $(window).height();
+        let rand = $(object).offset();
+        rand.bottom = rand.top + $(object).outerHeight();
+        return !(
+            viewport < rand.top + top || $(window).scrollTop() > rand.bottom - bottom
+        );
+    }
+
 
     // div height, add class to your content
     $('.height-50').css('height', 0.5 * $(window).height());

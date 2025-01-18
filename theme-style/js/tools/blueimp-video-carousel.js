@@ -282,6 +282,7 @@ function theme_video() {
             let videoControls = itemNode.getAttribute('data-controls');
             let videoStartTime = itemNode.getAttribute('data-start-time');
             let videoAutoPlay = itemNode.getAttribute('data-auto-play');
+            let videoLoop = itemNode.getAttribute('data-video-loop')
 
             let coverMedia;
             if (itemNode.getAttribute('data-media')) {
@@ -313,7 +314,7 @@ function theme_video() {
                         let muted;
                         //href: 'https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&start=10'
                         if (videoAutoPlay === "true") {
-                            console.log(1)
+
                             autoplay = 1;
                         } else {
                             autoplay = 0;
@@ -362,6 +363,7 @@ function theme_video() {
             videoObject.controls = videoControls;
             videoObject.currentTime = parseInt(videoStartTime);
             videoObject.autoPlay = videoAutoPlay;
+            videoObject.videoLoop = videoLoop;
             itemNodeArr.push(videoObject);
             document.getElementById(itemId).remove();
 
@@ -375,13 +377,14 @@ function theme_video() {
                     carousel: true,
                     videoPlaysInline: true,
                     videoCoverClass: 'video-cover toggle',
-                    startSlideshow: startSlideshow,
+                    startSlideshow: startSlideshow === 'true',
                     slideshowInterval: parseInt(slideshowInterval),
                     toggleControlsOnEnter: (toggleControlsOnEnter === 'true'),
                     toggleControlsOnSlideClick: (toggleControlsOnSlideClick === 'true'),
                     toggleSlideshowOnSpace: (toggleSlideshowOnSpace === 'true'),
                     emulateTouchEvents: (emulateTouchEvents === 'true'),
                     stopTouchEventsPropagation: (stopTouchEventsPropagation === 'true'),
+
                     onslide: function (index, slide) {
                         if ((continuous === 'false') && (index + 1) === itemCount) {
                             this.pause()
@@ -404,6 +407,7 @@ function theme_video() {
                                     console.warn('Das erste Video konnte nicht automatisch abgespielt werden:', error);
                                 });
                             }
+                            video.loop = itemNodeArr[index]['videoLoop'] === 'true';
                         }
 
                         const iframe = slide.querySelector('iframe');

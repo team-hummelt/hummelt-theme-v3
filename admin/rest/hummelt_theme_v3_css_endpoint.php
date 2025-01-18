@@ -178,7 +178,7 @@ class hummelt_theme_v3_css_endpoint extends WP_REST_Controller
     {
         global $wp_filesystem;
         $settings = get_option(HUMMELT_THEME_V3_SLUG . '/settings');
-        $themeJson = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $themeJson = HUMMELT_THEME_V3_JSON;
         $headlines = '';
         $maxWidth = '';
         if ($wp_filesystem->is_file($themeJson)) {

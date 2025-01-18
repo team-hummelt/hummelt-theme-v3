@@ -41,6 +41,7 @@ use Hummelt\ThemeV3\hummelt_theme_v3_shortcodes;
 use Hummelt\ThemeV3\hummelt_theme_v3_wp_optionen;
 use Hummelt\ThemeV3\register_hummelt_theme_v3_optionen;
 use Hummelt\ThemeV3\theme_hummelt_v3_database;
+use Hummelt\ThemeV3\theme_v3_gutenberg_patterns;
 
 
 /**
@@ -100,8 +101,6 @@ class Hummelt_Theme_V3
         $this->load_dependencies();
 
 
-
-
         $this->define_theme_v3_helper_hooks();
         $this->define_theme_v3_database_handle();
         $this->define_theme_v3_admin_hooks();
@@ -117,6 +116,7 @@ class Hummelt_Theme_V3
         $this->define_theme_v3_form_builder();
         $this->register_theme_v3_sortable_duplicate_hooks();
         $this->define_theme_v3_css_generate();
+        $this->register_gutenberg_theme_v3_pattern();
         $this->register_api_theme_v3();
         $this->register_cron_theme_v3();
         $this->register_theme_downloads();
@@ -240,12 +240,17 @@ class Hummelt_Theme_V3
         require_once(HUMMELT_THEME_V3_ADMIN_DIR . 'admin-dashboard/theme-optionen/hummelt_theme_v3_form_builder.php');
 
         //TODO CronJob
-        if($this->check_wp_cron()) {
+        if ($this->check_wp_cron()) {
             require_once(HUMMELT_THEME_V3_ADMIN_DIR . 'admin-dashboard/theme-optionen/hummelt_theme_v3_cronjob.php');
         }
 
         //TODO Product API
         require_once(HUMMELT_THEME_V3_ADMIN_DIR . 'admin-dashboard/theme-optionen/hummelt_theme_v3_server_api.php');
+
+
+        //TODO Gutenberg Theme Pattern
+        require_once(HUMMELT_THEME_V3_ADMIN_DIR . 'admin-dashboard/theme-optionen/class_theme_v3_gutenberg_patterns.php');
+
 
         /**
          * The class responsible for defining Menu-Order Duplicate admin area.
@@ -286,8 +291,8 @@ class Hummelt_Theme_V3
     {
         global $hummelt_theme_v3_options;
         $hummelt_theme_v3_options = register_hummelt_theme_v3_optionen::hummelt_theme_v3_option_instance($this->main);
-       // delete_option(HUMMELT_THEME_V3_SLUG . '/theme_version');
-        if(get_option(HUMMELT_THEME_V3_SLUG . '/theme_version') != HUMMELT_THEME_V3_VERSION) {
+        // delete_option(HUMMELT_THEME_V3_SLUG . '/theme_version');
+        if (get_option(HUMMELT_THEME_V3_SLUG . '/theme_version') != HUMMELT_THEME_V3_VERSION) {
             update_option(HUMMELT_THEME_V3_SLUG . '/theme_version', HUMMELT_THEME_V3_VERSION);
             global $themeV3Helper;
             $hash = $themeV3Helper->hashPassword(HUMMELT_THEME_V3_VERSION);
@@ -321,13 +326,13 @@ class Hummelt_Theme_V3
         $this->loader->add_action('wp_mail_failed', $hummelt_theme_v3_options, 'fn_theme_hummelt_v3_smtp_log_mailer_errors');
         //UPDATE
         //$this->loader->add_action('init', $hummelt_theme_v3_options, 'set_hummelt_theme_v3_update_checker');
-       // $this->loader->add_action('in_theme_update_message-', $hummelt_theme_v3_options, 'hummelt_them_v3_show_upgrade_notification');
+        // $this->loader->add_action('in_theme_update_message-', $hummelt_theme_v3_options, 'hummelt_them_v3_show_upgrade_notification');
 
-       // $this->loader->add_filter('wp_mail_from', $hummelt_theme_v3_options, 'fn_wp_mail_from_filter');
+        // $this->loader->add_filter('wp_mail_from', $hummelt_theme_v3_options, 'fn_wp_mail_from_filter');
 
-       //Custom Gutenberg CSS
+        //Custom Gutenberg CSS
         //enqueue_block_editor_assets
-     //  $this->loader->add_action('enqueue_block_editor_assets', $hummelt_theme_v3_options, 'hummelt_theme_v3_enqueue_block_editor');
+        //  $this->loader->add_action('enqueue_block_editor_assets', $hummelt_theme_v3_options, 'hummelt_theme_v3_enqueue_block_editor');
         //Menus
         //add_action('after_setup_theme', 'bootscore_register_navmenu');
 
@@ -397,7 +402,7 @@ class Hummelt_Theme_V3
         //Get Pages
         $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_pages', $themePostTypes, 'fn_theme_v3_get_pages');
         //Widgets
-        $this->loader->add_filter( 'widgets_init', $themePostTypes, 'fn_register_hummelt_theme_v3_widgets');
+        $this->loader->add_filter('widgets_init', $themePostTypes, 'fn_register_hummelt_theme_v3_widgets');
         // $this->loader->add_action('widgets_init', $hupa_register_starter_options, 'register_hupa_starter_widgets');
     }
 
@@ -414,7 +419,7 @@ class Hummelt_Theme_V3
         //Todo Dashboard Style
         $this->loader->add_action('admin_enqueue_scripts', $themeBranding, 'hummelt_theme_v3_wordpress_dashboard_style');
         //Editor Style
-       // $this->loader->add_action('admin_init', $themeBranding, 'hummelt_theme_v3_wordpress_editor_style');
+        // $this->loader->add_action('admin_init', $themeBranding, 'hummelt_theme_v3_wordpress_editor_style');
         $this->loader->add_action('admin_head', $themeBranding, 'add_inline_block_editor_styles');
 
         // ADD ADMIN-BAR HUPA MENU
@@ -548,38 +553,38 @@ class Hummelt_Theme_V3
         }
         $optionen = get_option(HUMMELT_THEME_V3_SLUG . '/optionen');
         $updateMsg = $optionen['update_msg'] ?? null;
-        if($updateMsg){
-            if($updateMsg['core_upd_msg_disabled']) {
+        if ($updateMsg) {
+            if ($updateMsg['core_upd_msg_disabled']) {
                 add_filter('auto_core_update_send_email', '__return_false');
             }
-            if($updateMsg['plugin_upd_msg_disabled']) {
+            if ($updateMsg['plugin_upd_msg_disabled']) {
                 add_filter('auto_plugin_update_send_email', '__return_false');
             }
-            if($updateMsg['theme_upd_msg_disabled']) {
+            if ($updateMsg['theme_upd_msg_disabled']) {
                 add_filter('auto_theme_update_send_email', '__return_false');
             }
-            if($updateMsg['dashboard_update_anzeige'] == 2) {
+            if ($updateMsg['dashboard_update_anzeige'] == 2) {
                 $this->loader->add_action('admin_menu', $wOptionen, 'fn_hummelt_theme_v3_hide_update_nag');
                 add_filter('pre_site_transient_update_core', '__return_null');
                 add_filter('pre_site_transient_update_plugins', '__return_null');
                 add_filter('pre_site_transient_update_themes', '__return_null');
             }
-            if($updateMsg['dashboard_update_anzeige'] == 3) {
+            if ($updateMsg['dashboard_update_anzeige'] == 3) {
                 $this->loader->add_action('admin_menu', $wOptionen, 'fn_hummelt_theme_v3_hide_update_not_admin_nag');
             }
-            if($updateMsg['dashboard_update_anzeige'] == 4) {
+            if ($updateMsg['dashboard_update_anzeige'] == 4) {
                 add_filter('pre_site_transient_update_core', '__return_null');
             }
-            if($updateMsg['dashboard_update_anzeige'] == 5) {
+            if ($updateMsg['dashboard_update_anzeige'] == 5) {
                 add_filter('pre_site_transient_update_plugins', '__return_null');
             }
-            if($updateMsg['dashboard_update_anzeige'] == 6) {
+            if ($updateMsg['dashboard_update_anzeige'] == 6) {
                 add_filter('pre_site_transient_update_themes', '__return_null');
             }
-            if($updateMsg['send_error_email_disabled']) {
+            if ($updateMsg['send_error_email_disabled']) {
                 $this->loader->add_filter('recovery_mode_email_rate_limit', $wOptionen, 'recovery_mail_infinite_rate_limit');
             }
-            if(filter_var($updateMsg['email_err_msg'], FILTER_VALIDATE_EMAIL) && !$updateMsg['send_error_email_disabled']) {
+            if (filter_var($updateMsg['email_err_msg'], FILTER_VALIDATE_EMAIL) && !$updateMsg['send_error_email_disabled']) {
                 $this->loader->add_filter('recovery_mode_email', $wOptionen, 'send_sumun_the_recovery_mode_email');
             }
         }
@@ -596,7 +601,7 @@ class Hummelt_Theme_V3
     {
         $settings = get_option(HUMMELT_THEME_V3_SLUG . '/settings');
         $themeV3RenderBlocks = new hummelt_theme_v3_render_block($this->main);
-        if($settings){
+        if ($settings) {
             if ($settings['theme_wp_optionen']['disabled_wp_layout']) {
                 $this->loader->add_filter('render_block', $themeV3RenderBlocks, 'fn_hummelt_theme_v3_remove_columns', 10, 2);
             }
@@ -690,7 +695,7 @@ class Hummelt_Theme_V3
         //Theme Formulare
         $this->loader->add_action('init', $themeGutenberg, 'hummelt_theme_v3_register_formulare_block');
         //Theme Single-Video
-       // $this->loader->add_action('init', $themeGutenberg, 'hummelt_theme_v3_register_single_video');
+        // $this->loader->add_action('init', $themeGutenberg, 'hummelt_theme_v3_register_single_video');
         //Theme Video-Carousel
         $this->loader->add_action('init', $themeGutenberg, 'hummelt_theme_v3_register_video_carousel');
         //Theme Filter Lightbox
@@ -717,6 +722,7 @@ class Hummelt_Theme_V3
         $this->loader->add_filter('form_builder_render', $themeV3BlockCallback, 'gutenberg_block_form_builder_render_filter', 10, 2);
         $this->loader->add_filter('theme_gallery_render', $themeV3BlockCallback, 'gutenberg_block_theme_gallery_render_filter', 10, 2);
     }
+
     /**
      * Register all the hooks related to the admin area functionality
      * of the theme.
@@ -748,7 +754,7 @@ class Hummelt_Theme_V3
     {
         global $themeV3GenerateCss;
         $themeV3GenerateCss = new hummelt_theme_v3_generate_auto_css($this->main);
-        $this->loader->add_action(HUMMELT_THEME_V3_SLUG.'/generate_theme_css', $themeV3GenerateCss, 'fn_generate_theme_css');
+        $this->loader->add_action(HUMMELT_THEME_V3_SLUG . '/generate_theme_css', $themeV3GenerateCss, 'fn_generate_theme_css');
 
 
         global $themeV3ScssCompiler;
@@ -779,23 +785,22 @@ class Hummelt_Theme_V3
         //bootscore/load_fontawesome
 
         //TODO Eigene Filter
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/edit_link', $bootscoreFilter, 'edit_link', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/get_the_title', $bootscoreFilter, 'theme_get_the_title', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/topbar/container', $bootscoreFilter, 'container_class', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/show/footer', $bootscoreFilter, 'show_info_footer', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/show/widget_footer', $bootscoreFilter, 'show_widget_footer', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/navbar/align', $bootscoreFilter, 'navbar_menu_align_items', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/navbar/logo', $bootscoreFilter, 'navbar_menu_logo', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/top-menu/active', $bootscoreFilter, 'top_menu_aktiv', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/top_area_menu_order', $bootscoreFilter, 'fn_top_area_menu_order',10,3);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/edit_link', $bootscoreFilter, 'edit_link', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_the_title', $bootscoreFilter, 'theme_get_the_title', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/topbar/container', $bootscoreFilter, 'container_class', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/show/footer', $bootscoreFilter, 'show_info_footer', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/show/widget_footer', $bootscoreFilter, 'show_widget_footer', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/navbar/align', $bootscoreFilter, 'navbar_menu_align_items', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/navbar/logo', $bootscoreFilter, 'navbar_menu_logo', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/top-menu/active', $bootscoreFilter, 'top_menu_aktiv', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/top_area_menu_order', $bootscoreFilter, 'fn_top_area_menu_order', 10, 3);
 
 
-
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/post/options', $bootscoreFilter, 'get_post_options', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/post/options', $bootscoreFilter, 'get_post_options', 10, 2);
         //TODO  CUSTOM HEADER | FOOTER | 404
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/theme/header', $bootscoreFilter, 'custom_theme_header', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/theme/footer', $bootscoreFilter, 'custom_theme_footer', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/get_the_page', $bootscoreFilter, 'theme_get_page_by_type', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/theme/header', $bootscoreFilter, 'custom_theme_header', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/theme/footer', $bootscoreFilter, 'custom_theme_footer', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_the_page', $bootscoreFilter, 'theme_get_page_by_type', 10, 2);
 
     }
 
@@ -810,33 +815,33 @@ class Hummelt_Theme_V3
     {
         global $themeFormBuilder;
         $themeFormBuilder = new hummelt_theme_v3_form_builder($this->main);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/get_form_builder', $themeFormBuilder, 'fn_theme_v3_get_form_builder', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/set_form_builder', $themeFormBuilder, 'fn_theme_v3_set_form_builder');
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/update_form_builder', $themeFormBuilder, 'fn_theme_v3_update_form_builder');
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/delete_form_builder', $themeFormBuilder, 'fn_theme_v3_delete_form_builder');
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/count_form_builder', $themeFormBuilder, 'fn_theme_v3_count_form_builder');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_form_builder', $themeFormBuilder, 'fn_theme_v3_get_form_builder', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/set_form_builder', $themeFormBuilder, 'fn_theme_v3_set_form_builder');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/update_form_builder', $themeFormBuilder, 'fn_theme_v3_update_form_builder');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/delete_form_builder', $themeFormBuilder, 'fn_theme_v3_delete_form_builder');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/count_form_builder', $themeFormBuilder, 'fn_theme_v3_count_form_builder');
         //Update Form
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/update_form', $themeFormBuilder, 'fn_theme_v3_update_form', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/update_designation', $themeFormBuilder, 'fn_theme_v3_update_form_designation', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/update_form', $themeFormBuilder, 'fn_theme_v3_update_form', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/update_designation', $themeFormBuilder, 'fn_theme_v3_update_form_designation', 10, 2);
         //Form REF
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/get_form_builder_ref', $themeFormBuilder, 'fn_theme_v3_get_form_builder_ref', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/count_form_builder_ref', $themeFormBuilder, 'fn_theme_v3_count_form_builder_ref');
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/next_pref_ref', $themeFormBuilder, 'fn_theme_v3_next_pref_ref', 10, 2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/builder_ref_selects', $themeFormBuilder, 'fn_theme_v3_get_form_builder_ref_selects', 10, 2);
-       //Form Email
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/set_form_email', $themeFormBuilder, 'fn_theme_v3_set_form_email');
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/get_form_email', $themeFormBuilder, 'fn_theme_v3_get_form_email',10 ,2);
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/count_form_email', $themeFormBuilder, 'fn_theme_v3_count_form_builder_email');
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG.'/delete_form_email', $themeFormBuilder, 'fn_theme_v3_delete_form_email');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_form_builder_ref', $themeFormBuilder, 'fn_theme_v3_get_form_builder_ref', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/count_form_builder_ref', $themeFormBuilder, 'fn_theme_v3_count_form_builder_ref');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/next_pref_ref', $themeFormBuilder, 'fn_theme_v3_next_pref_ref', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/builder_ref_selects', $themeFormBuilder, 'fn_theme_v3_get_form_builder_ref_selects', 10, 2);
+        //Form Email
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/set_form_email', $themeFormBuilder, 'fn_theme_v3_set_form_email');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_form_email', $themeFormBuilder, 'fn_theme_v3_get_form_email', 10, 2);
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/count_form_email', $themeFormBuilder, 'fn_theme_v3_count_form_builder_email');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/delete_form_email', $themeFormBuilder, 'fn_theme_v3_delete_form_email');
 
     }
 
     private function register_theme_downloads(): void
     {
         $themeDownloads = new hummelt_theme_v3_downloads($this->main);
-        $this->loader->add_action(HUMMELT_THEME_V3_SLUG.'/form_download', $themeDownloads, 'fn_hummelt_theme_v3_form_download',10, 2);
-        $this->loader->add_action(HUMMELT_THEME_V3_SLUG.'/pdf_download', $themeDownloads, 'fn_hummelt_theme_v3_pdf_download', 10,2);
-        $this->loader->add_action(HUMMELT_THEME_V3_SLUG.'/email_attachment_download', $themeDownloads, 'fn_hummelt_theme_v3_download_email_attachment', 10,3);
+        $this->loader->add_action(HUMMELT_THEME_V3_SLUG . '/form_download', $themeDownloads, 'fn_hummelt_theme_v3_form_download', 10, 2);
+        $this->loader->add_action(HUMMELT_THEME_V3_SLUG . '/pdf_download', $themeDownloads, 'fn_hummelt_theme_v3_pdf_download', 10, 2);
+        $this->loader->add_action(HUMMELT_THEME_V3_SLUG . '/email_attachment_download', $themeDownloads, 'fn_hummelt_theme_v3_download_email_attachment', 10, 3);
     }
 
     /**
@@ -873,7 +878,24 @@ class Hummelt_Theme_V3
         $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_plugins', $themeV3SrvApi, 'fn_get_hummelt_theme_v3_plugins');
 
         $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_license', $themeV3SrvApi, 'fn_hummelt_theme_v3_get_license');
-        //
+    }
+
+    /**
+     * Register all the hooks related to the admin area functionality
+     * of the plugin.
+     *
+     * @since    3.0.0
+     * @access   private
+     */
+    private function register_gutenberg_theme_v3_pattern(): void
+    {
+        global $themeV3Pattern;
+        $themeV3Pattern = new theme_v3_gutenberg_patterns($this->main);
+        $this->loader->add_action('init', $themeV3Pattern, 'register_theme_v3_gutenberg_patterns');
+        $this->loader->add_action('init', $themeV3Pattern, 'register_theme_v3_block_pattern_category');
+        $this->loader->add_action('init', $themeV3Pattern, 'register_theme_v3_block_pattern_vorlagen');
+        //after_setup_theme
+
     }
 
 
@@ -898,16 +920,16 @@ class Hummelt_Theme_V3
         $this->loader->run();
     }
 
-    public function current_user_can_by_role($option):bool
+    public function current_user_can_by_role($option): bool
     {
         $current_user = wp_get_current_user();
-        if(in_array('administrator', $current_user->roles)) {
+        if (in_array('administrator', $current_user->roles)) {
             return true;
         }
         $settings = get_option(HUMMELT_THEME_V3_SLUG . '/settings');
         $capabilities = $settings['theme_capabilities'];
         $getOption = $capabilities[$option] ?? false;
-        if($getOption) {
+        if ($getOption) {
             return current_user_can($getOption);
         }
         return false;
@@ -916,7 +938,7 @@ class Hummelt_Theme_V3
     private function check_hupa_smtp_settings(): void
     {
         //delete_option(HUMMELT_THEME_V3_SLUG . '/smtp_settings');
-        if(!get_option(HUMMELT_THEME_V3_SLUG . '/smtp_settings')) {
+        if (!get_option(HUMMELT_THEME_V3_SLUG . '/smtp_settings')) {
             $settings = [
                 'status' => false,
                 'active' => false,
@@ -938,12 +960,12 @@ class Hummelt_Theme_V3
         }
     }
 
-    private function define_config():void
+    private function define_config(): void
     {
-       // delete_option(HUMMELT_THEME_V3_SLUG . '/theme_v3_config');
-        if(!get_option(HUMMELT_THEME_V3_SLUG . '/theme_v3_config')) {
+        // delete_option(HUMMELT_THEME_V3_SLUG . '/theme_v3_config');
+        if (!get_option(HUMMELT_THEME_V3_SLUG . '/theme_v3_config')) {
             global $wp_filesystem;
-            if($wp_filesystem->is_file(HUMMELT_THEME_V3_DIR . 'config.json')) {
+            if ($wp_filesystem->is_file(HUMMELT_THEME_V3_DIR . 'config.json')) {
                 $config = json_decode($wp_filesystem->get_contents(HUMMELT_THEME_V3_DIR . 'config.json'), true);
                 update_option(HUMMELT_THEME_V3_SLUG . '/theme_v3_config', $config);
             }
@@ -966,13 +988,12 @@ class Hummelt_Theme_V3
     {
         $dsSettings = get_option(HUMMELT_THEME_V3_SLUG . '/hupa-licenses');
         foreach ($dsSettings['plugins'] as $tmp) {
-            if($tmp['slug'] == $slug && $tmp['aktiv']) {
+            if ($tmp['slug'] == $slug && $tmp['aktiv']) {
                 return true;
             }
         }
         return false;
     }
-
 
 
     /**

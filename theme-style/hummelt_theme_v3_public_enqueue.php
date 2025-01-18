@@ -107,6 +107,7 @@ class hummelt_theme_v3_public_enqueue
         ];
 
         $slider = $settings['slider'];
+        $animation_default = $settings['animation_default'];
 
         $splide = [];
         foreach ($slider as $tmp) {
@@ -147,7 +148,8 @@ class hummelt_theme_v3_public_enqueue
                 'theme_handle' => 'HummeltThemeV3AJAX',
                 'public_nonce' => $public_nonce,
                 'theme_nonce' => $theme_nonce,
-                'theme_slider' => $splide
+                'theme_slider' => $splide,
+                'animation' => $animation_default
             )
         );
         // delete_option(HUMMELT_THEME_V3_SLUG . '/form_redirect');
