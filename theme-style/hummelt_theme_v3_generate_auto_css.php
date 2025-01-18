@@ -460,6 +460,53 @@ class hummelt_theme_v3_generate_auto_css
                  animation-duration: 450ms;
                }
             }
+            .fadeScroll, .fadeScroll100, .fadeScroll25 {
+                transition: all 400ms;
+                opacity: 0 !important;
+            }
+            .aniFade {
+                opacity: 1 !important;
+            }
+            .moveLeft, .moveLeft25, .moveLeft100 {
+                transition: all 400ms;
+                opacity: 0;
+                position: relative;
+                left: -200px;
+            }
+            .moveRight, .moveRight25, .moveRight100 {
+                transition: all 400ms;
+                opacity: 0;
+                position: relative;
+                right: -200px;
+            }
+            .moveTop, .moveTop25, .moveTop100 {
+                transition: all 400ms;
+                opacity: 0;
+                position: relative;
+                top: -200px;
+            }
+            .moveBottom, .moveBottom25, .moveBottom100 {
+                transition: all 400ms;
+                opacity: 0;
+                position: relative;
+                bottom: -200px;
+            }
+            .left {
+                transform: translate(200px, 0);
+                opacity: 1;
+            }
+            .right {
+                transform: translate(-200px, 0);
+                opacity: 1;
+            }
+            .top {
+                transform: translate(0, 200px);
+                opacity: 1;
+            }
+            .bottom {
+                transform: translate(0, -200px);
+                opacity: 1;
+            }
         ';
 
         $compiler = new Compiler();

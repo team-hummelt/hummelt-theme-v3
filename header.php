@@ -13,7 +13,8 @@
 
 // Exit if accessed directly
 defined('ABSPATH') || exit;
-
+global $wp_query;
+$paged = $wp_query->get('pagename');
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -25,7 +26,7 @@ defined('ABSPATH') || exit;
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class($paged); ?>>
 
 <?php wp_body_open(); ?>
 

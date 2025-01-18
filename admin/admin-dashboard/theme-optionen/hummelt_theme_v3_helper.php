@@ -253,7 +253,7 @@ class hummelt_theme_v3_helper
     public function fn_theme_hummelt_add_font_theme_json($family = '', $serif = ''): void
     {
         global $wp_filesystem;
-        $themeJson = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $themeJson = HUMMELT_THEME_V3_JSON;
         $slug = Transliterator::urlize($family, '-');
         if ($wp_filesystem->is_file($themeJson)) {
             $editorJson = json_decode($wp_filesystem->get_contents($themeJson), true);
@@ -280,7 +280,7 @@ class hummelt_theme_v3_helper
     public function fn_theme_hummelt_delete_font_theme_json($family): void
     {
         global $wp_filesystem;
-        $themeJson = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $themeJson = HUMMELT_THEME_V3_JSON;
         if ($wp_filesystem->is_file($themeJson)) {
             $editorJson = json_decode($wp_filesystem->get_contents($themeJson), true);
             $fontFamilies = $editorJson['settings']['typography']['fontFamilies'];
@@ -317,7 +317,7 @@ class hummelt_theme_v3_helper
     {
         global $wp_filesystem;
         $settings = get_option(HUMMELT_THEME_V3_SLUG . '/settings');
-        $themeJson = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $themeJson =HUMMELT_THEME_V3_JSON;
 
 
         if ($wp_filesystem->is_file($themeJson)) {

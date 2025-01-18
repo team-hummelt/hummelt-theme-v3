@@ -15,8 +15,9 @@ if ($child_data->exists()) {
     $ifChild = false;
 }
 
-
 const HUMMELT_THEME_V3_SCSS_DISABLE_COMPILER = false;
+const HUMMELT_THEME_V3_SCSS_COMPILER_MAP = true;
+const HUMMELT_THEME_V3_SCSS_COMPILER_MAP_TYPE = 'inline'; //inline|file
 const WP_ENVIRONMENT_TYPE = 'production';
 
 /**
@@ -126,7 +127,18 @@ if(!$wp_filesystem->is_dir(HUMMELT_THEME_V3_DOWNLOAD_DIR)) {
     $wp_filesystem->put_contents(HUMMELT_THEME_V3_DOWNLOAD_DIR . '.htaccess', $htaccess);
 }
 
+$jsonPath = get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'theme.json';
+if(is_child_theme()) {
+    if(!$wp_filesystem->exists($jsonPath)) {
+        $src = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $wp_filesystem->copy($src, $jsonPath);
+    }
+}
 
+/**
+ * THEME JSON
+ */
+define("HUMMELT_THEME_V3_JSON", $jsonPath);
 
 /**
  * CSS Rest Url

@@ -47,6 +47,10 @@ registerBlockType('hupa/video-carousel-item', {
             type: 'bool',
             default: true
         },
+        videoLoop: {
+            type: 'bool',
+            default: false
+        },
         videoStartTime: {
             type: 'number',
             default: 0
@@ -103,6 +107,7 @@ registerBlockType('hupa/video-carousel-item', {
             videoMuted,
             videoAutoPlay,
             videoControls,
+            videoLoop,
             videoStartTime,
             mediaData,
             imageSize,
@@ -437,6 +442,13 @@ registerBlockType('hupa/video-carousel-item', {
                         />
                         <ToggleControl
                             disabled={selectedSourceType === 'extern'}
+                            label={__('Video loop', 'bootscore')}
+                            checked={videoLoop}
+                            __nextHasNoMarginBottom={true}
+                            onChange={e => setAttributes({videoLoop: e})}
+                        />
+                        <ToggleControl
+                            disabled={selectedSourceType === 'extern'}
                             label={__('Video controls', 'bootscore')}
                             checked={videoControls}
                             __nextHasNoMarginBottom={true}
@@ -483,6 +495,7 @@ registerBlockType('hupa/video-carousel-item', {
             mediaData,
             videoMuted,
             videoControls,
+            videoLoop,
             videoStartTime,
             videoAutoPlay,
             mediaVideoData,
@@ -510,6 +523,7 @@ registerBlockType('hupa/video-carousel-item', {
                  data-extern-mime={externLinkMimeType}
                  data-muted={videoMuted}
                  data-controls={videoControls}
+                 data-video-loop={videoLoop}
                  data-start-time={parseInt(videoStartTime)}
                  data-auto-play={videoAutoPlay}
             >

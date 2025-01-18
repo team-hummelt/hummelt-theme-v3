@@ -141,7 +141,7 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
         ];
         global $wp_filesystem;
         $palette = [];
-        $themeJson = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $themeJson = HUMMELT_THEME_V3_JSON;
         if ($wp_filesystem->is_file($themeJson)) {
             $editorJson = json_decode($wp_filesystem->get_contents($themeJson), true);
             $editorJson = $editorJson['settings'] ?? [];
@@ -252,7 +252,7 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
         }
         $data = json_decode($data, true);
         global $wp_filesystem;
-        $themeJson = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $themeJson = HUMMELT_THEME_V3_JSON;
         if ($wp_filesystem->is_file($themeJson)) {
             $editorJson = json_decode($wp_filesystem->get_contents($themeJson), true);
             $layout = $editorJson['settings']['layout'];
@@ -277,7 +277,7 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
             return $this->responseJson;
         }
         global $wp_filesystem;
-        $themeJson = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $themeJson = HUMMELT_THEME_V3_JSON;
         if (!$wp_filesystem->is_file($themeJson)) {
             $this->responseJson->msg = 'theme.json nicht gefunden. (rest-' . __LINE__ . ')';
             return $this->responseJson;
@@ -336,7 +336,7 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
     private function reset_gutenberg_settings(): object
     {
         $src = HUMMELT_THEME_V3_ADMIN_DIR . 'gutenberg' . DIRECTORY_SEPARATOR . 'theme.json';
-        $dest = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $dest = HUMMELT_THEME_V3_JSON;
         global $wp_filesystem;
         if ($wp_filesystem->is_file($src)) {
             $wp_filesystem->copy($src, $dest, true);
@@ -373,7 +373,7 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
             return $this->responseJson;
         }
         global $wp_filesystem;
-        $themeJson = HUMMELT_THEME_V3_DIR . 'theme.json';
+        $themeJson = HUMMELT_THEME_V3_JSON;
         if (!$wp_filesystem->is_file($themeJson)) {
             $this->responseJson->msg = 'theme.json nicht gefunden. (rest-' . __LINE__ . ')';
             return $this->responseJson;

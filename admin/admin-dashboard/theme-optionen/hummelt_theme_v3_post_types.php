@@ -175,7 +175,7 @@ class hummelt_theme_v3_post_types
                     'editor',
                     'post-formats'
                 ),
-                'taxonomies' => array('hupa_design_category'),
+                'taxonomies' => array('theme_design_category'),
             )
         );
     }
@@ -209,7 +209,7 @@ class hummelt_theme_v3_post_types
             'show_in_rest' => true,
             'query_var' => true,
             'args' => array('orderby' => 'term_order'),
-            'rewrite' => array('slug' => 'hupa_design_category'),
+            'rewrite' => array('slug' => 'theme_design_category'),
             'show_admin_column' => false,
             'capabilities' => array(
                 'manage_terms' => 'manage_theme_designs', // Kategorien verwalten
@@ -222,7 +222,7 @@ class hummelt_theme_v3_post_types
 
         if (!term_exists('Hupa Design General', 'theme_design_category')) {
             wp_insert_term(
-                'Hupa Design General',
+                'Theme v3 Design General',
                 'theme_design_category',
                 array(
                     'description' => __('Standard category for Design templates', 'bootscore'),
@@ -308,7 +308,7 @@ class hummelt_theme_v3_post_types
                     'delete_post' => 'delete_theme_footer',
                     'edit_posts' => 'edit_theme_footers',
                     'edit_others_posts' => 'edit_others_theme_footers',
-                    'publish_posts' => 'publish_theme_footer',
+                    'publish_posts' => 'publish_theme_footers',
                     'read_private_posts' => 'read_private_theme_footers',
                 ),
                 'map_meta_cap' => true,
