@@ -36,6 +36,10 @@
     font-size: 20px;
 }
 
+.cover-content {
+
+}
+
 .editor-styles-wrapper h6:not(.wp-block-post-title) {
     color: #3C434A;
     line-height: 1.2;

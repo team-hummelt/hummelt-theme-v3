@@ -46,6 +46,7 @@ export default class Optionen extends Component {
             capabilities: [],
             selectUserRole: [],
             fonts: [],
+            adobe_fonts: [],
             triggerFonts: false,
             schriftStilSelect: [],
             showColorModal: false,
@@ -87,6 +88,7 @@ export default class Optionen extends Component {
         this.filterArrayElementById = this.filterArrayElementById.bind(this);
         this.sendOptionFormData = this.sendOptionFormData.bind(this);
         this.onAddUploadFont = this.onAddUploadFont.bind(this);
+        this.onSetAdobeFontEdit = this.onSetAdobeFontEdit.bind(this);
 
 
     }
@@ -375,6 +377,24 @@ export default class Optionen extends Component {
         })
     }
 
+    onSetAdobeFontEdit(e, type, id) {
+        const fonts = this.state.fonts;
+        const find = this.findArrayElementById(fonts, id, 'id')
+        find.fontInfo[type] = e;
+        this.setState({
+            fonts:  fonts
+        })
+
+        let formData = {
+            'method': 'update_adobe_fonts',
+            'id': id,
+            'type': type,
+            'value': e
+        }
+        this.sendFetchApi(formData)
+    }
+
+
     sendFetchApi(formData, path = hummeltRestObj.dashboard_rest_path + 'settings') {
         wp.apiFetch({
             path: path,
@@ -390,6 +410,7 @@ export default class Optionen extends Component {
                             capabilities: data.capabilities,
                             selectUserRole: data.select_user_role,
                             fonts: data.fonts,
+                            adobe_fonts: data.adobe_fonts,
                             selects: data.selects,
                             editor: data.editor
                         })
@@ -493,6 +514,14 @@ export default class Optionen extends Component {
                             },
                         })
                     }
+                    break;
+                case 'import_adobe_font':
+                     if(data.status){
+                         this.setState({
+                             fonts: [...this.state.fonts, data.record],
+                             triggerFonts: true
+                         })
+                     }
                     break;
             }
         }).catch(
@@ -695,10 +724,12 @@ export default class Optionen extends Component {
                                                     <ThemeFonts
                                                         settings={this.state.settings}
                                                         fonts={this.state.fonts}
+                                                        adobe_fonts={this.state.adobe_fonts}
                                                         triggerFonts={this.state.triggerFonts}
                                                         sendFetchApi={this.sendFetchApi}
                                                         onSetTriggerFonts={this.onSetTriggerFonts}
                                                         onAddUploadFont={this.onAddUploadFont}
+                                                        onSetAdobeFontEdit={this.onSetAdobeFontEdit}
                                                     />
                                                 </div>
                                             </Collapse>

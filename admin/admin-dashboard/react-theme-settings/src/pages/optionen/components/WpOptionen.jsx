@@ -243,7 +243,7 @@ export default class WpOptionen extends Component {
                                     label="PDF Custom Upload DIR"
                                 />
                                 <div className="form-text">
-                                    Ist diese Option aktiviert, werden PDF-Dateien in den Ordner <code>uploads/hummelt-theme-v3-pdf</code> gespeichert.
+                                    Ist diese Option aktiviert, werden PDF-Dateien in den Ordner <code>uploads/hummelt-theme-v3-pdf</code> gespeichert. Die URI für den Download ist <code>/hummelt-theme-v3/pdf-download/?file=file-name.pdf</code>
                                 </div>
                             </CardBody>
                         </Card>

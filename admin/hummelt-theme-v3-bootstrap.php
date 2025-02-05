@@ -106,7 +106,7 @@ const HUMMELT_THEME_V3_EDITOR_SHOW_BOOTSTRAP_CSS = true;
 /**
  * DB-Version
  */
-const HUMMELT_THEME_V3_DB_VERSION = '1.0.3';
+const HUMMELT_THEME_V3_DB_VERSION = '1.0.4';
 
 global $wp_filesystem;
 // create a file interaction object, if it is not already created

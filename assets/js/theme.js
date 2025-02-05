@@ -155,21 +155,21 @@ jQuery(function ($) {
         let w = 0;
         if (leftBox.length !== 0) {
             if (width > 1400) {
-                w = (width - 1332) / 2 + 30
+                w = (width - 1332) / 2
                 leftBox.css('marginLeft', (w) + 'px')
             }
             if (width < 1400 && width > 1200) {
-                w = (width - 1152) / 2 + 30
+                w = (width - 1152) / 2
                 leftBox.css('marginLeft', (w) + 'px')
             }
         }
         if (rightBox.length !== 0) {
             if (width > 1400) {
-                w = (width - 1332) / 2 + 30
+                w = (width - 1332) / 2
                 rightBox.css('marginRight', w + 'px')
             }
             if (width < 1400 && width > 1200) {
-                w = (width - 1152) / 2 + 30
+                w = (width - 1152) / 2
                 rightBox.css('marginRight', w + 'px')
             }
         }
@@ -390,7 +390,7 @@ jQuery(function ($) {
         $('.scroll').on('click', function (e) {
             e.preventDefault();
             $('html, body').animate({
-                scrollTop: $(this).attr('href').offset().top - 170
+                scrollTop: $('body').offset().top - 170
             }, 1000, 'swing')
 
         });

@@ -287,6 +287,11 @@ class hummelt_theme_v3_css_endpoint extends WP_REST_Controller
             padding: .25rem;
         }
         
+        .editor-styles-wrapper h5.cover-content { 
+            position: relative;
+            z-index: 1
+        }
+        
         .editor-styles-wrapper .wp-block-paragraph {
             border: 1px solid #efefef!important;
             padding: .25rem;

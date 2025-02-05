@@ -79,9 +79,9 @@ defined('ABSPATH') || exit;
 </footer>
 
 <!-- To top button -->
-<a href="#"
-   class="<?= apply_filters('bootscore/class/footer/to_top_button', 'btn btn-primary shadow'); ?> position-fixed zi-1000 top-button"><i
-            class="bi bi-chevron-up"></i><span class="visually-hidden-focusable">To top</span></a>
+<div
+   class="<?= apply_filters('bootscore/class/footer/to_top_button', 'btn btn-primary shadow'); ?> position-fixed zi-1000 scroll top-button"><i
+            class="bi bi-chevron-up"></i><span class="visually-hidden-focusable">To top</span></div>
 
 </div><!-- #page -->
 

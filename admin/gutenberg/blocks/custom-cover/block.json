@@ -2,7 +2,7 @@
   "apiVersion": 2,
   "name": "custom/cover-block",
   "title": "Custom Cover",
-  "category": "design",
+  "category": "theme-v3-medien",
   "icon": "cover-image",
   "description": "Ein benutzerdefinierter Cover-Block mit Hintergrundbild und Text.",
   "supports": {

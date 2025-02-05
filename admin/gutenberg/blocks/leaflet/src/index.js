@@ -13,7 +13,8 @@ import {
 registerBlockType('hupa-v3/theme-leaflet-maps', {
     title: __('OpenStreetMap leaflet'),
     icon: icon,
-    category: 'media',
+    category: 'theme-v3-addons',
+    description: "OpenStreetMap (leaflet) – mit zahlreichen Anpassungsmöglichkeiten.",
     attributes: {
         selectedLeaflet: {
             type: 'string',

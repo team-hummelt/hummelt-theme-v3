@@ -159,23 +159,23 @@ const Edit = ({attributes, setAttributes}) => {
                     />
                     <TextControl
                         label='Position links'
-                        value={position_left}
+                        value={parseInt(position_left)}
                         __nextHasNoMarginBottom={true}
                         type='number'
                         min={0}
                         max={100}
                         step={1}
-                        onChange={e => setAttributes({position_left: e})}
+                        onChange={e => setAttributes({position_left: parseInt(e)})}
                     />
                     <TextControl
                         label='Position oben'
-                        value={position_oben}
+                        value={parseInt(position_oben)}
                         __nextHasNoMarginBottom={true}
                         type='number'
                         min={0}
                         max={100}
                         step={1}
-                        onChange={e => setAttributes({position_oben: e})}
+                        onChange={e => setAttributes({position_oben: parseInt(e)})}
                     />
                 </PanelBody>
                 <PanelBody initialOpen={false}

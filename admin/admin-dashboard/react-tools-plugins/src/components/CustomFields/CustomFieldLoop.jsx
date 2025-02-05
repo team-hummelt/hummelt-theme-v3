@@ -64,7 +64,8 @@ export default class CustomFieldLoop extends React.Component {
             <React.Fragment>
                 <Col style={{minHeight: '55vh'}} xxl={8} xl={10} xs={12} className="mx-auto">
                     <Card>
-                        <CardHeader style={{minHeight: '3rem'}} className="text-body bg-light fs-5 align-items-center d-flex flex-wrap">
+                        <CardHeader style={{minHeight: '3rem'}}
+                                    className="text-body bg-light fs-5 align-items-center d-flex flex-wrap">
                             <div>
                                 Benutzerdefinierte Felder
                             </div>
@@ -116,14 +117,17 @@ export default class CustomFieldLoop extends React.Component {
                                                                     : ''}
                                                                 {c.designation || ''}
                                                                 <small className="d-block small-lg">{c.value}</small>
-                                                                <small className="d-block text-primary small-lg"><b className="fw-bold">shortcode:</b> <code>[cf field="{c.slug}"]</code></small>
+                                                                <small className="d-block text-primary small-lg"><b
+                                                                    className="fw-bold">shortcode:</b> <code>[cf
+                                                                    field="{c.slug}"]</code></small>
                                                             </div>
                                                         </Accordion.Header>
                                                     </div>
                                                     <Accordion.Body>
                                                         <Row className="g-2">
                                                             <Col xs={12}>
-                                                                <b className="fw-semibold">shortcode</b>: <code className="fw-normal">[cf field="{c.slug}"]</code>
+                                                                <b className="fw-semibold">shortcode</b>: <code
+                                                                className="fw-normal">[cf field="{c.slug}"]</code>
                                                                 <hr/>
                                                             </Col>
 
@@ -225,7 +229,6 @@ export default class CustomFieldLoop extends React.Component {
                                                                             id={uuidv4()}
                                                                         />
                                                                     </div>
-
                                                                     <Form.Check
                                                                         label='In neuen Tab öffnen'
                                                                         type="checkbox"
@@ -234,8 +237,35 @@ export default class CustomFieldLoop extends React.Component {
                                                                         onChange={(e) => this.props.onSetValue(e.currentTarget.checked, 'new_tab', c.id)}
                                                                         id={uuidv4()}
                                                                     />
-
                                                                 </Col> : ''}
+                                                            {c.icon && c.link_type !== 'text' ?
+                                                                <div>
+                                                                    <hr className="mt-2"/>
+                                                                    <div className="fw-semibold mb-2">Icon URL
+                                                                        Einstellungen
+                                                                    </div>
+                                                                    <div className="d-flex flex-wrap">
+                                                                        <Form.Check
+                                                                            label='Nur Icon anzeigen'
+                                                                            type="checkbox"
+                                                                            className="no-blur me-4"
+                                                                            checked={c.only_icon_display || false}
+                                                                            onChange={(e) => this.props.onSetValue(e.currentTarget.checked, 'only_icon_display', c.id)}
+                                                                            id={uuidv4()}
+                                                                        />
+                                                                        <Form.Check
+                                                                            disabled={c.only_icon_display}
+                                                                            label='Icon ist Teil der URL'
+                                                                            type="checkbox"
+                                                                            className="no-blur me-4"
+                                                                            checked={c.icon_is_url || false}
+                                                                            onChange={(e) => this.props.onSetValue(e.currentTarget.checked, 'icon_is_url', c.id)}
+                                                                            id={uuidv4()}
+                                                                        />
+                                                                    </div>
+                                                                    <hr className="mt-2 mb-2"/>
+                                                                </div>
+                                                                : ''}
                                                             <Col xs={12}>
                                                                 <div className="my-3">
                                                                     {c.icon ?

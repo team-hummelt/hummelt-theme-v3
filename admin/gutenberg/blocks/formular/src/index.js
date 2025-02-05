@@ -17,7 +17,8 @@ const {__} = wp.i18n;
 registerBlockType("hupa/theme-formular", {
     title: "Formular",
     icon: icon,
-    category: "media",
+    category: 'theme-v3-addons',
+    description: "Formular mit SMTP und unzähligen Anpassungsmöglichkeiten.",
     attributes: {
         formular: {
             type: 'string',

@@ -25,7 +25,8 @@ const filterIframeUrl = (inputUrl) => {
 registerBlockType("hupa/google-maps-iframe", {
     title: "Google Maps Iframe",
     icon: icon,
-    category: "media",
+    category: 'theme-v3-addons',
+    description: "Google-Maps I-Frame – mit zahlreichen Anpassungsmöglichkeiten.",
     attributes: {
         datenschutz: {
             type: 'string',

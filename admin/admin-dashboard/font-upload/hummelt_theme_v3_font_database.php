@@ -58,13 +58,13 @@ class hummelt_theme_v3_font_database
         return $return;
     }
 
-    public function theme_hummelt_v3_get_font_by_args($id = null)
+    public function theme_hummelt_v3_get_font_by_args($id = null, $args = '')
     {
         if($id) {
             $args = sprintf('WHERE id=%d', $id);
             $get = $this->fn_theme_v3_get_font_data($args);
         } else {
-            $get = $this->fn_theme_v3_get_font_data('', false);
+            $get = $this->fn_theme_v3_get_font_data($args, false);
         }
         if(!$get->status) {
             return [];
@@ -108,6 +108,52 @@ class hummelt_theme_v3_font_database
         $return->id = $wpdb->insert_id;
 
         return $return;
+    }
+
+    public function fn_theme_v3_set_adobe_font_data($record): object
+    {
+        $return = new stdClass();
+        global $wpdb;
+        $table = $wpdb->prefix . $this->table_fonts;
+        $wpdb->insert(
+            $table,
+            array(
+                'designation' => $record['designation'],
+                'localName' => 'no',
+                'fontSerif' => $record['fontSerif'],
+                'fontInfo' => $record['fontInfo'],
+                'fontData' => $record['fontData'],
+                'isTtf' => 0,
+                'isWoff' => 0,
+                'isWoff2' => 0,
+                'fontType' => 'adobe'
+            ),
+            array('%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s')
+        );
+        if (!$wpdb->insert_id) {
+            $return->status = false;
+
+            return $return;
+        }
+        $return->status = true;
+        $return->id = $wpdb->insert_id;
+
+        return $return;
+    }
+
+    public function fn_theme_v3_update_adobe_font_data($record): void
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . $this->table_fonts;
+        $wpdb->update(
+            $table,
+            array(
+                'fontInfo' => $record['fontInfo'],
+            ),
+            array('id' => $record['id']),
+            array('%s'),
+            array('%d')
+        );
     }
 
     public function fn_theme_v3_update_font_data($record): void

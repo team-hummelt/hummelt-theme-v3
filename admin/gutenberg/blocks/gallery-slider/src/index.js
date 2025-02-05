@@ -12,7 +12,8 @@ const {useEffect, useState} = wp.element;
 registerBlockType('hupa/gallery-slideshow-block', {
     title: 'Galerie Slider',
     icon: 'images-alt2',
-    category: 'media',
+    category: 'theme-v3-medien',
+    description: "Slider von splideJs mit vielen Optionen.",
     attributes: {
         images: {
             type: 'array',

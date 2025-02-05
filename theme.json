@@ -4,13 +4,7 @@
     "settings": {
         "typography": {
             "customFontSize": true,
-            "fontFamilies": [
-                {
-                    "fontFamily": "'Amiri', serif",
-                    "name": "Amiri",
-                    "slug": "amiri"
-                }
-            ]
+            "fontFamilies": []
         },
         "appearanceTools": true,
         "color": {

@@ -32,7 +32,8 @@ const filterIframeUrl = (inputUrl) => {
 registerBlockType("hupa/openstreetmap-iframe", {
     title: "OpenStreetMap Iframe",
     icon: icon,
-    category: "media",
+    category: 'theme-v3-addons',
+    description: "OpenStreetMap (iFrame) – mit zahlreichen Anpassungsmöglichkeiten.",
     attributes: {
         datenschutz: {
             type: 'string',

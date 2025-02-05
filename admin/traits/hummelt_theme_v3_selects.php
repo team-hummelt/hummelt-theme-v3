@@ -1051,6 +1051,8 @@ trait hummelt_theme_v3_selects
             'slug' => $slug,
             'extra_css' => '',
             'show_url' => 'url',
+            'only_icon_display' => false,
+            'icon_is_url' => false,
             'new_tab' => false,
             'icon_css' => '',
             'icon' => '',
@@ -1061,16 +1063,18 @@ trait hummelt_theme_v3_selects
     protected function sanitize_custom_field($data):array
     {
         return [
-            'id' => filter_var($data['id'], FILTER_UNSAFE_RAW),
-            'designation' => filter_var($data['designation'], FILTER_UNSAFE_RAW),
-            'slug' => filter_var($data['slug'], FILTER_UNSAFE_RAW),
-            'extra_css' => filter_var($data['extra_css'], FILTER_UNSAFE_RAW),
-            'show_url' => filter_var($data['show_url'], FILTER_UNSAFE_RAW),
+            'id' => sanitize_text_field($data['id']),
+            'designation' => sanitize_text_field($data['designation']),
+            'slug' => sanitize_text_field($data['slug']),
+            'extra_css' => sanitize_text_field($data['extra_css']),
+            'show_url' => sanitize_text_field($data['show_url']),
+            'only_icon_display' => filter_var($data['only_icon_display'], FILTER_VALIDATE_BOOLEAN),
+            'icon_is_url' => filter_var($data['icon_is_url'], FILTER_VALIDATE_BOOLEAN),
             'new_tab' => filter_var($data['new_tab'], FILTER_VALIDATE_BOOLEAN),
-            'icon_css' => filter_var($data['icon_css'], FILTER_UNSAFE_RAW),
-            'icon' => filter_var($data['icon'], FILTER_UNSAFE_RAW),
-            'link_type' => filter_var($data['link_type'], FILTER_UNSAFE_RAW),
-            'value' => filter_var($data['value'], FILTER_UNSAFE_RAW),
+            'icon_css' => sanitize_text_field($data['icon_css']),
+            'icon' => sanitize_text_field($data['icon']),
+            'link_type' => sanitize_text_field($data['link_type']),
+            'value' => sanitize_text_field($data['value']),
         ];
     }
 
