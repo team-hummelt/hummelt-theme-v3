@@ -186,7 +186,8 @@ class hummelt_theme_v3_helper
             'fontData' => json_decode($data->fontData, true),
             'isTtf' => (bool)$data->isTtf,
             'isWoff' => (bool)$data->isWoff,
-            'isWoff2' => (bool)$data->isWoff2
+            'isWoff2' => (bool)$data->isWoff2,
+            'fontType' => $data->fontType
         ];
     }
 
@@ -207,7 +208,8 @@ class hummelt_theme_v3_helper
     public function fn_theme_hummelt_v3_font_face($site_url = false, $file_name = '', $family = ''): void
     {
         global $wp_filesystem;
-        $fonts = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_by_args', null);
+        $args = 'WHERE fontType="intern"';
+        $fonts = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_by_args', $args);
         $url = '';
         if ($site_url) {
             $url = HUMMELT_THEME_V3_FONTS_URL;
@@ -275,6 +277,26 @@ class hummelt_theme_v3_helper
             $editorJson = json_encode($editorJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES);
             $wp_filesystem->put_contents($themeJson, $editorJson);
         }
+    }
+
+    public function fn_get_register_adobe_fonts():array
+    {
+        $args = 'WHERE fontType="adobe"';
+        $adobeFonts = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_data', $args, false);
+        $fontArr = [];
+        if($adobeFonts->status) {
+            foreach ($adobeFonts->record as $tmp) {
+                $fontInfo = json_decode($tmp->fontInfo, true);
+                if($fontInfo['register_font'] && $fontInfo['url']) {
+                    $item = [
+                        'id' => 'adobe-fonts-'.$tmp->id,
+                        'url' => $fontInfo['url'],
+                    ];
+                    $fontArr[] = $item;
+                }
+            }
+        }
+        return $fontArr;
     }
 
     public function fn_theme_hummelt_delete_font_theme_json($family): void
@@ -930,6 +952,11 @@ class hummelt_theme_v3_helper
             return '';
         }
         return trim(preg_replace('/\s+/', ' ', $string));
+    }
+
+    public function fn_create_slug($string): string
+    {
+        return sanitize_title($string);
     }
 
     public function fn_hummelt_theme_v3_smtp_test(): array

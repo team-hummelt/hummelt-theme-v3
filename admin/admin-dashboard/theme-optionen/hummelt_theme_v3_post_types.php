@@ -225,7 +225,7 @@ class hummelt_theme_v3_post_types
                 'Theme v3 Design General',
                 'theme_design_category',
                 array(
-                    'description' => __('Standard category for Design templates', 'bootscore'),
+                    'description' => __('Standard category for design templates', 'bootscore'),
                     'slug' => 'hupa-design-templates-posts'
                 )
             );

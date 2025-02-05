@@ -1,4 +1,4 @@
-import {Card, CardBody, Col,Row, Container, Nav, Form, Collapse, Button} from "react-bootstrap";
+import {Button, Card, CardBody, Col, Collapse, FloatingLabel, Form, Row} from "react-bootstrap";
 import MediaUpload from "../../../utils/MediaUpload.jsx";
 import {v4 as uuidv4, v5 as uuidv5} from "uuid";
 import FontSettingsModal from "../../../utils/FontSettingsModal.jsx";
@@ -16,13 +16,15 @@ export default class ThemeFonts extends Component {
         this.uploadRefForm = React.createRef();
         this.state = {
             showUpload: false,
+            showAdobeCol: false,
+            adobeFontUrl: '',
             showInfoFontModal: false,
             showFontSettingsModal: false,
             fontInfo: [],
             fontData: [],
             fontEdit: {},
             editId: '',
-            designation: ''
+            designation: '',
         }
         //Modal
         this.onSetInfoFontModal = this.onSetInfoFontModal.bind(this);
@@ -34,7 +36,7 @@ export default class ThemeFonts extends Component {
         this.onSendFontEdit = this.onSendFontEdit.bind(this);
         this.onDeleteFont = this.onDeleteFont.bind(this);
         this.onMediathekCallback = this.onMediathekCallback.bind(this);
-
+        this.onSubmitAddAdobe = this.onSubmitAddAdobe.bind(this);
 
         this.findArrayElementById = this.findArrayElementById.bind(this);
         this.filterArrayElementById = this.filterArrayElementById.bind(this);
@@ -42,16 +44,18 @@ export default class ThemeFonts extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.triggerFonts) {
+        if (this.props.triggerFonts) {
             this.setState({
                 showUpload: false,
+                showAdobeCol: false,
                 showInfoFontModal: false,
                 showFontSettingsModal: false,
                 fontInfo: [],
                 fontData: [],
                 fontEdit: {},
                 editId: '',
-                designation: ''
+                designation: '',
+                adobeFontUrl: ''
             })
             this.props.onSetTriggerFonts(false)
         }
@@ -102,6 +106,8 @@ export default class ThemeFonts extends Component {
         const find = this.findArrayElementById(font, id, 'id');
         const fontData = [...find.fontData];
         const findData = this.findArrayElementById(fontData, infoId, 'id')
+        findData.fontType = find.fontType
+        findData.fontInfo = find.fontInfo
         this.setState({
             fontEdit: findData,
             showFontSettingsModal: true,
@@ -111,6 +117,7 @@ export default class ThemeFonts extends Component {
 
     onSetFontEdit(e, type) {
         let fontEdit = this.state.fontEdit;
+
         fontEdit[type] = e;
         this.setState({
             fontEdit: fontEdit
@@ -120,7 +127,7 @@ export default class ThemeFonts extends Component {
     onSendFontEdit() {
         let formData = {
             'method': 'font_edit',
-            'data' : JSON.stringify(this.state.fontEdit),
+            'data': JSON.stringify(this.state.fontEdit),
             'id': this.state.editId
         }
         this.props.sendFetchApi(formData)
@@ -138,7 +145,7 @@ export default class ThemeFonts extends Component {
                     'method': 'delete_font',
                     'id': id,
                 }
-               this.props.sendFetchApi(formData)
+                this.props.sendFetchApi(formData)
             }
         })
     }
@@ -155,13 +162,28 @@ export default class ThemeFonts extends Component {
                 break;
             case 'start_complete':
                 if (data.complete) {
-                   this.setState({
-                       showUpload: false
-                   })
+                    this.setState({
+                        showUpload: false
+                    })
                 }
                 break;
         }
     }
+
+    onSubmitAddAdobe(event) {
+        const form = event.currentTarget;
+        event.preventDefault();
+        event.stopPropagation();
+        if (form.checkValidity() === false) {
+            return false;
+        }
+        let formData = {
+            'method': 'import_adobe_font',
+            'font_url': this.state.adobeFontUrl
+        }
+        this.props.sendFetchApi(formData)
+    }
+
 
 
     render() {
@@ -169,14 +191,59 @@ export default class ThemeFonts extends Component {
             <Fragment>
                 <Card className="shadow-sm my-3">
                     <CardBody>
-                        <Button
-                            onClick={() => this.setState({showUpload: !this.state.showUpload})}
-                            active={this.state.showUpload}
-                            variant="outline-primary">
-                            <b className="fw-semibold">Font</b> Upload
-                            <i className={`bi ms-2 ${this.state.showUpload ? 'bi-arrows-expand' : 'bi-arrows-collapse'}`}></i>
-                        </Button>
+                        <div className="d-flex flex-wrap">
+                            <Button
+                                onClick={() => this.setState({showUpload: !this.state.showUpload, showAdobeCol: false})}
+                                active={this.state.showUpload}
+                                variant="outline-primary">
+                                <b className="fw-semibold">Font</b> Upload
+                                <i className={`bi ms-2 ${this.state.showUpload ? 'bi-arrows-expand' : 'bi-arrows-collapse'}`}></i>
+                            </Button>
+                            <div className="ms-auto">
+                                <Button
+                                    onClick={() => this.setState({
+                                        showAdobeCol: !this.state.showAdobeCol,
+                                        showUpload: false
+                                    })}
+                                    active={this.state.showAdobeCol}
+                                    variant="outline-primary">
+                                    <b className="fw-semibold">Adobe</b> Fonts
+                                    <i className={`bi ms-2 ${this.state.showAdobeCol ? 'bi-arrows-expand' : 'bi-arrows-collapse'}`}></i>
+                                </Button>
+                            </div>
+                        </div>
                         <hr/>
+                        <Collapse
+                            in={this.state.showAdobeCol}>
+                            <div id={uuidv4()}>
+                                <h6 className="text-start my-3">
+                                    <i className="bi bi-node-plus me-2"></i>
+                                    Adobe Font <span className="fw-light"> hinzufügen</span>
+                                </h6>
+                                <Form onSubmit={this.onSubmitAddAdobe}>
+                                    <FloatingLabel
+                                        controlId={uuidv4()}
+                                        label="Adobe Font CSS URL *"
+                                        className="my-2"
+                                    >
+                                        <Form.Control
+                                            className="no-blur"
+                                            required={true}
+                                            type="url"
+                                            value={this.state.adobeFontUrl || ''}
+                                            onChange={(e) => this.setState({adobeFontUrl: e.currentTarget.value})}
+                                            placeholder="Adobe Font Css URL"/>
+                                    </FloatingLabel>
+                                    <Button
+                                        type="submit"
+                                        disabled={!this.state.adobeFontUrl}
+                                        className="mt-2" variant="primary">
+                                        Schrift <span className="fw-semibold">Importieren</span>
+                                    </Button>
+                                </Form>
+                                <hr/>
+                            </div>
+                        </Collapse>
                         <Collapse
                             in={this.state.showUpload}>
                             <div id={uuidv4()}>
@@ -209,7 +276,7 @@ export default class ThemeFonts extends Component {
                             <Row className="g-3 align-items-stretch ">
                                 {this.props.fonts.map((f, i) => {
                                     return (
-                                        <Col xl={4}  lg={6} xs={12} key={i}>
+                                        <Col xxl={4} xl={6} lg={6} xs={12} key={i}>
                                             <div
                                                 className="d-flex overflow-hidden position-relative border h-100 w-100 shadow-sm">
                                                 <div className="p-3 d-flex flex-column w-100 h-100">
@@ -220,17 +287,34 @@ export default class ThemeFonts extends Component {
                                                         </h5>
                                                     </div>
                                                     <hr/>
-                                                   <small className="fw-semibold d-flex justify-content-center flex-wrap">
+                                                    {f.fontType === 'intern' ?
+                                                        <small
+                                                            className="fw-semibold d-flex justify-content-center flex-wrap">
                                                        <span className="me-2">TTF:
                                                         <i className={`bi ms-2 ${f.isTtf ? 'bi-check2-circle text-success' : 'bi-bi-x-lg text-danger'}`}></i>
                                                        </span>
-                                                       <span className="me-2">WOFF:
+                                                            <span className="me-2">WOFF:
                                                         <i className={`bi ms-2 ${f.isWoff ? 'bi-check2-circle text-success' : 'bi-bi-x-lg text-danger'}`}></i>
                                                        </span>
-                                                       <span className="me-2">WOFF2:
+                                                            <span className="me-2">WOFF2:
                                                         <i className={`bi ms-2 ${f.isWoff2 ? 'bi-check2-circle text-success' : 'bi-x-circle text-danger'}`}></i>
                                                        </span>
-                                                   </small>
+                                                        </small> :
+                                                        <div>
+                                                            <small className="fw-semibold d-block text-center">
+                                                                Adobe <span className="fw-normal">Font</span>
+                                                            </small>
+                                                            <hr/>
+                                                            <Form.Check
+                                                                type="switch"
+                                                                className="no-blur"
+                                                                id={uuidv4()}
+                                                                checked={f.fontInfo.register_font || false}
+                                                                onChange={(e) => this.props.onSetAdobeFontEdit(e.target.checked, 'register_font', f.id)}
+                                                                label="Font Registrieren"
+                                                            />
+                                                        </div>
+                                                    }
                                                     <hr/>
                                                     <h6>Schriftstile:</h6>
                                                     <ul className="li-font-list list-unstyled mb-2">
@@ -243,9 +327,10 @@ export default class ThemeFonts extends Component {
                                                                             {d.full_name}
                                                                         </span>
                                                                         <span className="ms-auto d-block">
-                                                                            <i onClick={() => this.onGetFontInfo(f.id, d.id)}
-                                                                               title="Font Info"
-                                                                               className="text-primary cursor-pointer me-2 bi bi-info-circle"></i>
+                                                                            {f.fontType === 'intern' ?
+                                                                                <i onClick={() => this.onGetFontInfo(f.id, d.id)}
+                                                                                   title="Font Info"
+                                                                                   className="text-primary cursor-pointer me-2 bi bi-info-circle"></i> : ''}
                                                                             <i onClick={() => this.onGetFontEdit(f.id, d.id)}
                                                                                title="Schrift-Einstellungen"
                                                                                className="text-orange cursor-pointer bi bi-gear"></i>
@@ -259,14 +344,17 @@ export default class ThemeFonts extends Component {
                                                         <hr className="mt-1"/>
                                                         <div className="d-flex align-items-center">
                                                             <div onClick={() => this.onDeleteFont(f.id)}
-                                                                className="small fw-semibold cursor-pointer d-inline-block text-danger">
+                                                                 className="small fw-semibold cursor-pointer d-inline-block text-danger">
                                                                 löschen
                                                             </div>
                                                             <div className="ms-auto">
-                                                                <div
-                                                                    className="d-inline-block ">
-                                                                    <a className="text-primary no-blur small fw-semibold text-decoration-none" href={`${hummeltRestObj.site_url}/hummelt-theme-v3/font-demo/?font=${f.designation}`} target="_blank">Demo</a>
-                                                                </div>
+                                                                {f.fontType === 'intern' ?
+                                                                    <div
+                                                                        className="d-inline-block ">
+                                                                        <a className="text-primary no-blur small fw-semibold text-decoration-none"
+                                                                           href={`${hummeltRestObj.site_url}/hummelt-theme-v3/font-demo/?font=${f.designation}`}
+                                                                           target="_blank">Demo</a>
+                                                                    </div> : ''}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -283,6 +371,20 @@ export default class ThemeFonts extends Component {
                             </div>
                         }
                         <hr/>
+                        {this.props.adobe_fonts && this.props.fonts.adobe_fonts ?
+                            <Row className="g-3 align-items-stretch">
+                                <Col xs={12}>
+                                    <div className="fw-semibold mb-3">Adobe Fonts</div>
+                                </Col>
+                                {this.props.adobe_fonts.map((f, i) => {
+                                    return (
+                                        <Col xl={4} lg={6} xs={12} key={i}>
+
+                                        </Col>
+                                    )
+                                })}
+                            </Row>
+                            : ''}
                     </CardBody>
                 </Card>
                 <FontSettingsModal

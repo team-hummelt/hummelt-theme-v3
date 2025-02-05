@@ -9,7 +9,7 @@ import icon from './icon.js';
 registerBlockType('hupa/accordion', {
     title: __('Accordion', 'bootscore'),
     icon: icon,
-    category: 'layout',
+    category: 'theme-v3-addons',
     supports: {
         // Durch InnerBlocks sind andere Funktionen weitgehend bereits möglich
         align: false,

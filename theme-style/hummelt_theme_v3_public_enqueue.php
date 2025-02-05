@@ -39,6 +39,13 @@ class hummelt_theme_v3_public_enqueue
         wp_enqueue_style('hummelt-theme-v3-style', get_template_directory_uri() . '/theme-style/css/theme-custom.css', array(), $modificated_theme_Css);
       // wp_enqueue_style( 'hummelt-theme-v3-animate-style', HUMMELT_THEME_V3_ADMIN_URL . '/assets/css/bs/bs-wp-editor/animate-gb-block.css', [], $modificatedAnimate );
 
+        $adobeFonts = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_register_adobe_fonts', '');
+        if ($adobeFonts) {
+            foreach ($adobeFonts as $tmp) {
+                wp_enqueue_style( $tmp['id'], $tmp['url'], [], null );
+            }
+        }
+
         $settings = get_option(HUMMELT_THEME_V3_SLUG . '/settings');
         $theme_wp_optionen = $settings['theme_wp_optionen'];
         if($theme_wp_optionen['material_icons_active']) {

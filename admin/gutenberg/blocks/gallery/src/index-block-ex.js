@@ -1,5 +1,5 @@
 import './editor.scss';
-
+import metadata from '../block.json';
 import {select} from '@wordpress/data';
 
 const DEFAULT_BREAKPOINTS = {
@@ -29,85 +29,8 @@ const {
 const {__} = wp.i18n;
 const {useEffect, useState, Fragment} = wp.element;
 
-registerBlockType('hupa/theme-gallery', {
-    title: 'Theme Galerie',
-    icon: 'images-alt2',
-    category: 'theme-v3-medien',
-    description: "Ein benutzerdefinierte Galerie mit Grid und Masonry-Grid.",
-    attributes: {
-        images: {
-            type: 'array',
-            default: [],
-        },
-        imageSize: {
-            type: 'string',
-            default: 'large',
-        },
-        imageWidth: {
-            type: 'number',
-            default: 260,
-        },
-        imageHeight: {
-            type: 'number',
-            default: 160,
-        },
-        galleryType: {
-            type: 'string',
-            default: 'gallery',
-        },
-        imageCrop: {
-            type: 'boolean',
-            default: true,
-        },
-        lazyLoad: {
-            type: 'boolean',
-            default: true,
-        },
-        lazyLoadAnimation: {
-            type: 'boolean',
-            default: false,
-        },
-        repeatAnimation: {
-            type: 'boolean',
-            default: false,
-        },
-        animationType: {
-            type: 'string',
-            default: '',
-        },
-        galleryId: {
-            type: 'string',
-            default: '',
-        },
-        enableLightbox: {
-            type: 'boolean',
-            default: false,
-        },
-        clickAction: {
-            type: 'string',
-            default: '',
-        },
-        imgLink: {
-            type: 'string',
-            default: '',
-        },
-        lightboxSingle: {
-            type: 'boolean',
-            default: false,
-        },
-        breakpoints: {
-            type: 'object',
-            default: {
-                xxl: {columns: 6, gutter: 1},
-                xl: {columns: 5, gutter: 1},
-                lg: {columns: 4, gutter: 1},
-                md: {columns: 3, gutter: 1},
-                sm: {columns: 2, gutter: 1},
-                xs: {columns: 2, gutter: 1},
-            },
-        }
-    },
-
+registerBlockType(metadata.name, {
+    ...metadata,
     edit({attributes, setAttributes}) {
         const {
             images,

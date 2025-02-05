@@ -495,6 +495,11 @@ class Hummelt_Theme_V3
         $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/test_url', $themeV3Helper, 'fn_check_local_test_url');
         //Check Plugin license
         $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/installed_plugins', $themeV3Helper, 'fn_check_theme_v3_installed_plugins');
+        //Make Slug
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/create_slug', $themeV3Helper, 'fn_create_slug');
+        //Get Adobe Register Fonts
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_register_adobe_fonts', $themeV3Helper, 'fn_get_register_adobe_fonts');
+
         //
 
 
@@ -659,7 +664,11 @@ class Hummelt_Theme_V3
         $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/delete_font_data', $themeV3FontDb, 'fn_theme_v3_delete_font_data');
         $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/update_data', $themeV3FontDb, 'fn_theme_v3_update_data', 10, 2);
 
-        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_font_by_args', $themeV3FontDb, 'theme_hummelt_v3_get_font_by_args');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_font_by_args', $themeV3FontDb, 'theme_hummelt_v3_get_font_by_args', 10, 2);
+        //Adobe Fonts
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/set_adobe_font_data', $themeV3FontDb, 'fn_theme_v3_set_adobe_font_data');
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/update_adobe_font_data', $themeV3FontDb, 'fn_theme_v3_update_adobe_font_data');
+        //
     }
 
     /**
@@ -706,7 +715,8 @@ class Hummelt_Theme_V3
         $this->loader->add_action('init', $themeGutenberg, 'hummelt_theme_v3_register_gallery_slider_block');
         //Gallery
         $this->loader->add_action('init', $themeGutenberg, 'hummelt_theme_v3_register_gallery_block');
-        //
+        //Block Kategorie
+        $this->loader->add_filter('block_categories_all', $themeGutenberg, 'theme_block_plugin_category', 10 ,2);
 
         //add_action('enqueue_block_assets', 'enqueue_bootstrap_assets');
         //TODO SHORTCODES

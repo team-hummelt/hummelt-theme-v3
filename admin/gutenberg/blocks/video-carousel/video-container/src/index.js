@@ -11,7 +11,8 @@ import Icon from "./icon.js";
 registerBlockType('hupa/video-carousel-container', {
     title: __('Video Carousel', 'bootscore'),
     icon: icon,
-    category: 'media',
+    category: 'theme-v3-medien',
+    description: "Flexibles Video Carousel für einzelne oder mehrere Videos – mit zahlreichen Anpassungsmöglichkeiten.",
     supports: {
         // Durch InnerBlocks sind andere Funktionen weitgehend bereits möglich
         align: false,

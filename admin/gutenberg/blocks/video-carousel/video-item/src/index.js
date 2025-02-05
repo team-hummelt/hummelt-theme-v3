@@ -21,7 +21,8 @@ const {MediaUpload, MediaUploadCheck, InnerBlocks, useBlockProps, InspectorContr
 registerBlockType('hupa/video-carousel-item', {
     title: __('Video Item', 'bootscore'),
     icon: icon,
-    category: 'media',
+    category: 'theme-v3-medien',
+    description: "Flexibles Video Carousel für einzelne oder mehrere Videos – mit zahlreichen Anpassungsmöglichkeiten.",
     parent: ['hupa/video-carousel-container'], // Erzwingt, dass dieser Block nur im Accordion benutzt wird
     supports: {
         reusable: false, // In der Regel kein eigenes Reusable hier benötigt

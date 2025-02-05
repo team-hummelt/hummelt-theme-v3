@@ -52,6 +52,7 @@ export default class FontSettingsModal extends Component {
                                     <Form.Control
                                         className={`no-blur`}
                                         required={true}
+                                        disabled={this.props.fontEdit.fontType !== 'intern'}
                                         type="text"
                                         value={this.props.fontEdit.font_style || ''}
                                         onChange={(e) => this.props.onSetFontEdit(e.target.value, 'font_style')}
@@ -67,6 +68,7 @@ export default class FontSettingsModal extends Component {
                                     <Form.Control
                                         className={`no-blur`}
                                         required={true}
+                                        disabled={this.props.fontEdit.fontType !== 'intern'}
                                         type="text"
                                         value={this.props.fontEdit.font_weight || ''}
                                         onChange={(e) => this.props.onSetFontEdit(e.target.value, 'font_weight')}
@@ -74,16 +76,21 @@ export default class FontSettingsModal extends Component {
                                 </FloatingLabel>
 
                             </Col>
+                            {this.props.fontEdit.fontType !== 'intern' ?
+                                <Col className="mt-3" xs={12}>
+                                    <small className="fw-semibold">Adobe <span className="fw-normal">Font</span> </small>
+                                </Col>
+                                : ''}
                         </Row>
-
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => this.props.onSetSettingsFontModal(false)}>
                             Schließen
                         </Button>
+                        {this.props.fontEdit.fontType === 'intern' ?
                         <Button type="submit" variant="primary">
                             Speichern
-                        </Button>
+                        </Button>: ''}
                     </Modal.Footer>
                 </Form>
             </Modal>

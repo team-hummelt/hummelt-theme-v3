@@ -231,14 +231,165 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
             $tmp['sub'] = $subArr;
             $menuArr[] = $tmp;
         }
+        $args = 'WHERE fontType="intern"';
+        $fontIntern = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_by_args', NULL);
+        $args = 'WHERE fontType="adobe"';
+        //$fontAdobe = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_by_args', NULL, $args);
+
         $settings['theme_design'] = $themeDesign;
         $this->responseJson->selects = $selects;
-        $this->responseJson->fonts = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_by_args', null);
+        $this->responseJson->fonts = $fontIntern;
+        //$this->responseJson->adobe_fonts = $fontAdobe;
         $this->responseJson->record = $settings;
         $this->responseJson->capabilities = $capabilities;
         $this->responseJson->select_user_role = $this->select_user_role();
         $this->responseJson->menu = $menuArr;
         $this->responseJson->editor = $editor;
+        $this->responseJson->status = true;
+        return $this->responseJson;
+    }
+
+    private function import_adobe_font(): object
+    {
+        $font_url = filter_var($this->request->get_param('font_url'), FILTER_VALIDATE_URL);
+        if (!$font_url) {
+            $this->responseJson->msg = 'Ungültige URL (rest-' . __LINE__ . ')';
+            return $this->responseJson;
+        }
+
+        $response = wp_remote_get($font_url);
+
+        // Überprüfen, ob der Abruf erfolgreich war
+        if (is_wp_error($response)) {
+            $this->responseJson->msg = "Fehler beim Abrufen der Adobe Fonts: " . $response->get_error_message() . ' (' . __LINE__ . ')';
+            return $this->responseJson;
+        }
+
+        $css = wp_remote_retrieve_body($response);
+        if (empty($css)) {
+            $this->responseJson->msg = 'Fehler: Keine CSS-Daten empfangen. (rest-' . __LINE__ . ')';
+            return $this->responseJson;
+        }
+
+        // Regulärer Ausdruck zum Extrahieren von font-family, font-style, font-weight und serif/sans-serif
+        $pattern = '/@font-face\s*{\s*font-family:\s*"([^"]+)";.*?font-style:\s*([^;]+);.*?font-weight:\s*([^;]+);/s';
+        preg_match_all($pattern, $css, $matches, PREG_SET_ORDER);
+
+        // Mapping für freundliche Namen
+        $style_names = [
+            '100' => 'Thin',
+            '200' => 'Extra Light',
+            '300' => 'Light',
+            '400' => 'Regular',
+            '500' => 'Medium',
+            '600' => 'Semi Bold',
+            '700' => 'Bold',
+            '800' => 'Extra Bold',
+            '900' => 'Black'
+        ];
+
+        // Zweiter Regex zum Erkennen von serif oder sans-serif
+        $serif_pattern = '/\.tk-[a-zA-Z0-9_-]+\s*{\s*font-family:\s*"([^"]+)",\s*(serif|sans-serif);/s';
+        preg_match($serif_pattern, $css, $serif_match);
+        $font_type = !empty($serif_match[2]) ? $serif_match[2] : 'unknown';
+
+        // Ergebnisse speichern
+        $fonts = [];
+        $fontFamily = '';
+        foreach ($matches as $match) {
+            $font_family = trim($match[1]);
+            $font_style = trim($match[2]);
+            $font_weight = trim($match[3]);
+
+            // Schriftstil bestimmen
+            $style_name = $style_names[$font_weight] ?? "Unknown";
+
+            // Falls italic, Stilname anpassen
+            if ($font_style === "italic") {
+                $style_name .= " Italic";
+            }
+
+            $fontFamily = $font_family;
+
+            $fonts[] = [
+                'id' => uniqid(),
+                'local_name' => '',
+                'full_name' => $font_family . ' ' . $style_name,
+                'first_family' => $font_family,
+                'prefer_family' => '',
+                'sub_family' => $style_name,
+                'family' => $font_family,
+                'font_style' => $font_style,
+                'font_weight' => $font_weight,
+                'style-name' => $style_name,
+                'font_serif' => $font_type
+            ];
+        }
+
+        if (!$fonts || !$fontFamily) {
+            $this->responseJson->msg = 'Fehler: Keine CSS-Daten empfangen. (rest-' . __LINE__ . ')';
+            return $this->responseJson;
+        }
+
+        $args = sprintf('WHERE designation="%s"', $fontFamily);
+        $isInstall = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_data', $args);
+        if ($isInstall->status) {
+            $this->responseJson->msg = 'Fehler: Schrift ist schon installiert. (rest-' . __LINE__ . ')';
+            return $this->responseJson;
+        }
+
+
+        // Daten für Speicherung vorbereiten
+        //'slug' => apply_filters(HUMMELT_THEME_V3_SLUG . '/create_slug', $fontFamily . '-' . $font_type),
+        $fontInfo = [
+            'url' => $font_url,
+            'register_font' => false
+        ];
+        $fontData = [
+            'designation' => $fontFamily,
+            'fontSerif' => $font_type, // serif oder sans-serif
+            'fontInfo' => json_encode($fontInfo),
+            'fontData' => json_encode($fonts)
+        ];
+        $insertFont = apply_filters(HUMMELT_THEME_V3_SLUG . '/set_adobe_font_data', $fontData);
+        //set_adobe_font_data
+        if ($insertFont->status) {
+            $fontData['fontInfo'] = $fontInfo;
+            $fontData['fontData'] = $fonts;
+            $fontData['id'] = $insertFont->id;
+            $fontData['fontType'] = 'adobe';
+            $this->responseJson->record = $fontData;
+            $this->responseJson->status = true;
+
+            do_action(HUMMELT_THEME_V3_SLUG . '/add_font_theme_json', $fontFamily, $font_type);
+        }
+        return $this->responseJson;
+    }
+
+    private function update_adobe_fonts():object
+    {
+        $id = filter_var($this->request->get_param('id'), FILTER_VALIDATE_INT);
+        $value = filter_var($this->request->get_param('value'), FILTER_VALIDATE_BOOLEAN);
+        if(!$id) {
+            return $this->responseJson;
+        }
+
+        $t = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_register_adobe_fonts', '');
+        exit();
+
+        $args = sprintf('WHERE id=%d', $id);
+        $getFont = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_data', $args, true);
+        if(!$getFont->status) {
+            return $this->responseJson;
+        }
+        $getFont = $getFont->record;
+        $fontInfo = json_decode($getFont->fontInfo, true);
+        $fontInfo['register_font'] = $value;
+        $update = [
+            'id' => $id,
+            'fontInfo' => json_encode($fontInfo)
+        ];
+        apply_filters(HUMMELT_THEME_V3_SLUG . '/update_adobe_font_data', $update);
         $this->responseJson->status = true;
         return $this->responseJson;
     }
@@ -447,6 +598,7 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
         $theme_wp_general['handy_menu_option'] = filter_var($data['handy_menu_option'], FILTER_VALIDATE_INT);
         $theme_wp_general['handy_menu_text'] = filter_var($data['handy_menu_text'], FILTER_UNSAFE_RAW);
         $theme_wp_general['logo_size_mobil_menu'] = filter_var($data['logo_size_mobil_menu'], FILTER_VALIDATE_INT);
+        $theme_wp_general['logo_size_scroll'] = filter_var($data['logo_size_scroll'], FILTER_VALIDATE_INT);
 
         $theme_wp_general['login_img_aktiv'] = filter_var($data['login_img_aktiv'], FILTER_VALIDATE_BOOLEAN);
         $theme_wp_general['login_img_width'] = filter_var($data['login_img_width'], FILTER_VALIDATE_INT);
@@ -807,10 +959,10 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
         $topArea = $settings['theme_top_area'];
         foreach ($data as $tmp) {
             $slug = filter_var($tmp['slug'], FILTER_UNSAFE_RAW);
-            if(isset($topArea[$slug])) {
+            if (isset($topArea[$slug])) {
                 $topArea[$slug]['order'] = $i;
             }
-             $i++;
+            $i++;
         }
         $settings['theme_top_area'] = $topArea;
         update_option(HUMMELT_THEME_V3_SLUG . '/settings', $settings);

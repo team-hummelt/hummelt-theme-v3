@@ -13,7 +13,8 @@ import {
 registerBlockType('hupa-v3/gmaps-api', {
     title: __('Google Maps API'),
     icon: icon,
-    category: 'media',
+    category: 'theme-v3-addons',
+    description: "Google-Maps API – mit zahlreichen Anpassungsmöglichkeiten.",
     attributes: {
         selectedApi: {
             type: 'string',

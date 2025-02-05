@@ -30,6 +30,28 @@ class hummelt_theme_v3_gutenberg
         $this->main = $main;
     }
 
+    public function theme_block_plugin_category($categories, $post): array
+    {
+        // Neue Kategorie definieren
+        $new_category = [
+            'slug' => 'theme-v3-medien',
+            'title' => __('Theme Medien', 'bootscore'),
+            //'icon' => $this->main->get_svg_icons('easel2'), // Optional: Icon definieren
+        ];
+
+        $new_category_2 = [
+            'slug' => 'theme-v3-addons',
+            'title' => __('Theme Add-ons', 'bootscore'),
+            //'icon' => $this->main->get_svg_icons('puzzle-piece'), // Optional: Icon definieren
+        ];
+        // Position bestimmen (Beispiel: Zweite Position)
+        return array_merge(
+            array_slice($categories, 0, 1), // Erste Kategorie(n) beibehalten
+            [$new_category, $new_category_2],               // Neue Kategorie einfügen
+            array_slice($categories, 1)    // Restliche Kategorien anhängen
+        );
+    }
+
     public function hummelt_theme_v3_gutenberg_register_blocks():void
     {
         $gmaps_asset = require_once HUMMELT_THEME_V3_ADMIN_DIR . 'gutenberg/blocks/google-maps/build/index.asset.php';

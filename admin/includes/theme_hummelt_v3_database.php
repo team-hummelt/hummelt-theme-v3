@@ -41,6 +41,7 @@ class theme_hummelt_v3_database
     		`id` int(11) NOT NULL AUTO_INCREMENT,
             `designation` varchar(128) NOT NULL,
             `fontSerif` varchar(64) NOT NULL,
+            `fontType` varchar(64) NOT NULL DEFAULT 'intern',
             `localName` mediumtext NOT NULL,
             `fontInfo` mediumtext NOT NULL,
             `fontData` mediumtext NOT NULL,

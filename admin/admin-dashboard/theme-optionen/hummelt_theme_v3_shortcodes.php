@@ -45,33 +45,56 @@ class hummelt_theme_v3_shortcodes
             $custom_fields = $settings['custom_fields'];
             $out = '';
             foreach ($custom_fields as $tmp) {
+                if(!$tmp['value']) {
+                    return ob_get_clean();
+                }
                 if ($tmp['slug'] == $a['field']) {
+                    $icon = '';
                     $out .= '<span class="' . $tmp['extra_css'] . '">';
                     if ($tmp['icon']) {
-                        $out .= '<i class="' . $tmp['icon'] . ' ' . $tmp['icon_css'] . '"></i>';
+                        $icon = '<i class="' . $tmp['icon'] . ' ' . $tmp['icon_css'] . '"></i>';
                     }
                     if ($tmp['link_type'] == 'text') {
                         $out .= $tmp['value'];
                     }
                     if ($tmp['link_type'] == 'mailto') {
-                        $out .= '<a href="mailto: ' . $tmp['value'] . '">' . $tmp['value'] . '</a>';
+                        if ($tmp['only_icon_display'] && $tmp['icon']) {
+                            $out .= '<a href="mailto: ' . $tmp['value'] . '">' . $icon . '</a>';
+                        } elseif ($tmp['icon_is_url'] && $tmp['icon']) {
+                            $out .= '<a href="mailto: ' . $tmp['value'] . '">' . $icon . $tmp['value'] . '</a>';
+                        } else {
+                            $out .= $icon . '<a href="mailto: ' . $tmp['value'] . '">' . $tmp['value'] . '</a>';
+                        }
                     }
                     if ($tmp['link_type'] == 'tel') {
-                        $tel = str_replace([' ', '-', '/', '+'], ['', '', '', '00'], $tmp['value']);
-                        $out .= '<a href="tel: ' . $tel . '">' . $tmp['value'] . '</a>';
+                        $tel = str_replace([' ', '-', '/', '+', '(0)'], ['', '', '', '00', ''], $tmp['value']);
+                        if ($tmp['only_icon_display'] && $tmp['icon']) {
+                            $out .= '<a href="tel: ' . $tel . '">' . $icon . '</a>';
+                        } elseif ($tmp['icon_is_url'] && $tmp['icon']) {
+                            $out .= '<a href="tel: ' . $tel . '">' . $icon . $tmp['value'] . '</a>';
+                        } else {
+                            $out .= $icon . '<a href="tel: ' . $tel . '">' . $tmp['value'] . '</a>';
+                        }
                     }
                     if ($tmp['link_type'] == 'url') {
-                        if($tmp['show_url']) {
+
+                        if ($tmp['show_url']) {
                             $url = $tmp['value'];
                         } else {
                             $url = $tmp['designation'];
                         }
-                        if($tmp['new_tab']) {
+                        if ($tmp['new_tab']) {
                             $tab = '_blank';
                         } else {
                             $tab = '_self';
                         }
-                        $out .= '<a target="'.$tab.'" href="'. $tmp['value'] . '">' . $url . '</a>';
+                        if ($tmp['only_icon_display'] && $tmp['icon']) {
+                            $out .= '<a target="' . $tab . '" href="' . $url . '">' . $icon . '</a>';
+                        } elseif ($tmp['icon_is_url'] && $tmp['icon']) {
+                            $out .= '<a target="' . $tab . '" href="' . $tmp['value'] . '">' . $icon . $url . '</a>';
+                        } else {
+                            $out .= $icon . '<a target="' . $tab . '" href="' . $tmp['value'] . '">' . $url . '</a>';
+                        }
                     }
                     $out .= '</span>';
                 }

@@ -10,7 +10,8 @@ const {Fragment, useEffect} = wp.element;
 registerBlockType('hupa/bootstrap-carousel-block', {
     title: 'Bootstrap Carousel',
     icon: 'images-alt2',
-    category: 'media',
+    category: 'theme-v3-medien',
+    description: "A slideshow component for cycling through elements—images or slides of text",
     attributes: {
         isLoaded: {type: 'boolean', default: false},
         postId: {type: 'number'},

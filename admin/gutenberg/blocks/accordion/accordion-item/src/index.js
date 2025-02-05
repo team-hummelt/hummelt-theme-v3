@@ -10,7 +10,7 @@ const { PanelBody, ToggleControl, RangeControl } = wp.components;
 registerBlockType('hupa/accordion-item', {
     title: __('Accordion Item', 'bootscore'),
     icon: icon,
-    category: 'layout',
+    category: 'theme-v3-addons',
     parent: ['hupa/accordion'], // Erzwingt, dass dieser Block nur im Accordion benutzt wird
     supports: {
         reusable: false, // In der Regel kein eigenes Reusable hier benötigt
