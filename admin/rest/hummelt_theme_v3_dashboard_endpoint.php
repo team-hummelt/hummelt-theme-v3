@@ -620,6 +620,15 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
         $theme_wp_general['preloader_aktiv'] = filter_var($data['preloader_aktiv'], FILTER_VALIDATE_BOOLEAN);
         $theme_wp_general['sitemap_post'] = filter_var($data['sitemap_post'], FILTER_VALIDATE_BOOLEAN);
         $theme_wp_general['sitemap_page'] = filter_var($data['sitemap_page'], FILTER_VALIDATE_BOOLEAN);
+        $theme_wp_general['sitemap_custom_post_active'] = filter_var($data['sitemap_custom_post_active'], FILTER_VALIDATE_BOOLEAN);
+        $theme_wp_general['sitemap_custom_post'] = filter_var($data['sitemap_custom_post'], FILTER_UNSAFE_RAW);
+        if(!isset($theme_wp_general['sitemap_url'])) {
+            $theme_wp_general['sitemap_url'] = site_url();
+        }
+        if( $theme_wp_general['sitemap_custom_post'] ) {
+            $theme_wp_general['sitemap_custom_post'] = str_replace([' ',',', ';'], ['', ';', ';'], $theme_wp_general['sitemap_custom_post']);
+        }
+        //
         $theme_wp_general['woocommerce_aktiv'] = filter_var($data['woocommerce_aktiv'], FILTER_VALIDATE_BOOLEAN);
         $theme_wp_general['woocommerce_sidebar'] = filter_var($data['woocommerce_sidebar'], FILTER_VALIDATE_BOOLEAN);
         $theme_wp_general['social_type'] = filter_var($data['social_type'], FILTER_VALIDATE_INT);
@@ -664,6 +673,13 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
 
         $settings['theme_wp_general'] = $theme_wp_general;
         update_option(HUMMELT_THEME_V3_SLUG . '/settings', $settings);
+        $this->responseJson->status = true;
+        return $this->responseJson;
+    }
+
+    private function update_sitemap():object
+    {
+        do_action(HUMMELT_THEME_V3_SLUG.'/create_sitemap');
         $this->responseJson->status = true;
         return $this->responseJson;
     }

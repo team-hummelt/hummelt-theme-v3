@@ -499,9 +499,10 @@ class Hummelt_Theme_V3
         $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/create_slug', $themeV3Helper, 'fn_create_slug');
         //Get Adobe Register Fonts
         $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_register_adobe_fonts', $themeV3Helper, 'fn_get_register_adobe_fonts');
-
-        //
-
+        //Sitemap
+        $this->loader->add_action('save_post', $themeV3Helper, 'fn_theme_v3_create_sitemap');
+        $this->loader->add_action('deleted_post', $themeV3Helper, 'fn_theme_v3_create_sitemap');
+        $this->loader->add_action(HUMMELT_THEME_V3_SLUG.'/create_sitemap', $themeV3Helper, 'fn_theme_v3_create_sitemap');
 
     }
 

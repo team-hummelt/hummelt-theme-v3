@@ -1086,12 +1086,47 @@ class hummelt_theme_v3_helper
     {
         $dsSettings = get_option(HUMMELT_THEME_V3_SLUG . '/hupa-licenses');
         $plugins = $dsSettings['plugins'];
+
         foreach ($plugins as $tmp) {
             if($tmp['slug'] == $slug) {
                 return $tmp['aktiv'];
             }
         }
         return false;
+    }
+
+    public function fn_theme_v3_create_sitemap(): void
+    {
+        $settings = get_option(HUMMELT_THEME_V3_SLUG . '/settings');
+        $theme_wp_general = $settings['theme_wp_general'];
+        $postTypes = ['post', 'page'];
+        if($theme_wp_general['sitemap_custom_post_active'] && $theme_wp_general['sitemap_custom_post']) {
+            $sitemap_custom_post = explode(';', $theme_wp_general['sitemap_custom_post']);
+            $postTypes = array_merge($postTypes, $sitemap_custom_post);
+        }
+
+        $posts_for_sitemap = get_posts(array(
+            'numberposts' => -1,
+            'orderby' => 'modified',
+            'order' => 'DESC',
+            'post_status' => 'publish',
+            'post_type' => $postTypes
+        ));
+        $sitemap = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+        foreach ($posts_for_sitemap as $post) {
+            setup_postdata($post);
+            $lastmod = get_the_modified_time('Y-m-d', $post->ID);
+            $sitemap .= "\t" . '<url>' . "\n" .
+                "\t\t" . '<loc>' . get_permalink($post->ID) . '</loc>' .
+                "\n\t\t" . '<lastmod>' . esc_html($lastmod) . '</lastmod>' .
+                "\n\t\t" . '<changefreq>monthly</changefreq>' .
+                "\n\t" . '</url>' . "\n";
+        }
+        $sitemap .= '</urlset>';
+
+        global $wp_filesystem;
+        $file = ABSPATH . "sitemap.xml";
+        $wp_filesystem->put_contents($file, $sitemap);
     }
 
 }

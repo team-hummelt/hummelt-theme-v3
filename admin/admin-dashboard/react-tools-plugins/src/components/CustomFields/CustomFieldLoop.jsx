@@ -5,13 +5,16 @@ import {Card, CardBody, CardHeader, ButtonGroup, Col, Row, FloatingLabel, Form} 
 import {ReactSortable} from "react-sortablejs";
 import SetAjaxResponse from "../../utils/SetAjaxResponse.jsx";
 import AppIcons from "./AppIcons.jsx";
-
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+const sleep = ms =>
+    new Promise(resolve => setTimeout(resolve, ms));
 export default class CustomFieldLoop extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
         this.state = {
             showModalIcons: false,
+            showCopyTxt: false,
             editId: '',
             sortableOptions: {
                 animation: 300,
@@ -30,8 +33,20 @@ export default class CustomFieldLoop extends React.Component {
         this.onIconCallback = this.onIconCallback.bind(this);
         this.onGetIconModal = this.onGetIconModal.bind(this);
         this.onSetActive = this.onSetActive.bind(this);
+        this.onSetCopied = this.onSetCopied.bind(this);
 
 
+    }
+
+    onSetCopied() {
+        this.setState({
+            showCopyTxt: true
+        })
+        sleep(1500).then(() => {
+            this.setState({
+                showCopyTxt: false
+            })
+        })
     }
 
     onSetShowModalIcons(state) {
@@ -126,8 +141,20 @@ export default class CustomFieldLoop extends React.Component {
                                                     <Accordion.Body>
                                                         <Row className="g-2">
                                                             <Col xs={12}>
-                                                                <b className="fw-semibold">shortcode</b>: <code
-                                                                className="fw-normal">[cf field="{c.slug}"]</code>
+                                                                <b className="fw-semibold">shortcode</b>:
+                                                                <code className="fw-normal">[cf field="{c.slug}"]</code>
+                                                                <CopyToClipboard
+                                                                    text={`[cf field="${c.slug}"]`}
+                                                                    onCopy={() => this.onSetCopied()}>
+                                                                <span className="position-relative">
+                                                                    <i title="kopieren"
+                                                                       className="bi bi-copy cursor-pointer ms-2"></i>
+                                                                     <span style={{right: '-2.75rem'}}
+                                                                           className={`position-absolute copied top-0 pe-none text-danger small-lg ${this.state.showCopyTxt ? 'show-copied' : ''}`}>
+                                                                            kopiert
+                                                                        </span>
+                                                                </span>
+                                                                </CopyToClipboard>
                                                                 <hr/>
                                                             </Col>
 
