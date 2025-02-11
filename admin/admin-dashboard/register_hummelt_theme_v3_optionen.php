@@ -69,6 +69,7 @@ class register_hummelt_theme_v3_optionen
             $optionen['update_msg']['email_err_msg'] = $default_email;
             update_option(HUMMELT_THEME_V3_SLUG . '/optionen', $optionen);
         }
+
         //delete_option(HUMMELT_THEME_V3_SLUG . '/hupa-licenses');
         $dsSettings = get_option(HUMMELT_THEME_V3_SLUG . '/hupa-licenses');
         if (!$dsSettings) {
@@ -155,6 +156,14 @@ class register_hummelt_theme_v3_optionen
                 add_action('load-' . $hook_suffix, array($this, 'hummelt_theme_v3_load_ajax_admin_options_script'));
             }
 
+            add_options_page(
+                'OPcache Manager',
+                'OPcache',
+                'manage_options',
+                'wp-opcache-manager',
+                array($this, 'wp_opcache_manager_settings_page')
+            );
+
             /** OPTIONS PAGE */
             $hook_suffix = add_options_page(
                 __('HUPA Theme v3', 'bootscore'),
@@ -171,7 +180,11 @@ class register_hummelt_theme_v3_optionen
 
     public function settings_hummelt_theme_v3(): void
     {
-
+        $settings = get_option(HUMMELT_THEME_V3_SLUG . '/settings');
+        $theme_wp_general = $settings['theme_wp_general'];
+        if($theme_wp_general['sitemap_url'] != site_url()) {
+            do_action(HUMMELT_THEME_V3_SLUG.'/create_sitemap');
+        }
         echo '<div class="hummelt-theme-v3" id="hummelt-theme-v3"></div>';
     }
 
@@ -185,6 +198,11 @@ class register_hummelt_theme_v3_optionen
     {
         echo '<div class="hummelt-theme-v3" id="hummelt-theme-v3-options"></div>';
 
+    }
+
+    public function wp_opcache_manager_settings_page(): void
+    {
+       require_once ('OpCache/wp-opcache-manager.php');
     }
 
     public function forms_hummelt_theme_v3(): void

@@ -89,7 +89,7 @@ export default class Optionen extends Component {
         this.sendOptionFormData = this.sendOptionFormData.bind(this);
         this.onAddUploadFont = this.onAddUploadFont.bind(this);
         this.onSetAdobeFontEdit = this.onSetAdobeFontEdit.bind(this);
-
+        this.onUpdateSitemap = this.onUpdateSitemap.bind(this);
 
     }
 
@@ -184,6 +184,13 @@ export default class Optionen extends Component {
         this.setState({
             colLayout: layout
         })
+    }
+
+    onUpdateSitemap() {
+        let formData = {
+            'method': 'update_sitemap'
+        }
+        this.sendFetchApi(formData)
     }
 
     onSetThemeGeneral(e, type) {
@@ -421,6 +428,7 @@ export default class Optionen extends Component {
                 case 'set_theme_colors':
                 case 'set_theme_fonts':
                 case 'set_editor_layout':
+                case 'update_sitemap':
                     this.setState({
                         spinner: {
                             showAjaxWait: false,
@@ -682,6 +690,7 @@ export default class Optionen extends Component {
                                                         settings={this.state.settings}
                                                         selects={this.state.selects}
                                                         onUpdateTemplateOptionen={this.onUpdateTemplateOptionen}
+                                                        onUpdateSitemap={this.onUpdateSitemap}
                                                     />
                                                 </div>
                                             </Collapse>

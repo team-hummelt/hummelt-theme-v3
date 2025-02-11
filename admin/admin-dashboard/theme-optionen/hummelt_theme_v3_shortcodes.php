@@ -55,7 +55,7 @@ class hummelt_theme_v3_shortcodes
                         $icon = '<i class="' . $tmp['icon'] . ' ' . $tmp['icon_css'] . '"></i>';
                     }
                     if ($tmp['link_type'] == 'text') {
-                        $out .= $tmp['value'];
+                        $out .= $icon.$tmp['value'];
                     }
                     if ($tmp['link_type'] == 'mailto') {
                         if ($tmp['only_icon_display'] && $tmp['icon']) {

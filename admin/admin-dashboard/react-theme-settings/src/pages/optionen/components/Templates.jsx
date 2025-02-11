@@ -15,7 +15,7 @@ export default class Templates extends Component {
     }
 
     onSetCollapse(id) {
-        if(id === this.state.activeId){
+        if (id === this.state.activeId) {
             this.setState({
                 activeId: ''
             })
@@ -58,151 +58,152 @@ export default class Templates extends Component {
                                 </div>
                                 <hr/>
                                 {this.props.settings.theme_wp_general.template_options.map((o, i) => {
-                                   return (
-                                       <Collapse
-                                           key={i}
-                                           in={this.state.activeId === o.id}>
-                                           <div id={uuidv4()}>
-                                            <h6>
-                                                <i className="bi bi-arrow-right-short me-1"></i>
-                                                Einstellungen für <span className="text-capitalize">{o.type}</span> Beitragslisten.
-                                            </h6>
-                                               <hr/>
-                                                    <Row className="g-2">
-                                                        <Col xs={12}>
+                                    return (
+                                        <Collapse
+                                            key={i}
+                                            in={this.state.activeId === o.id}>
+                                            <div id={uuidv4()}>
+                                                <h6>
+                                                    <i className="bi bi-arrow-right-short me-1"></i>
+                                                    Einstellungen für <span
+                                                    className="text-capitalize">{o.type}</span> Beitragslisten.
+                                                </h6>
+                                                <hr/>
+                                                <Row className="g-2">
+                                                    <Col xs={12}>
+                                                        <Form.Check
+                                                            type="switch"
+                                                            className="no-blur my-1 me-4"
+                                                            id={uuidv4()}
+                                                            checked={o.show_sidebar || false}
+                                                            onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_sidebar', o.id)}
+                                                            label="Sidebar anzeigen"
+                                                        />
+                                                    </Col>
+                                                    <Col xl={6} xs={12}>
+                                                        <FloatingLabel
+                                                            controlId={uuidv4()}
+                                                            label={`Sidebar`}
+                                                        >
+                                                            <Form.Select
+                                                                className="no-blur mw-100"
+                                                                disabled={!o.select_sidebar}
+                                                                value={o.show_sidebar || false}
+                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.value, 'select_sidebar', o.id)}
+                                                                aria-label={`Sidebar`}>
+                                                                <option value="">auswählen</option>
+                                                                {this.props.selects.sidebar.map((select, index) =>
+                                                                    <option key={index}
+                                                                            value={select.id}>
+                                                                        {select.name}
+                                                                    </option>
+                                                                )}
+                                                            </Form.Select>
+                                                        </FloatingLabel>
+                                                    </Col>
+                                                    <Col xl={6} xs={12}></Col>
+                                                    <Col xl={6} xs={12}>
+                                                        <FloatingLabel
+                                                            controlId={uuidv4()}
+                                                            label={`Custom-Header`}
+                                                        >
+                                                            <Form.Select
+                                                                className="no-blur mw-100"
+                                                                value={o.select_header || false}
+                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.value, 'select_header', o.id)}
+                                                                aria-label={`Custom-Header`}>
+                                                                <option value="">auswählen</option>
+                                                                {this.props.selects.header.map((select, index) =>
+                                                                    <option key={index}
+                                                                            value={select.id}>
+                                                                        {select.label}
+                                                                    </option>
+                                                                )}
+                                                            </Form.Select>
+                                                        </FloatingLabel>
+                                                    </Col>
+                                                    <Col xl={6} xs={12}>
+                                                        <FloatingLabel
+                                                            controlId={uuidv4()}
+                                                            label={`Custom-Footer`}
+                                                        >
+                                                            <Form.Select
+                                                                className="no-blur mw-100"
+                                                                value={o.select_footer || false}
+                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.value, 'select_footer', o.id)}
+                                                                aria-label={`Custom-Footer`}>
+                                                                <option value="">auswählen</option>
+                                                                {this.props.selects.footer.map((select, index) =>
+                                                                    <option key={index}
+                                                                            value={select.id}>
+                                                                        {select.label}
+                                                                    </option>
+                                                                )}
+                                                            </Form.Select>
+                                                        </FloatingLabel>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <Form.Check
+                                                            type="switch"
+                                                            className="no-blur my-1 me-4"
+                                                            id={uuidv4()}
+                                                            checked={o.show_image || false}
+                                                            onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_image', o.id)}
+                                                            label="Beitragsbild anzeigen"
+                                                        />
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <h6>Informationen für Kategorie & Beitragslisten anzeigen</h6>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <div className="d-flex flex-wrap">
                                                             <Form.Check
                                                                 type="switch"
                                                                 className="no-blur my-1 me-4"
                                                                 id={uuidv4()}
-                                                                checked={o.show_sidebar || false}
-                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_sidebar', o.id)}
-                                                                label="Sidebar anzeigen"
+                                                                checked={o.show_kategorie || false}
+                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_kategorie', o.id)}
+                                                                label="Kategorien anzeigen"
                                                             />
-                                                        </Col>
-                                                        <Col xl={6} xs={12}>
-                                                            <FloatingLabel
-                                                                controlId={uuidv4()}
-                                                                label={`Sidebar`}
-                                                            >
-                                                                <Form.Select
-                                                                    className="no-blur mw-100"
-                                                                    disabled={!o.select_sidebar}
-                                                                    value={o.show_sidebar || false}
-                                                                    onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.value, 'select_sidebar', o.id)}
-                                                                    aria-label={`Sidebar`}>
-                                                                    <option value="">auswählen</option>
-                                                                    {this.props.selects.sidebar.map((select, index) =>
-                                                                        <option key={index}
-                                                                                value={select.id}>
-                                                                            {select.name}
-                                                                        </option>
-                                                                    )}
-                                                                </Form.Select>
-                                                            </FloatingLabel>
-                                                        </Col>
-                                                        <Col xl={6} xs={12}></Col>
-                                                        <Col xl={6} xs={12}>
-                                                            <FloatingLabel
-                                                                controlId={uuidv4()}
-                                                                label={`Custom-Header`}
-                                                            >
-                                                                <Form.Select
-                                                                    className="no-blur mw-100"
-                                                                    value={o.select_header || false}
-                                                                    onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.value, 'select_header', o.id)}
-                                                                    aria-label={`Custom-Header`}>
-                                                                    <option value="">auswählen</option>
-                                                                    {this.props.selects.header.map((select, index) =>
-                                                                        <option key={index}
-                                                                                value={select.id}>
-                                                                            {select.label}
-                                                                        </option>
-                                                                    )}
-                                                                </Form.Select>
-                                                            </FloatingLabel>
-                                                        </Col>
-                                                        <Col xl={6} xs={12}>
-                                                            <FloatingLabel
-                                                                controlId={uuidv4()}
-                                                                label={`Custom-Footer`}
-                                                            >
-                                                                <Form.Select
-                                                                    className="no-blur mw-100"
-                                                                    value={o.select_footer || false}
-                                                                    onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.value, 'select_footer', o.id)}
-                                                                    aria-label={`Custom-Footer`}>
-                                                                    <option value="">auswählen</option>
-                                                                    {this.props.selects.footer.map((select, index) =>
-                                                                        <option key={index}
-                                                                                value={select.id}>
-                                                                            {select.label}
-                                                                        </option>
-                                                                    )}
-                                                                </Form.Select>
-                                                            </FloatingLabel>
-                                                        </Col>
-                                                        <Col xs={12}>
                                                             <Form.Check
                                                                 type="switch"
                                                                 className="no-blur my-1 me-4"
                                                                 id={uuidv4()}
-                                                                checked={o.show_image || false}
-                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_image', o.id)}
-                                                                label="Beitragsbild anzeigen"
+                                                                checked={o.show_post_date || false}
+                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_post_date', o.id)}
+                                                                label="Datum anzeigen"
                                                             />
-                                                        </Col>
-                                                        <Col xs={12}>
-                                                            <h6>Informationen für Kategorie & Beitragslisten anzeigen</h6>
-                                                        </Col>
-                                                        <Col xs={12}>
-                                                            <div className="d-flex flex-wrap">
-                                                                <Form.Check
-                                                                    type="switch"
-                                                                    className="no-blur my-1 me-4"
-                                                                    id={uuidv4()}
-                                                                    checked={o.show_kategorie || false}
-                                                                    onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_kategorie', o.id)}
-                                                                    label="Kategorien anzeigen"
-                                                                />
-                                                                <Form.Check
-                                                                    type="switch"
-                                                                    className="no-blur my-1 me-4"
-                                                                    id={uuidv4()}
-                                                                    checked={o.show_post_date || false}
-                                                                    onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_post_date', o.id)}
-                                                                    label="Datum anzeigen"
-                                                                />
-                                                                <Form.Check
-                                                                    type="switch"
-                                                                    className="no-blur my-1 me-4"
-                                                                    id={uuidv4()}
-                                                                    checked={o.show_post_author || false}
-                                                                    onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_post_author', o.id)}
-                                                                    label="Author anzeigen"
-                                                                />
-                                                                <Form.Check
-                                                                    type="switch"
-                                                                    className="no-blur my-1 me-4"
-                                                                    id={uuidv4()}
-                                                                    checked={o.show_post_kommentar || false}
-                                                                    onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_post_kommentar', o.id)}
-                                                                    label="Kommentar anzeigen"
-                                                                />
-                                                                <Form.Check
-                                                                    type="switch"
-                                                                    className="no-blur my-1 "
-                                                                    id={uuidv4()}
-                                                                    checked={o.show_post_tags || false}
-                                                                    onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_post_tags', o.id)}
-                                                                    label="Schlagworte anzeigen"
-                                                                />
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                               <hr/>
-                                           </div>
-                                       </Collapse>
-                                   )
+                                                            <Form.Check
+                                                                type="switch"
+                                                                className="no-blur my-1 me-4"
+                                                                id={uuidv4()}
+                                                                checked={o.show_post_author || false}
+                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_post_author', o.id)}
+                                                                label="Author anzeigen"
+                                                            />
+                                                            <Form.Check
+                                                                type="switch"
+                                                                className="no-blur my-1 me-4"
+                                                                id={uuidv4()}
+                                                                checked={o.show_post_kommentar || false}
+                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_post_kommentar', o.id)}
+                                                                label="Kommentar anzeigen"
+                                                            />
+                                                            <Form.Check
+                                                                type="switch"
+                                                                className="no-blur my-1 "
+                                                                id={uuidv4()}
+                                                                checked={o.show_post_tags || false}
+                                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'show_post_tags', o.id)}
+                                                                label="Schlagworte anzeigen"
+                                                            />
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                                <hr/>
+                                            </div>
+                                        </Collapse>
+                                    )
                                 })}
                                 <h6>Breadcrumb für Beiträge anzeigen</h6>
                                 <Form.Check
@@ -268,13 +269,48 @@ export default class Templates extends Component {
                                         onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'sitemap_page')}
                                         label="Seiten"
                                     />
+                                    <Form.Check
+                                        type="switch"
+                                        className="no-blur my-1 me-4"
+                                        id={uuidv4()}
+                                        checked={this.props.settings.theme_wp_general.sitemap_custom_post_active || false}
+                                        onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.checked, 'sitemap_custom_post_active')}
+                                        label="Custom Posts"
+                                    />
                                 </div>
                                 <div className="form-text">
-                                    Nach dem erstellen von Beiträgen und Seiten, wird die Sitemap aktualisiert.
+                                    Nach dem erstellen oder löschen von Beiträgen und Seiten, wird die Sitemap
+                                    aktualisiert.
                                 </div>
+                                {this.props.settings.theme_wp_general.sitemap_custom_post_active ?
+                                    <Col xs={12}>
+                                        <FloatingLabel
+                                            controlId={uuidv4()}
+                                            label="Custom Posts"
+                                            className="mt-3"
+                                        >
+                                            <Form.Control
+                                                className={`no-blur`}
+                                                type="text"
+                                                value={this.props.settings.theme_wp_general.sitemap_custom_post || ''}
+                                                onChange={(e) => this.props.onUpdateTemplateOptionen(e.target.value, 'sitemap_custom_post')}
+                                                placeholder="Custom Posts"/>
+                                        </FloatingLabel>
+                                        <div className="form-text">
+                                            Beitrags Typen mit Komma oder Semikolon trennen.
+                                        </div>
+                                    </Col> : ''}
+                                <Button
+                                    type="button"
+                                    onClick={this.props.onUpdateSitemap}
+                                    size="sm"
+                                    variant="outline-primary mt-3 me-1">
+                                    <i className="fa fa-gear me-2"></i>
+                                    Sitemap aktualisieren
+                                </Button>
                             </CardBody>
                         </Card>
-                        <Card className="shadow-sm my-2">
+                        {/*}<Card className="shadow-sm my-2">
                             <CardBody>
                                 <h6>
                                     <i className="bi bi-arrow-right-short me-1"></i>
@@ -300,7 +336,7 @@ export default class Templates extends Component {
                                     />
                                 </div>
                             </CardBody>
-                        </Card>
+                        </Card>{*/}
                     </Fragment>}
             </Fragment>
         )

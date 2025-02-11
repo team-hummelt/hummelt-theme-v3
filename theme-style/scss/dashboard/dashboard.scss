@@ -19,7 +19,14 @@ $yellow: #ffbf31;
   //color: #fff;
 }
 
+.copied {
+  opacity: 0;
+  transition: all 350ms ease-in-out;
 
+  &.show-copied {
+    opacity: 1;
+  }
+}
 
 .theme-settings_page_hummelt-theme-v3-optionen,
 .settings_page_hupa-theme-v3-options,
