@@ -209,7 +209,8 @@ class hummelt_theme_v3_helper
     {
         global $wp_filesystem;
         $args = 'WHERE fontType="intern"';
-        $fonts = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_by_args', $args);
+        $fonts = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_by_args',null,  $args);
+       // $fonts = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_font_by_args', '');
         $url = '';
         if ($site_url) {
             $url = HUMMELT_THEME_V3_FONTS_URL;
