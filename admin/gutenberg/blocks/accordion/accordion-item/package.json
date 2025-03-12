@@ -22,5 +22,8 @@
     "@wordpress/data": "^10.13.0",
     "@wordpress/scripts": "^30.6.0"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "uuid": "^11.0.3"
+  }
 }

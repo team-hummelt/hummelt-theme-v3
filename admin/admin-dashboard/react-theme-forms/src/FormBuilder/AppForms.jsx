@@ -1472,6 +1472,12 @@ export default class AppForms extends Component {
                                 })}
                             </ButtonGroup>
                             <div className="ms-lg-auto d-flex align-items-center">
+                                {/*}  <Button
+                                    size="sm"
+                                    variant={`outline-light text-body border me-1`}>
+                                    <i className="bi bi-braces me-2"></i>
+                                    Row wrapper
+                                </Button> {*/}
                                 <span onClick={() => this.setFormReferenz(this.state.prev)}
                                       title="Rückgängig"
                                       className={`btn-prev me-1 ${this.state.prev ? '' : 'disabled'}`}></span>
@@ -1500,6 +1506,7 @@ export default class AppForms extends Component {
                             </div>
                         </div>
                         <hr/>
+
                         <div
                             className={`builder-wrapper d-flex flex-wrap g-3 px-2 pb-3 pt-2 mt-3  rounded mb-2 align-items-stretch ${this.state.builderToggle ? 'active' : ''}`}>
                             <div onClick={() => this.setState({builderToggle: !this.state.builderToggle})}

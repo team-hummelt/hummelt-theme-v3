@@ -91,7 +91,7 @@ class register_hummelt_theme_v3_optionen
 
         $settings = get_option(HUMMELT_THEME_V3_SLUG . '/settings');
         $this->capabilities = $settings['theme_capabilities'];
-
+        add_filter('widget_text', 'do_shortcode');
 
     }
 

@@ -67,7 +67,7 @@ class hummelt_theme_v3_shortcodes
                         }
                     }
                     if ($tmp['link_type'] == 'tel') {
-                        $tel = str_replace([' ', '-', '/', '+', '(0)'], ['', '', '', '00', ''], $tmp['value']);
+                        $tel = str_replace([' ', '-', '/', '+', '(0)', '|', '(', ')'], ['', '', '', '+', '', '', '', ''], $tmp['value']);
                         if ($tmp['only_icon_display'] && $tmp['icon']) {
                             $out .= '<a href="tel: ' . $tel . '">' . $icon . '</a>';
                         } elseif ($tmp['icon_is_url'] && $tmp['icon']) {

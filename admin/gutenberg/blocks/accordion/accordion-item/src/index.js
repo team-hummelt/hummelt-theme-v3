@@ -1,19 +1,20 @@
 import './editor.scss';
 import './style.scss';
-
-const {registerBlockType} = wp.blocks;
-import {InnerBlocks, useBlockProps, InspectorControls, RichText} from '@wordpress/block-editor';
+import { v4 as uuidv4 } from "uuid";
+const { registerBlockType } = wp.blocks;
+import { InnerBlocks, useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
 import icon from './icon.js';
-const {__} = wp.i18n;
-const { Fragment } = wp.element;
+const { __ } = wp.i18n;
+const { Fragment, useEffect, useState } = wp.element;
 const { PanelBody, ToggleControl, RangeControl } = wp.components;
+
 registerBlockType('hupa/accordion-item', {
     title: __('Accordion Item', 'bootscore'),
     icon: icon,
     category: 'theme-v3-addons',
-    parent: ['hupa/accordion'], // Erzwingt, dass dieser Block nur im Accordion benutzt wird
+    parent: ['hupa/accordion'],
     supports: {
-        reusable: false, // In der Regel kein eigenes Reusable hier benötigt
+        reusable: false,
     },
     attributes: {
         itemId: {
@@ -31,13 +32,13 @@ registerBlockType('hupa/accordion-item', {
         scrollToItem: {
             type: 'boolean',
             default: false
-        },       // Neu: Soll gescrollt werden?
+        },
         scrollOffset: {
             type: 'number',
             default: 0
-        },     // Neu: Offset in px
+        },
     },
-    edit({attributes, setAttributes})  {
+    edit({ attributes, setAttributes }) {
         const {
             itemId,
             title,
@@ -46,33 +47,39 @@ registerBlockType('hupa/accordion-item', {
             isOpen,
         } = attributes;
 
-        if (!itemId) {
-            const uniqueId = `item-${Math.random().toString(36).slice(2, 9)}`;
-            setAttributes({itemId: uniqueId});
-        }
+        // Einzigartige ID nur setzen, wenn sie noch nicht existiert
+        useEffect(() => {
+            if (!itemId) {
+                setAttributes({ itemId: uuidv4() });
+            }
+        }, []);
 
+        // Lokaler Zustand, um den Status unabhängig von anderen Blocks zu steuern
+        const [localIsOpen, setLocalIsOpen] = useState(isOpen);
+
+        const toggleAccordion = () => {
+            setLocalIsOpen(!localIsOpen);
+            setAttributes({ isOpen: !localIsOpen }); // Synchronisieren mit Gutenberg
+        };
 
         const blockProps = useBlockProps({
             className: 'hupa-accordion-item',
         });
 
-        // Hier könnte man auch ein eigenes Template definieren, etwa:
-        // template={[['core/heading', { placeholder: __('Accordion Title', 'myplugin') }], ['core/paragraph', { placeholder: __('Accordion content...', 'myplugin') }]]}
-        // Wenn man maximale Freiheit will, einfach ohne Template, aber mit InnerBlocks
         return (
             <Fragment>
                 <InspectorControls>
-                    <PanelBody title={ __('Scrolling Options', 'bootscore') } initialOpen={true}>
+                    <PanelBody title={__('Scrolling Options', 'bootscore')} initialOpen={true}>
                         <ToggleControl
-                            label={ __('Scroll to this item on open', 'bootscore') }
-                            checked={ scrollToItem }
-                            onChange={ (newVal) => setAttributes({ scrollToItem: newVal }) }
+                            label={__('Scroll to this item on open', 'bootscore')}
+                            checked={scrollToItem}
+                            onChange={(newVal) => setAttributes({ scrollToItem: newVal })}
                             __nextHasNoMarginBottom={true}
                         />
                         {scrollToItem && (
                             <RangeControl
-                                label={ __('Scroll Offset (px)', 'bootscore') }
-                                value={ scrollOffset }
+                                label={__('Scroll Offset (px)', 'bootscore')}
+                                value={scrollOffset}
                                 onChange={(newOffset) => setAttributes({ scrollOffset: newOffset })}
                                 __nextHasNoMarginBottom={true}
                                 step={10}
@@ -81,12 +88,12 @@ registerBlockType('hupa/accordion-item', {
                             />
                         )}
                     </PanelBody>
-                    <PanelBody title={ __('Open State', 'bootscore') } initialOpen={true}>
+                    <PanelBody title={__('Open State', 'bootscore')} initialOpen={true}>
                         <ToggleControl
-                            label={ __('Item open by default', 'bootscore') }
-                            checked={ isOpen }
+                            label={__('Item open by default', 'bootscore')}
+                            checked={localIsOpen}
                             __nextHasNoMarginBottom={true}
-                            onChange={ (newVal) => setAttributes({ isOpen: newVal }) }
+                            onChange={toggleAccordion}
                         />
                     </PanelBody>
                 </InspectorControls>
@@ -94,22 +101,22 @@ registerBlockType('hupa/accordion-item', {
                     <RichText
                         tagName="h5"
                         className="text-body"
-                        value={ title }
+                        value={title}
                         onChange={(newTitle) => setAttributes({ title: newTitle })}
-                        placeholder={ __('Accordion Title...', 'bootscore') }
+                        placeholder={__('Accordion Title...', 'bootscore')}
                     />
                     <InnerBlocks />
                 </div>
             </Fragment>
         );
     },
-    save({attributes}) {
+    save({ attributes }) {
         const { itemId, title, scrollToItem, scrollOffset, isOpen } = attributes;
         return (
             <div
                 className="accordion-item"
-                data-scroll-to-item={ scrollToItem ? 'true' : 'false' }
-                data-scroll-offset={ scrollOffset }
+                data-scroll-to-item={scrollToItem ? 'true' : 'false'}
+                data-scroll-offset={scrollOffset}
             >
                 <h5 className="accordion-header" id={`heading-${itemId}`}>
                     <button
@@ -117,14 +124,14 @@ registerBlockType('hupa/accordion-item', {
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target={`#collapse-${itemId}`}
-                        aria-expanded="false"
+                        aria-expanded={isOpen}
                         aria-controls={`collapse-${itemId}`}
                     >
-                        { title }
+                        {title}
                     </button>
                 </h5>
                 <div id={`collapse-${itemId}`}
-                     className={`accordion-collapse collapse${ isOpen ? ' show' : ''}`}
+                     className={`accordion-collapse collapse${isOpen ? ' show' : ''}`}
                      aria-labelledby={`heading-${itemId}`}>
                     <div className="accordion-body">
                         <InnerBlocks.Content />

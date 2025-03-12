@@ -162,7 +162,7 @@ registerBlockType('hupa/theme-gallery', {
             setAttributes({images: newImages});
         };
 
-        useEffect(() => {
+        /*useEffect(() => {
             if (images.length > 0) {
                 const sortableElement = document.querySelector('.sortable-list');
                 if (sortableElement) {
@@ -179,6 +179,24 @@ registerBlockType('hupa/theme-gallery', {
                         },
                     });
                 }
+            }
+        }, [images]);*/
+        useEffect(() => {
+            if (images.length > 0) {
+                document.querySelectorAll('.sortable-list').forEach((sortableElement) => {
+                    jQuery(sortableElement).sortable({
+                        update: (event, ui) => {
+                            const sortedIDs = jQuery(sortableElement)
+                                .sortable('toArray', {attribute: 'data-id'})
+                                .map((id) => parseInt(id, 10));
+
+                            const reorderedImages = sortedIDs.map((id) =>
+                                images.find((image) => image.id === id)
+                            );
+                            setAttributes({images: reorderedImages});
+                        },
+                    });
+                });
             }
         }, [images]);
 
