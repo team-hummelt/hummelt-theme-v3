@@ -61,7 +61,7 @@ class hummelt_theme_v3_wp_optionen
         }
         return $headers;
     }
-    public function fn_hummelt_theme_v3_disabled_pingback_trackbacks_methods($open, $post_id): false
+    public function fn_hummelt_theme_v3_disabled_pingback_trackbacks_methods($open, $post_id): bool
     {
         $post = get_post($post_id);
         if ('pingback' === get_post_meta($post->ID, '_pingme', true)) {
