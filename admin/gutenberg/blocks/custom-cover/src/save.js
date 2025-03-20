@@ -8,6 +8,8 @@ const Save = ({attributes}) => {
         height,
         parallax_active,
         parallax_fixiert,
+        ausgabeOption,
+        imageCaption,
         parallax_type,
         parallax_speed,
         position_left,
@@ -47,6 +49,9 @@ const Save = ({attributes}) => {
                     <InnerBlocks.Content />
                 </div>
             </div>
+            {ausgabeOption === 'caption' ?
+                <div className="custom-cover-caption">{imageCaption}</div>
+                : ''}
         </div>
     );
 };

@@ -38,6 +38,14 @@
       "type": "string",
       "default": "full"
     },
+    "ausgabeOption" : {
+      "type": "string",
+      "default": ""
+    },
+    "imageCaption" : {
+      "type": "string",
+      "default": ""
+    },
     "parallax_active" : {
       "type": "bool",
       "default": false
