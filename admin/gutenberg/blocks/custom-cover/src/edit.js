@@ -7,7 +7,7 @@ import {
     MediaUploadCheck
 } from '@wordpress/block-editor';
 
-const {PanelBody, ColorPicker, RangeControl, Button, SelectControl, Flex, FlexItem, ToggleControl, TextControl} = wp.components;
+const {PanelBody, ColorPicker, RangeControl, Button, SelectControl, Flex, FlexItem, ToggleControl, TextControl, RadioControl} = wp.components;
 const {Fragment} = wp.element;
 
 const Edit = ({attributes, setAttributes}) => {
@@ -18,6 +18,8 @@ const Edit = ({attributes, setAttributes}) => {
         content,
         height,
         imageSize,
+        ausgabeOption,
+        imageCaption,
         parallax_active,
         parallax_fixiert,
         parallax_type,
@@ -39,7 +41,7 @@ const Edit = ({attributes, setAttributes}) => {
         // Sicherstellen, dass `media.sizes` existiert und die gewünschte Größe verfügbar ist
         const selectedImageSize =
             media?.sizes?.[newSize]?.url || media?.url || ''; // Fallback auf die Standard-URL oder einen leeren String
-        setAttributes({imageSize: newSize, backgroundImage: selectedImageSize});
+        setAttributes({imageSize: newSize, backgroundImage: selectedImageSize, imageCaption: media?.caption});
     };
 
     const setNewSize = (size) => {
@@ -87,7 +89,7 @@ const Edit = ({attributes, setAttributes}) => {
 
         const selectedImageSize =
             media?.sizes?.[imageSize]?.url || media?.url || ''; // Fallback auf die Standard-URL oder einen leeren String
-        setAttributes({backgroundImage: selectedImageSize, imageId: media.id});
+        setAttributes({backgroundImage: selectedImageSize, imageId: media.id, imageCaption: media?.caption});
     };
 
     const handleFixiert = (e) => {
@@ -176,6 +178,20 @@ const Edit = ({attributes, setAttributes}) => {
                         max={100}
                         step={1}
                         onChange={e => setAttributes({position_oben: parseInt(e)})}
+                    />
+                    <RadioControl
+                        label={'Ausgabe Option'}
+                        selected={ausgabeOption}
+                        __nextHasNoMarginBottom={true}
+                        options={[{
+                            label: 'keine Aktion',
+                            value: '',
+                        }, {
+                            label: 'Caption anzeigen',
+                            value: 'caption',
+                        }
+                        ]}
+                        onChange={(action) => setAttributes({ausgabeOption: action})}
                     />
                 </PanelBody>
                 <PanelBody initialOpen={false}

@@ -83,6 +83,14 @@ registerBlockType('hupa/theme-gallery', {
             type: 'boolean',
             default: false,
         },
+        ausgabeOption: {
+            type: 'string',
+            default: '',
+        },
+        enableTitle: {
+            type: 'boolean',
+            default: true,
+        },
         clickAction: {
             type: 'string',
             default: '',
@@ -118,6 +126,8 @@ registerBlockType('hupa/theme-gallery', {
             imageCrop,
             lazyLoad,
             imageWidth,
+            ausgabeOption,
+            enableTitle,
             imageHeight,
             lazyLoadAnimation,
             lightboxSingle,
@@ -135,6 +145,7 @@ registerBlockType('hupa/theme-gallery', {
         const [isModalOpen, setIsModalOpen] = useState(false);
 
         const onSelectImages = (newImages) => {
+
             setAttributes({
                 images: newImages.map((image) => ({
                     id: image.id,
@@ -303,6 +314,31 @@ registerBlockType('hupa/theme-gallery', {
                                 checked={repeatAnimation}
                                 onChange={(value) => setAttributes({repeatAnimation: value})}
                             />
+
+
+                            <RadioControl
+                                label={__('Ausgabe Option', 'text-domain')}
+                                selected={ausgabeOption}
+                                __nextHasNoMarginBottom={true}
+                                options={[{
+                                    label: __('keine Aktion', 'text-domain'),
+                                    value: '',
+                                }, {
+                                    label: __('Caption anzeigen', 'text-domain'),
+                                    value: 'caption',
+                                }
+                                ]}
+                                onChange={(action) => setAttributes({ausgabeOption: action})}
+                            />
+
+                            <ToggleControl
+                                label="Titel anzeigen"
+                                //disabled={galleryType === 'gallery'}
+                                __nextHasNoMarginBottom={true}
+                                checked={enableTitle}
+                                onChange={(value) => setAttributes({enableTitle: value})}
+                            />
+
                             {/*}  <RangeControl
                                 label="Image Width (px)"
                                 __nextHasNoMarginBottom={true}
@@ -741,6 +777,8 @@ registerBlockType('hupa/theme-gallery', {
             repeatAnimation,
             imageCrop,
             imageWidth,
+            ausgabeOption,
+            enableTitle,
             imageHeight,
             lazyLoadAnimation,
             lightboxSingle,
@@ -773,7 +811,7 @@ registerBlockType('hupa/theme-gallery', {
                         return (
                             <div className={`col grid-item text-center `} key={index}>
                                 <div className="d-inline-block image-wrapper w-100">
-                                    <a target={image.tab ? '_blank' : '_self'}
+                                    <a title={enableTitle ? image.title : ''} target={image.tab ? '_blank' : '_self'}
                                        href={clickAction === 'lightbox' ? image.url : image.link !== '' ? image.link : ''}
                                        className={`${clickAction === 'lightbox' || clickAction === 'individuell' && image.link !== '' ? 'cursor-pointer' : 'pe-none'}`}>
                                         <img className={`img-fluid rounded lazy-image ${lazyLoadAnimation ? '' : 'no-animate'}`}
@@ -785,11 +823,14 @@ registerBlockType('hupa/theme-gallery', {
                                                  objectFit: 'cover'
                                              }}
                                              data-src={image.url}
-                                             alt={image.alt}
-                                             title={image.caption}
+                                             alt={image.alt ? image.alt : image.title}
+                                             title={ausgabeOption === 'caption' ? image.title : ''}
                                              loading={"lazy"}
                                         />
                                     </a>
+                                    {ausgabeOption === 'caption' ?
+                                        <div className="gallery-item-caption"> {image.title}</div>
+                                        : ''}
                                 </div>
                             </div>
                         )

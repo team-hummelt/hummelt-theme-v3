@@ -381,7 +381,8 @@ function theme_video() {
                     slideshowInterval: parseInt(slideshowInterval),
                     toggleControlsOnEnter: (toggleControlsOnEnter === 'true'),
                     toggleControlsOnSlideClick: (toggleControlsOnSlideClick === 'true'),
-                    toggleSlideshowOnSpace: (toggleSlideshowOnSpace === 'true'),
+                   // toggleSlideshowOnSpace: (toggleSlideshowOnSpace === 'true'),
+                    toggleSlideshowOnSpace: false,
                     emulateTouchEvents: (emulateTouchEvents === 'true'),
                     stopTouchEventsPropagation: (stopTouchEventsPropagation === 'true'),
 
