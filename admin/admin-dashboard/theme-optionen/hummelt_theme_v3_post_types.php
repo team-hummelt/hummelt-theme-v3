@@ -421,11 +421,15 @@ class hummelt_theme_v3_post_types
 
     public function fn_theme_v3_get_pages(): array
     {
-        $pages = get_posts(array(
+       /* $pages = get_posts(array(
             'numberposts' => -1,
             'post_type' => 'page',
             'post_status' => 'publish',
-        ));
+        ));*/
+        $pages = get_pages([
+            'sort_column' => 'post_title',
+            'sort_order'  => 'ASC', // A–Z
+        ]);
         $pageArr = [];
         foreach ($pages as $page) {
             $item = [
@@ -435,7 +439,7 @@ class hummelt_theme_v3_post_types
             ];
             $pageArr[] = $item;
         }
-        sort($pageArr);
+       // sort($pageArr);
         return $pageArr;
     }
 

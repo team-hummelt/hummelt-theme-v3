@@ -503,6 +503,8 @@ class Hummelt_Theme_V3
         $this->loader->add_action('save_post', $themeV3Helper, 'fn_theme_v3_create_sitemap');
         $this->loader->add_action('deleted_post', $themeV3Helper, 'fn_theme_v3_create_sitemap');
         $this->loader->add_action(HUMMELT_THEME_V3_SLUG.'/create_sitemap', $themeV3Helper, 'fn_theme_v3_create_sitemap');
+        //Attachment Array
+        $this->loader->add_filter(HUMMELT_THEME_V3_SLUG . '/get_image_attachment', $themeV3Helper, 'get_attachment_image_array', 10, 2);
 
     }
 

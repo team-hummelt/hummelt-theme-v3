@@ -950,14 +950,108 @@ class hummelt_theme_v3_dashboard_endpoint extends WP_REST_Controller
             $jsonArr = json_decode($jsonArr, true);
             $settings['google_maps_api']['map_color_schema'] = json_encode($jsonArr, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES);
         }
+        if(!isset($settings['aktionsbanner'])) {
+            $defSettings = $this->get_theme_default_settings('aktionsbanner');
+            $settings['aktionsbanner'] = $defSettings;
+        }
+        $posts = [];
+        if($settings['aktionsbanner']['post_type']) {
+            $posts = (array) $this->get_posts_by_type($settings['aktionsbanner']['post_type']);
+        }
+
+        $this->responseJson->posts = $posts;
+        $excluded = ['attachment', 'revision', 'nav_menu_item', 'page', 'theme_footer', 'theme_header'];
+        $post_types = get_post_types(['public' => true], 'objects');
+        $postTypes = [];
+        foreach ($post_types as $post_type) {
+            if (in_array($post_type->name, $excluded)) {
+                continue;
+            }
+            $item = [
+                'label' => $post_type->label,
+                'type' => $post_type->name
+            ];
+            $postTypes[] = $item;
+        }
+
 
         $settings['google_maps_api']['map_pins'] = $pinArr;
         $settings['google_maps_datenschutz'] = $mapDsArr;
         $this->responseJson->menu = $this->tools_plugins_menu();
+        $this->responseJson->post_types = $postTypes;
+
         $this->responseJson->pages = apply_filters(HUMMELT_THEME_V3_SLUG . '/get_pages', null);
         $this->responseJson->settings = $settings;
         $this->responseJson->osm_tile_layers = $this->osm_tile_layers();
         $this->responseJson->top_area_widgets = $this->top_area_widget_types($settings['theme_top_area']);
+        $this->responseJson->status = true;
+        return $this->responseJson;
+    }
+
+    private function get_posts_by_type($type = ''):object
+    {
+        if($type){
+            $post_type = $type;
+        } else {
+            $post_type = sanitize_text_field($this->request->get_param('type'));
+        }
+
+
+        $posts = get_posts([
+            'post_type'   => $post_type,
+            'numberposts' => 20,            // 🔢 Begrenzung auf 20 Beiträge
+            'orderby'     => 'date',
+            'order'       => 'DESC',
+        ]);
+
+        $postArr = [];
+        foreach ($posts as $post) {
+           $title =  mb_strimwidth($post->post_title, 0, 50, '...', 'UTF-8');
+            $item = [
+                'id' => $post->ID,
+                'title' => $title
+            ];
+            $postArr[] = $item;
+        }
+        if($type) {
+            return (object) $postArr;
+        }
+        $this->responseJson->posts = $postArr;
+        $this->responseJson->status = true;
+        return $this->responseJson;
+    }
+
+    private function update_aktionsbanner():object
+    {
+        $data = $this->request->get_param('data');
+        if(!$data){
+            return $this->responseJson;
+        }
+        $data = json_decode($data, true);
+        $banner = [
+            'static' => filter_var($data['static'], FILTER_VALIDATE_BOOLEAN),
+            'scrollable' => filter_var($data['scrollable'], FILTER_VALIDATE_BOOLEAN),
+            'centered' => filter_var($data['centered'], FILTER_VALIDATE_BOOLEAN),
+            'size' => sanitize_text_field($data['size']),
+            'dialog_css' => sanitize_text_field($data['dialog_css']),
+            'modal_css' => sanitize_text_field($data['modal_css']),
+            'aktiv' => filter_var($data['aktiv'], FILTER_VALIDATE_BOOLEAN),
+            'show_login_user' =>filter_var($data['show_login_user'], FILTER_VALIDATE_BOOLEAN),
+            'post_id' => filter_var($data['post_id'], FILTER_VALIDATE_INT),
+            'post_type' => sanitize_text_field($data['post_type']),
+            'show_all_pages' => filter_var($data['show_all_pages'], FILTER_VALIDATE_BOOLEAN),
+            'show_page_id' => filter_var($data['show_page_id'], FILTER_VALIDATE_INT),
+            'show_pro_sitzung' => filter_var($data['show_pro_sitzung'], FILTER_VALIDATE_BOOLEAN),
+            'last_post' => filter_var($data['last_post'], FILTER_VALIDATE_BOOLEAN),
+            'show_beitrags_image' => filter_var($data['show_beitrags_image'], FILTER_VALIDATE_BOOLEAN),
+            'image_size' => sanitize_text_field($data['image_size']),
+            'object_fit' => sanitize_text_field($data['object_fit']),
+            'height' => sanitize_text_field($data['height']),
+            'object_postion' => sanitize_text_field($data['object_postion']),
+        ];
+        $settings = get_option(HUMMELT_THEME_V3_SLUG . '/settings');
+        $settings['aktionsbanner'] = $banner;
+        update_option(HUMMELT_THEME_V3_SLUG . '/settings', $settings);
         $this->responseJson->status = true;
         return $this->responseJson;
     }

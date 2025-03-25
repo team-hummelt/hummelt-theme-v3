@@ -9,6 +9,7 @@ import Gallery from "./components/Gallery/Gallery.jsx";
 import SetAjaxResponse from "./utils/SetAjaxResponse.jsx";
 import CustomFields from "./components/CustomFields/CustomFields.jsx";
 import TopArea from "./components/TopArea.jsx";
+import Aktionsbanner from "./components/Aktionsbanner.jsx";
 import * as AppTools from "./utils/AppTools";
 
 const {Component, Fragment} = wp.element;
@@ -36,8 +37,11 @@ export default class App extends Component {
             triggerGallery: false,
             menu: [],
             pages: [],
+            post_types: [],
+            posts: [],
             topArea: [],
             osm_tile_layers: [],
+            aktionsBanner: {},
             settings: {
                 google_maps_datenschutz: [],
                 google_maps: {},
@@ -68,6 +72,7 @@ export default class App extends Component {
         this.onSetTopArea = this.onSetTopArea.bind(this);
         this.onSetSortableTopArea = this.onSetSortableTopArea.bind(this);
         this.onUpdateSortableTopArea = this.onUpdateSortableTopArea.bind(this);
+        this.onSetAktionsBanner = this.onSetAktionsBanner.bind(this);
 
         this.onSetTriggerMapDs = this.onSetTriggerMapDs.bind(this);
         this.onSetGMapsApi = this.onSetGMapsApi.bind(this);
@@ -204,21 +209,21 @@ export default class App extends Component {
     }
 
     onDeleteLeafletPin(pinId, leafletId) {
-      let swal = {
-          'title': 'Pin löschen?',
-          'btn': 'Pin löschen',
-          'msg': 'Das Löschen kann nicht rückgängig gemacht werden!'
-      }
-      AppTools.swal_delete_modal(swal).then((result) => {
-          if(result) {
-              let formData = {
-                  'method': 'delete_leaflet_pin',
-                  'pin_id': pinId,
-                  'leaflet_id': leafletId
-              }
-              this.sendFetchApi(formData)
-          }
-      })
+        let swal = {
+            'title': 'Pin löschen?',
+            'btn': 'Pin löschen',
+            'msg': 'Das Löschen kann nicht rückgängig gemacht werden!'
+        }
+        AppTools.swal_delete_modal(swal).then((result) => {
+            if (result) {
+                let formData = {
+                    'method': 'delete_leaflet_pin',
+                    'pin_id': pinId,
+                    'leaflet_id': leafletId
+                }
+                this.sendFetchApi(formData)
+            }
+        })
     }
 
     onSetLeafletHandle(e, type, id) {
@@ -267,6 +272,18 @@ export default class App extends Component {
         }
     }
 
+    onSetAktionsBanner(e, type) {
+        let settings = this.state.settings;
+        let ab = settings.aktionsbanner;
+        ab[type] = e;
+        settings.aktionsbanner = ab;
+        this.setState({
+            settings: settings
+        })
+
+        this.sendOptionFormData(settings.aktionsbanner, 'update_aktionsbanner')
+    }
+
     sendOptionFormData(settings, method) {
         let _this = this;
         clearTimeout(this.formUpdTimeOut);
@@ -276,7 +293,7 @@ export default class App extends Component {
                 'data': JSON.stringify(settings)
             }
             _this.sendFetchApi(formData)
-        }, 1000);
+        }, 500);
     }
 
     onSetTopArea(e, type, slug) {
@@ -302,9 +319,9 @@ export default class App extends Component {
     }
 
     onSetSortableTopArea(setState) {
-       this.setState({
-           topArea: setState
-       })
+        this.setState({
+            topArea: setState
+        })
     }
 
     onUpdateSortableTopArea() {
@@ -332,12 +349,13 @@ export default class App extends Component {
                             settings: data.settings,
                             pages: data.pages,
                             topArea: data.top_area_widgets,
-                            osm_tile_layers: data.osm_tile_layers
+                            osm_tile_layers: data.osm_tile_layers,
+                            post_types: data.post_types,
+                            posts: data.posts
                         })
                     }
                     break;
                 case 'maps_ds_handle':
-
                     if (data.status) {
                         console.log(data.handle)
                         if (data.handle === "insert") {
@@ -420,10 +438,10 @@ export default class App extends Component {
                     })
                     break;
                 case 'delete_leaflet_pin':
-                    if(data.status) {
+                    if (data.status) {
                         const leaflet = [...this.state.settings.leaflet];
                         const findLeaflet = this.findArrayElementById(leaflet, data.leaflet_id, 'id');
-                        if(findLeaflet) {
+                        if (findLeaflet) {
                             findLeaflet.pins = this.filterArrayElementById([...findLeaflet.pins], data.pin_id, 'id')
                             let settings = this.state.settings;
                             settings.leaflet = leaflet;
@@ -435,6 +453,13 @@ export default class App extends Component {
                     } else {
                         AppTools.warning_message(data.msg);
                     }
+                    break;
+                case 'get_posts_by_type':
+                        if(data.status) {
+                            this.setState({
+                                posts: data.posts
+                            })
+                        }
                     break;
 
             }
@@ -661,6 +686,19 @@ export default class App extends Component {
                                                             onSetTopArea={this.onSetTopArea}
                                                             onSetSortableTopArea={this.onSetSortableTopArea}
                                                             onUpdateSortableTopArea={this.onUpdateSortableTopArea}
+                                                        />
+                                                    </div>
+                                                </Collapse>
+                                                <Collapse
+                                                    in={this.state.collapsedId === 'aktionsbanner'}>
+                                                    <div id={uuidv4()}>
+                                                        <Aktionsbanner
+                                                            settings={this.state.settings}
+                                                            post_types={this.state.post_types}
+                                                            pages={this.state.pages}
+                                                            posts={this.state.posts}
+                                                            onSetAktionsBanner={this.onSetAktionsBanner}
+                                                            sendFetchApi={this.sendFetchApi}
                                                         />
                                                     </div>
                                                 </Collapse>
