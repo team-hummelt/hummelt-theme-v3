@@ -569,6 +569,15 @@ trait hummelt_theme_v3_selects
                 'icon' => 'bi-collection',
                 'sub' => []
             ],
+            '4' => [
+                'id' => 'aktionsbanner',
+                'first' => '',
+                'first-label' => 'Einstellungen',
+                'label' => 'Aktionsbanner',
+                'headline' => 'Aktionsbanner',
+                'icon' => 'bi-bell',
+                'sub' => []
+            ],
 
         ];
     }

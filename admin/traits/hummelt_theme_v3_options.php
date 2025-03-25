@@ -65,6 +65,28 @@ trait hummelt_theme_v3_options
                     'css' => '',
                 ]
             ],
+            'aktionsbanner' => [
+                'static' => true,
+                'scrollable' => false,
+                'centered' => true,
+                'size' => '',
+                'dialog_css' => '',
+                'modal_css' => '',
+                'aktiv' => false,
+                'show_login_user' => false,
+                'post_id' => 0,
+                'post_type' => '',
+                'show_all_pages' => true,
+                'show_page_id' => 0,
+                'show_pro_sitzung' => true,
+                'last_post' => false,
+                'show_beitrags_image' => false,
+                'image_size' => 'large',
+                'object_fit' => 'cover',
+                'height' => 'auto',
+                'object_postion' => '50% 50%'
+
+            ],
             'google_maps_datenschutz' => [
                 '0' => [
                     'id' => uniqid(),

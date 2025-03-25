@@ -115,6 +115,13 @@ class hummelt_theme_v3_public_enqueue
 
         $slider = $settings['slider'];
         $animation_default = $settings['animation_default'];
+        $banner = $settings['aktionsbanner'];
+        $aktionsBanner = [
+            'is_user_logged_id' => is_user_logged_in(),
+            'show_pro_sitzung' => $banner['show_pro_sitzung'],
+            'aktiv' => $banner['aktiv'],
+            'show_login_user' => $banner['show_login_user']
+        ];
 
         $splide = [];
         foreach ($slider as $tmp) {
@@ -156,7 +163,8 @@ class hummelt_theme_v3_public_enqueue
                 'public_nonce' => $public_nonce,
                 'theme_nonce' => $theme_nonce,
                 'theme_slider' => $splide,
-                'animation' => $animation_default
+                'animation' => $animation_default,
+                'banner' => $aktionsBanner
             )
         );
         // delete_option(HUMMELT_THEME_V3_SLUG . '/form_redirect');

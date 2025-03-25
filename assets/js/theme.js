@@ -1,7 +1,35 @@
 /*--------------------------------------------------------------
 Theme JS
 --------------------------------------------------------------*/
+document.addEventListener("DOMContentLoaded", function () {
+    let newsModal = document.getElementById("theme-aktionsbanner");
+    if (newsModal) {
+        let aktionsbannerModal = bootstrap.Modal.getOrCreateInstance(newsModal, {
+            keyboard: false,
+            focus: true
+        });
 
+
+        let banner = hummeltPublicObj.banner;
+        let bannerAktiv = banner.aktiv === true;
+        let show_login_user = banner.show_login_user === true;
+        let is_user_logged_id = banner.is_user_logged_id === true;
+        let show_pro_sitzung = banner.show_pro_sitzung === true;
+        //
+        if (bannerAktiv && !show_pro_sitzung) {
+            aktionsbannerModal.show()
+        }
+        if (bannerAktiv && show_pro_sitzung) {
+            if(!sessionStorage.getItem('aktionsbannerBanner')) {
+                aktionsbannerModal.show()
+                sessionStorage.setItem('aktionsbannerBanner', '1')
+            }
+        }
+        if(show_login_user && is_user_logged_id){
+            aktionsbannerModal.show()
+        }
+    }
+});
 jQuery(function ($) {
 
     const carousels = document.querySelectorAll('.carousel');
@@ -396,7 +424,7 @@ jQuery(function ($) {
         });
         if (window.location.hash) {
             $('html, body').animate({
-                scrollTop: $(window.location.hash).offset().top -170
+                scrollTop: $(window.location.hash).offset().top - 170
             }, 1000, 'swing')
         }
         if (window.location.hash) {

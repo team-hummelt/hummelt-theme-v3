@@ -84,8 +84,10 @@ defined('ABSPATH') || exit;
             class="bi bi-chevron-up"></i><span class="visually-hidden-focusable">To top</span></div>
 
 </div><!-- #page -->
+<?=do_shortcode('[aktionsbanner]');?>
+<?php
 
-<?php wp_footer(); ?>
+wp_footer(); ?>
 
 </body>
 
