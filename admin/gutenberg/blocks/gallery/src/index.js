@@ -1,6 +1,8 @@
 import './editor.scss';
 
 import {select} from '@wordpress/data';
+import {ToolbarButton, ToolbarDropdownMenu} from "@wordpress/components";
+import {MediaUploadCheck} from "@wordpress/block-editor/build/components/index.js";
 
 const DEFAULT_BREAKPOINTS = {
     xxl: {columns: 6, gutter: 1},
@@ -11,7 +13,7 @@ const DEFAULT_BREAKPOINTS = {
     xs: {columns: 2, gutter: 1},
 };
 const {registerBlockType} = wp.blocks;
-const {InspectorControls, MediaPlaceholder, MediaUpload} = wp.blockEditor;
+const {InspectorControls, MediaPlaceholder, MediaReplaceFlow ,BlockControls , MediaUpload} = wp.blockEditor;
 const {
     PanelBody,
     ToggleControl,
@@ -23,11 +25,13 @@ const {
     Modal,
     Flex,
     FlexItem,
+    ToolbarGroup,
+    DropdownMenu,
     ResponsiveWrapper,
 
 } = wp.components;
 const {__} = wp.i18n;
-const {useEffect, useState, Fragment} = wp.element;
+const {useEffect, useState, Fragment, useRef} = wp.element;
 
 registerBlockType('hupa/theme-gallery', {
     title: 'Theme Galerie',
@@ -258,10 +262,140 @@ registerBlockType('hupa/theme-gallery', {
             setIsModalOpen(false);
         }
 
+        const openGalleryFrame = async () => {
+            const attachments = await Promise.all(
+                images.map((img) => {
+                    const attachment = wp.media.attachment(img.id);
+                    return attachment.fetch().then(() => attachment);
+                })
+            );
+
+            const frame = wp.media({
+                title: 'Galerie bearbeiten',
+                frame: 'post',
+                state: 'gallery-edit',
+                library: wp.media.query({ type: 'image' }),
+                multiple: true,
+                button: {
+                    text: 'Zur Galerie übernehmen',
+                },
+                editing: true,
+                selection: new wp.media.model.Selection([]), // muss initial gesetzt sein
+            });
+
+            // Wichtig: Auswahl nach dem Öffnen setzen
+            frame.on('open', () => {
+                const state = frame.state('gallery-edit');
+
+                // Nur wenn State korrekt geladen ist
+                if (state && state.get('selection')) {
+                    state.get('selection').reset(attachments); // <- entscheidend
+                }
+            });
+
+            frame.on('update', (selection) => {
+                const selectedImages = selection.models.map((attachment) => {
+                    const image = attachment.toJSON();
+                    return {
+                        id: image.id,
+                        link: '',
+                        tab: false,
+                        url: image?.sizes?.large?.url || image.url,
+                        alt: image.alt || '',
+                        title: image.caption || '',
+                    };
+                });
+
+                setAttributes({ images: selectedImages });
+            });
+
+            frame.open();
+        };
+
+        const GalleryReplaceMenu = ({ images, setAttributes, imageSize }) => {
+            return (
+                <BlockControls>
+                    <ToolbarGroup>
+                        <MediaUploadCheck>
+                            <MediaUpload
+                                allowedTypes={['image']}
+                                multiple
+                                gallery
+                                value={images.map((img) => img.id)}
+                                onSelect={(newImages) => {
+                                    const updatedImages = newImages.map((image) => ({
+                                        id: image.id,
+                                        link: '',
+                                        tab: false,
+                                        url: image?.sizes?.[imageSize]?.url || image.url,
+                                        alt: image.alt || '',
+                                        title: image.caption || '',
+                                    }));
+                                    setAttributes({ images: updatedImages });
+                                }}
+                                render={({ open }) => (
+                                    <ToolbarDropdownMenu
+                                        icon="update"
+                                        label={__('Ersetzen', 'text-domain')}
+                                        controls={[
+                                            {
+                                                title: __('Mediathek öffnen', 'text-domain'),
+                                                icon: 'format-gallery',
+                                                onClick: open,
+                                            },
+                                            {
+                                                title: __('Hochladen', 'text-domain'),
+                                                icon: 'upload',
+                                                onClick: open,
+                                            },
+                                            {
+                                                title: __('Zurücksetzen', 'text-domain'),
+                                                icon: 'image-rotate',
+                                                onClick: () => setAttributes({ images: [] }),
+                                            },
+                                        ]}
+                                    />
+                                )}
+                            />
+                        </MediaUploadCheck>
+                    </ToolbarGroup>
+                </BlockControls>
+            );
+        };
+
+
 
         return (
             <Fragment>
-
+                <BlockControls>
+                    <ToolbarGroup>
+                        <MediaUpload
+                            onSelect={(newImages) => {
+                                const updatedImages = newImages.map((image) => ({
+                                    id: image.id,
+                                    link: '',
+                                    tab: false,
+                                    url: image?.sizes?.[imageSize]?.url || image.url,
+                                    alt: image.alt || '',
+                                    title: image.caption || '',
+                                }));
+                                setAttributes({ images: updatedImages });
+                            }}
+                            allowedTypes={['image']}
+                            multiple
+                            gallery
+                            value={images.map((img) => img.id)}
+                            render={({ open }) => (
+                                <ToolbarButton
+                                    icon="images-alt2"
+                                    text="Galerie bearbeiten"
+                                    label="Galerie bearbeiten"
+                                    onClick={open}
+                                />
+                            )}
+                        />
+                    </ToolbarGroup>
+                </BlockControls>
                 <InspectorControls>
                     <div className="gallery-sidebar">
                         <PanelBody title={__('Galerie Settings', 'text-domain')}>
@@ -698,40 +832,11 @@ registerBlockType('hupa/theme-gallery', {
                             ))}
                         </ul>
                         {/* Button zum Hinzufügen neuer Bilder */}
-                        <div className="add-images-button">
-                            <MediaUpload
-                                onSelect={(newImages) => {
-                                    const updatedImages = [
-                                        ...images, // Bestehende Bilder
-                                        ...newImages.map((image) => ({
-                                            id: image.id,
-                                            link: '',
-                                            tab: false,
-                                            url: image?.sizes?.[imageSize]?.url || image?.url || '',
-                                            alt: image.alt || '',
-                                            title: image.caption || ''
-                                        })),
-                                    ];
-                                    setAttributes({images: updatedImages});
-                                }}
-                                allowedTypes={['image']}
-                                multiple
-                                render={({open}) => (
-                                    <Button
-                                        onClick={open}
-                                        variant="primary"
-                                        className="add-images-button"
-                                    >
-                                        {__('Bild hinzufügen', 'text-domain')}
-                                    </Button>
-                                )}
-                            />
-                        </div>
                     </Fragment>) : (
-                        <MediaPlaceholder
-                            onSelect={onSelectImages}
-                            allowedTypes={['image']}
-                            multiple
+                        <GalleryReplaceMenu
+                            images={images}
+                            setAttributes={setAttributes}
+                            imageSize={imageSize}
                         />
                     )}
                     {isModalOpen && (
@@ -797,9 +902,9 @@ registerBlockType('hupa/theme-gallery', {
         }
 
 
-
         return (
-            <div id={galleryId} className={`theme-gallery-wrapper ${clickAction === 'lightbox' ? 'with-lightbox' : ''} ${galleryType === 'masonry' ? 'masonry-grid' : ''} ${lazyLoadAnimation ? 'gallery-animation' : ''}`}
+            <div id={galleryId}
+                 className={`theme-gallery-wrapper ${clickAction === 'lightbox' ? 'with-lightbox' : ''} ${galleryType === 'masonry' ? 'masonry-grid' : ''} ${lazyLoadAnimation ? 'gallery-animation' : ''}`}
                  data-animation-active={lazyLoadAnimation}
                  data-animation-type={animationType}
                  data-animation-repeat={repeatAnimation}
@@ -814,18 +919,19 @@ registerBlockType('hupa/theme-gallery', {
                                     <a title={enableTitle ? image.title : ''} target={image.tab ? '_blank' : '_self'}
                                        href={clickAction === 'lightbox' ? image.url : image.link !== '' ? image.link : ''}
                                        className={`${clickAction === 'lightbox' || clickAction === 'individuell' && image.link !== '' ? 'cursor-pointer' : 'pe-none'}`}>
-                                        <img className={`img-fluid rounded lazy-image ${lazyLoadAnimation ? '' : 'no-animate'}`}
-                                             style={{
-                                                 height: galleryType === 'masonry' && !imageCrop ? '100%' : imageHeight + 'px',
-                                                 maxHeight: '100%',
-                                                 //width:  imageWidth + 'px',
-                                                 width:  '100%',
-                                                 objectFit: 'cover'
-                                             }}
-                                             data-src={image.url}
-                                             alt={image.alt ? image.alt : image.title}
-                                             title={ausgabeOption === 'caption' ? image.title : ''}
-                                             loading={"lazy"}
+                                        <img
+                                            className={`img-fluid rounded lazy-image ${lazyLoadAnimation ? '' : 'no-animate'}`}
+                                            style={{
+                                                height: galleryType === 'masonry' && !imageCrop ? '100%' : imageHeight + 'px',
+                                                maxHeight: '100%',
+                                                //width:  imageWidth + 'px',
+                                                width: '100%',
+                                                objectFit: 'cover'
+                                            }}
+                                            data-src={image.url}
+                                            alt={image.alt ? image.alt : image.title}
+                                            title={ausgabeOption === 'caption' ? image.title : ''}
+                                            loading={"lazy"}
                                         />
                                     </a>
                                     {ausgabeOption === 'caption' ?
