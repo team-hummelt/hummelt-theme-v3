@@ -1,12 +1,11 @@
 // Import necessary dependencies
 import './editor.scss';
 import {Fragment} from "react";
-import {BlockControls} from "@wordpress/block-editor";
-import {ToolbarButton, ToolbarGroup} from "@wordpress/components";
+
 
 const {registerBlockType} = wp.blocks;
-const {InspectorControls, MediaPlaceholder, MediaUpload} = wp.blockEditor;
-const {PanelBody, ToggleControl, SelectControl, RadioControl, RangeControl, TextControl, Button, Modal} = wp.components;
+const {InspectorControls, MediaPlaceholder, MediaUpload, BlockControls} = wp.blockEditor;
+const {PanelBody, ToggleControl, SelectControl, RadioControl, RangeControl, TextControl, Button, Modal, ToolbarButton, ToolbarGroup} = wp.components;
 const {__} = wp.i18n;
 const {useEffect, useState} = wp.element;
 

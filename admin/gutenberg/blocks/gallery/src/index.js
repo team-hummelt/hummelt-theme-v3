@@ -1,8 +1,6 @@
 import './editor.scss';
 
-import {select} from '@wordpress/data';
-import {ToolbarButton, ToolbarDropdownMenu} from "@wordpress/components";
-import {MediaUploadCheck} from "@wordpress/block-editor/build/components/index.js";
+
 
 const DEFAULT_BREAKPOINTS = {
     xxl: {columns: 6, gutter: 1},
@@ -13,7 +11,7 @@ const DEFAULT_BREAKPOINTS = {
     xs: {columns: 2, gutter: 1},
 };
 const {registerBlockType} = wp.blocks;
-const {InspectorControls, MediaPlaceholder, MediaReplaceFlow ,BlockControls , MediaUpload} = wp.blockEditor;
+const {InspectorControls, MediaPlaceholder,MediaUploadCheck, MediaReplaceFlow ,BlockControls , MediaUpload} = wp.blockEditor;
 const {
     PanelBody,
     ToggleControl,
@@ -28,7 +26,8 @@ const {
     ToolbarGroup,
     DropdownMenu,
     ResponsiveWrapper,
-
+    ToolbarButton,
+    ToolbarDropdownMenu
 } = wp.components;
 const {__} = wp.i18n;
 const {useEffect, useState, Fragment, useRef} = wp.element;
@@ -833,10 +832,10 @@ registerBlockType('hupa/theme-gallery', {
                         </ul>
                         {/* Button zum Hinzufügen neuer Bilder */}
                     </Fragment>) : (
-                        <GalleryReplaceMenu
-                            images={images}
-                            setAttributes={setAttributes}
-                            imageSize={imageSize}
+                        <MediaPlaceholder
+                            onSelect={onSelectImages}
+                            allowedTypes={['image']}
+                            multiple
                         />
                     )}
                     {isModalOpen && (
