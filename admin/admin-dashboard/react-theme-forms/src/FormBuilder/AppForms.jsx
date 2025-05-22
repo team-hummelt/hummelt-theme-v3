@@ -29,6 +29,7 @@ export default class AppForms extends Component {
         this.props = props;
         this.formUpdTimeOut = '';
         this.state = {
+
             next: 0,
             prev: 0,
             rowsCount: 0,
@@ -98,7 +99,8 @@ export default class AppForms extends Component {
             email_settings: {
                 email: '',
                 responder: '',
-                email_select_active: ''
+                email_select_active: '',
+                header_selects: []
             }
 
         }
@@ -1293,7 +1295,8 @@ export default class AppForms extends Component {
                             email_settings: {
                                 email: data.record.email,
                                 responder: data.record.responder,
-                                email_select_active: data.email_select_active
+                                email_select_active: data.email_select_active,
+                                header_selects: data.header_select
                             }
                         })
                         this.onToggleCollapse('email');
