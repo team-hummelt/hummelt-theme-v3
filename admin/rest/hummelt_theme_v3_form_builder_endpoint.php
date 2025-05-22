@@ -157,7 +157,8 @@ class hummelt_theme_v3_form_builder_endpoint extends WP_REST_Controller
                     'subject' => $defSubject,
                     'cc' => '',
                     'bcc' => '',
-                    'message' => $defMsg
+                    'message' => $defMsg,
+                    'header' => []
                 ],
                 'responder' => [
                     'subject' => $defSubject,
@@ -467,6 +468,7 @@ class hummelt_theme_v3_form_builder_endpoint extends WP_REST_Controller
         $data['send_email']['responder']['message'] = html_entity_decode($data['send_email']['responder']['message']);
         $this->responseJson->record = $data['send_email'];
         $this->responseJson->email_select_active = $sendEmailSelect;
+        $this->responseJson->header_select = $this->select_custom_header();
         $this->responseJson->fields = $formInputs;
         $this->responseJson->status = true;
         return $this->responseJson;
@@ -2104,12 +2106,18 @@ class hummelt_theme_v3_form_builder_endpoint extends WP_REST_Controller
         $cc = explode('#', $cc);
         $bcc = str_replace([';', ','], '#', $bcc);
         $bcc = explode('#', $bcc);
+        //$formData['email']['cc']
+        $header = [];
+        if(isset($formData['email']['header'])) {
+            $header = $formData['email']['header'];
+        }
         $sendMail = [
             'email' => [
                 'recipient' => $formData['email']['recipient'],
                 'subject' => $formData['email']['subject'],
                 'cc' => implode(',', $cc),
                 'bcc' => implode(',', $bcc),
+                'header' => $header,
                 'message' => htmlentities($themeV3Helper->fn_compress_string($formData['email']['message']))
             ],
             'responder' => [

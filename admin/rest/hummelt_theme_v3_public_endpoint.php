@@ -751,6 +751,53 @@ class hummelt_theme_v3_public_endpoint extends WP_REST_Controller
                 }
             }
         }
+
+        $headers = [];
+
+        if(isset($sendEmail['email']['header'])) {
+            $keys = [];
+            foreach ($sendEmail['email']['header'] as $tmp) {
+                $keys[] = $tmp['key'];
+            }
+            $sendHeader = $sendEmail['email']['header'];
+            $getHeader = function ($key) use ($sendHeader) {
+                foreach ($sendHeader as $tmp) {
+                    if($tmp['key'] == $key) {
+                        return $tmp;
+                    }
+                }
+                return [];
+            };
+
+            $setPlaceholder = function ($slug) use ($formData) {
+                foreach ($formData as $tmp) {
+                    $form = $tmp['form'];
+
+                    if($form['slug'] == $slug ) {
+                        return $form['config']['default'];
+                    }
+                }
+                return  '';
+            };
+            $keys = array_merge(array_unique(array_filter($keys)));
+            foreach ($keys as $key){
+                $h =  $getHeader($key);
+
+                preg_match_all('/{(.*?)}/', $h['value'], $matches);
+                $values = $matches[1] ?? null;
+                if($values) {
+                    foreach ($values as $val) {
+                        $replace = $setPlaceholder($val);
+                        if($replace) {
+                            $h['value'] = str_replace('{'.$val.'}', $replace, $h['value']);
+                        }
+                    }
+                }
+                // 'Reply-To: Antwortadresse <antwortadresse@domain.de>'
+                $headers[] = $key.': '. $h['value'];
+            }
+        }
+
         if (!$sendEmail['subject']) {
             $sendEmail['subject'] = get_bloginfo('name');
         }
@@ -788,10 +835,8 @@ class hummelt_theme_v3_public_endpoint extends WP_REST_Controller
             }
         }
 
-
         $ccEmailToDb = [];
         $bCcEmailToDb = [];
-        $headers = [];
         if ($cc) {
             foreach ($cc as $tmp) {
                 if (filter_var($tmp, FILTER_VALIDATE_EMAIL)) {

@@ -893,4 +893,16 @@ trait hummelt_theme_v3_form_settings
         }
         return str_shuffle($stack);
     }
+
+    protected function select_custom_header():array
+    {
+        return [
+            '0' => [
+                'id' => uniqid(),
+                'key' => 'Reply-To',
+                'value' => '',
+                'label' => 'Reply-To'
+            ],
+        ];
+    }
 }
