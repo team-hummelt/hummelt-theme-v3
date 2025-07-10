@@ -220,7 +220,7 @@ class hummelt_theme_v3_post_types
         );
         register_taxonomy('theme_design_category', array('theme_design'), $args);
 
-        if (!term_exists('Hupa Design General', 'theme_design_category')) {
+        if (!defined('ICL_SITEPRESS_VERSION') && !term_exists('Theme v3 Design General', 'theme_design_category')) {
             wp_insert_term(
                 'Theme v3 Design General',
                 'theme_design_category',
