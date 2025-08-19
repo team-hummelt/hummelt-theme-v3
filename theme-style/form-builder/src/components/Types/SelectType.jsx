@@ -10,11 +10,13 @@ export default class SelectType extends Component {
     }
 
     render() {
+
         return (
             <Fragment>
                 {this.props.form.floating ? (
                     <FloatingLabel
                         controlId={uuidv4()}
+                        className={this.props.form.config.custom_class || ''}
                         label={`${this.props.form.label} ${this.props.form.required ? '*' : ''}`}>
                         <Form.Select
                             required={this.props.form.required}
@@ -51,6 +53,7 @@ export default class SelectType extends Component {
                     )}
                     <Form.Select
                         required={this.props.form.required}
+                        className={this.props.form.config.custom_class || ''}
                         disabled={this.props.onFindConditionDisabledForms(this.props.form.condition.type || false)}
                         value={this.props.form.config.selected}
                         onChange={(e) => this.props.onSelectedTypeValue(e.currentTarget.value, this.props.form.id)}

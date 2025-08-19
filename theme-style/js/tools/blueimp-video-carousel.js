@@ -127,8 +127,11 @@ function blueimp_wordpress_gallery() {
                             fullscreen: false,
                             displayTransition: false,
                             toggleControlsOnSlideClick: false,
+                            titleElement: 'div.gallery-title',
+                            titleElementSelector: '.gallery-title',
                         }
                         blueimp.Gallery(links, options)
+
                         e.preventDefault();
                     })
                 }
@@ -164,8 +167,11 @@ function blueimp_wordpress_gallery() {
                             index: currentLink,
                             event: e,
                             toggleControlsOnSlideClick: false,
+                            titleElement: 'div.gallery-title',
+                            titleElementSelector: '.gallery-title',
                         }
-                        blueimp.Gallery(linkNotes, options)
+                       blueimp.Gallery(linkNotes, options)
+
                     }
                     e.preventDefault();
                 })
@@ -203,6 +209,8 @@ function blueimp_gallery() {
                         fullscreen: false,
                         displayTransition: false,
                         toggleControlsOnSlideClick: false,
+                        titleElement: 'div.gallery-title',
+                        titleElementSelector: '.gallery-title',
                     }
                     blueimp.Gallery(links, options)
                     e.preventDefault();
@@ -238,8 +246,10 @@ function blueimp_gallery() {
                     index: currentLink,
                     event: e,
                     toggleControlsOnSlideClick: false,
+                    titleElement: 'div.gallery-title',
+                    titleElementSelector: '.gallery-title',
                 }
-                blueimp.Gallery(linkNotes, options)
+               blueimp.Gallery(linkNotes, options)
             }
             e.preventDefault();
         })
@@ -385,6 +395,8 @@ function theme_video() {
                     toggleSlideshowOnSpace: false,
                     emulateTouchEvents: (emulateTouchEvents === 'true'),
                     stopTouchEventsPropagation: (stopTouchEventsPropagation === 'true'),
+                    titleElement: 'div.gallery-title',
+                    titleElementSelector: '.gallery-title',
 
                     onslide: function (index, slide) {
                         if ((continuous === 'false') && (index + 1) === itemCount) {
@@ -485,6 +497,8 @@ function theme_splide_gallery() {
                                     fullscreen: false,
                                     displayTransition: false,
                                     toggleControlsOnSlideClick: false,
+                                    titleElement: 'div.gallery-title',
+                                    titleElementSelector: '.gallery-title',
                                 }
                                 blueimp.Gallery([image], options)
                             } else {
@@ -493,8 +507,11 @@ function theme_splide_gallery() {
                                     index: this,
                                     event: e,
                                     toggleControlsOnSlideClick: false,
+                                    titleElement: 'div.gallery-title',
+                                    titleElementSelector: '.gallery-title',
                                 }
                                 blueimp.Gallery(linkNotes, options)
+
                             }
                         }
                         e.preventDefault();
@@ -557,6 +574,8 @@ function theme_splide_thumbnail_gallery() {
                                     fullscreen: false,
                                     displayTransition: false,
                                     toggleControlsOnSlideClick: false,
+                                    titleElement: 'div.gallery-title',
+                                    titleElementSelector: '.gallery-title',
                                 }
                                 blueimp.Gallery([image], options)
                             } else {
@@ -565,6 +584,8 @@ function theme_splide_thumbnail_gallery() {
                                     index: this,
                                     event: e,
                                     toggleControlsOnSlideClick: false,
+                                    titleElement: 'div.gallery-title',
+                                    titleElementSelector: '.gallery-title',
                                 }
                                 blueimp.Gallery(linkNotes, options)
                             }
@@ -805,6 +826,8 @@ function galleryLightBoxAnimation(options, targets, galleryNode) {
                             fullscreen: false,
                             displayTransition: false,
                             toggleControlsOnSlideClick: false,
+                            titleElement: 'div.gallery-title',
+                            titleElementSelector: '.gallery-title',
                         }
                         blueimp.Gallery([image], lightboxOptions)
                     } else {
@@ -813,6 +836,8 @@ function galleryLightBoxAnimation(options, targets, galleryNode) {
                             index: this,
                             event: e,
                             toggleControlsOnSlideClick: false,
+                            titleElement: 'div.gallery-title',
+                            titleElementSelector: '.gallery-title',
                         }
                         blueimp.Gallery(linkNotes, lightboxOptions)
                     }
@@ -862,7 +887,7 @@ function blueimp_gallery_layout(id, showOl = true) {
   role="dialog"
 >
   <div class="slides" aria-live="polite"></div>
-  <h3 class="title text-light fw-normal fs-4"></h3>
+  <div class="title gallery-title text-light fw-normal fs-4"></div>
   <a
     class="prev"
     aria-controls="blueimp-gallery"
@@ -894,13 +919,13 @@ function blueimp_gallery_layout(id, showOl = true) {
 }
 
 function blueimp_single_layout(id) {
-    return `<div id="single-${id}" 
+    return `<div id="single-${id}"  
  class="blueimp-gallery blueimp-gallery-controls"
  aria-label="image gallery"
  aria-modal="true"
  role="dialog">
 <div class="slides" aria-live="polite"></div>
-<h3 class="title text-light fw-normal fs-4"></h3>
+<div class="title gallery-title text-light fw-normal fs-4"></div>
 <a class="close"
    aria-controls="blueimp-gallery"
    aria-label="close"

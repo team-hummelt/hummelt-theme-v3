@@ -239,6 +239,7 @@ trait hummelt_theme_v3_form_settings
                             'default' => false,
                             'custom_class' => '',
                             'btn_type' => 'submit',
+                            'aria_label' => 'Kontaktformular absenden',
                             'btn_class' => 'btn btn-secondary'
                         ],
                     ],

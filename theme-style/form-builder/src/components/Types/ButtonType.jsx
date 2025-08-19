@@ -8,19 +8,20 @@ export default class ButtonType extends Component {
     }
 
     render() {
+
         return (
             <Fragment>
                 <div
                     className={this.props.form.config.custom_class ? this.props.form.config.custom_class : 'bs-form-button'}>
                     {this.props.form.config.btn_type === 'submit' ? (
-                        <button type="submit"
+                        <button type="submit" aria-label={this.props.form.config && this.props.form.config.aria_label ? this.props.form.config.aria_label : 'Kontaktformular absenden'}
                                 disabled={this.props.onFindConditionDisabledForms(this.props.form.condition.type) || this.props.showSendForm}
                                 className={`${this.props.form.config.btn_class ? this.props.form.config.btn_class : 'btn btn-secondary'}`}>
                             {this.props.form.label}
                         </button>
                     ) : (<></>)}
                     {this.props.form.config.btn_type === 'reset' ? (
-                        <button type="reset"
+                        <button type="reset" aria-label={this.props.form.config && this.props.form.config.aria_label ? this.props.form.config.aria_label : 'Kontaktformular reset'}
                                 className={`${this.props.form.config.btn_class ? this.props.form.config.btn_class : 'btn btn-secondary'}`}>
                             {this.props.form.label}
                         </button>
@@ -31,7 +32,7 @@ export default class ButtonType extends Component {
                                 <Fragment>
                                     {this.props.pages.includes(this.props.page -1) ? (
                                     <button onClick={(e) => this.props.onPrevNextButton(e, this.props.page-1, 'prev')}
-                                        type="button"
+                                        type="button" aria-label={this.props.form.config && this.props.form.config.aria_label ? this.props.form.config.aria_label : 'Previous Page'}
                                             disabled={this.props.onFindConditionDisabledForms(this.props.form.condition.type) || this.props.showSendForm}
                                             className={`${this.props.form.config.btn_class ? this.props.form.config.btn_class : 'btn btn-secondary'}`}>
                                         {this.props.form.label}
@@ -42,7 +43,7 @@ export default class ButtonType extends Component {
                         <Fragment>
                             {this.props.pages.includes(this.props.page + 1) ? (
                                 <button onClick={(e) => this.props.onPrevNextButton(e, this.props.page+1, 'next')}
-                                        type="button"
+                                        type="button" aria-label={this.props.form.config && this.props.form.config.aria_label ? this.props.form.config.aria_label : 'Next Page'}
                                         disabled={this.props.onFindConditionDisabledForms(this.props.form.condition.type) || this.props.showSendForm}
                                         className={`${this.props.form.config.btn_class ? this.props.form.config.btn_class : 'btn btn-secondary'}`}>
                                     {this.props.form.label}
@@ -52,7 +53,7 @@ export default class ButtonType extends Component {
                     {this.props.form.config.btn_type === 'button' ? (
                         <Fragment>
                                 <button  onClick={() => this.props.onSetFormTextTypes(!this.props.form.config.default, this.props.form.id)}
-                                    type="button"
+                                    type="button" aria-label={this.props.form.config && this.props.form.config.aria_label ? this.props.form.config.aria_label : ''}
                                         disabled={this.props.onFindConditionDisabledForms(this.props.form.condition.type) || this.props.showSendForm}
                                         className={`${this.props.form.config.btn_class ? this.props.form.config.btn_class : 'btn btn-secondary'} ${this.props.form.config.default ? 'active' : ''}`}>
                                     {this.props.form.label}
