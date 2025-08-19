@@ -199,6 +199,7 @@ export default class BsFormBuilder extends Component {
                                 ref={this.builderEmailSpam}
                                 type="email"
                                 name="email"
+                                tabIndex="-1"
                                 autoComplete="off"
                                 placeholder="Your e-mail here"/>
                         </Form.Group>
@@ -208,6 +209,7 @@ export default class BsFormBuilder extends Component {
                                 ref={this.builderNameSpam}
                                 type="text"
                                 name="name"
+                                tabIndex="-1"
                                 autoComplete="off"
                                 placeholder="Your name here"/>
                         </Form.Group>
@@ -220,6 +222,7 @@ export default class BsFormBuilder extends Component {
                                 defaultChecked={false}
                                 id={uuidv4()}
                                 name="terms"
+                                tabIndex="-1"
                                 label="Check this terms"
                             />
                         ) : ''}

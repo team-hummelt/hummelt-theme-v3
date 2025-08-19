@@ -1240,6 +1240,7 @@ class hummelt_theme_v3_form_builder_endpoint extends WP_REST_Controller
             $this->responseJson->slug = $formData['slug'];
         }
 
+
         $this->responseJson->is_slug = $is_slug;
 
         if ($formData['type'] == 'select') {
@@ -1272,7 +1273,11 @@ class hummelt_theme_v3_form_builder_endpoint extends WP_REST_Controller
             $placeholder = $matches[0] ?? null;
             $linkStr = $matches[2] ?? null;
             if ($placeholder && $linkStr) {
-                $href = '<a href="' . $formData['config']['url'] . '">' . $matches[2] . '</a>';
+                $target = '_self';
+                if($formData['config']['new_tab']) {
+                    $target = '_blank';
+                }
+                $href = '<a href="' . $formData['config']['url'] . '" target="'.$target.'">' . $matches[2] . '</a>';
                 $link = str_replace($matches[0], $href, $formData['config']['default']);
                 $formData['config']['link'] = $link;
             }

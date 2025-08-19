@@ -106,7 +106,7 @@ class register_hummelt_theme_v3_optionen
         add_menu_page(
             __('HUPA Theme v3', 'bootscore'),
             __('Theme Settings', 'bootscore'),
-            'read',
+            $this->capabilities['theme-settings'],
             'hummelt-theme-v3-dashboard',
             '',
             $this->main->get_hupa_icon()
@@ -118,7 +118,7 @@ class register_hummelt_theme_v3_optionen
                 'hummelt-theme-v3-dashboard',
                 __('Theme Settings', 'bootscore'),
                 __('Dashboard', 'bootscore'),
-                'read',
+                $this->capabilities['theme-settings'],
                 'hummelt-theme-v3-dashboard',
                 array($this, 'settings_hummelt_theme_v3'));
 

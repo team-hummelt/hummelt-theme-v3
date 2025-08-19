@@ -611,6 +611,19 @@ export default class EditTextFields extends Component {
                                             placeholder='Button CSS'/>
                                     </FloatingLabel>
                                 </div>
+                                <div className={"col-12"}>
+                                    <FloatingLabel
+                                        controlId={uuidv4()}
+                                        label='aria-label'
+                                    >
+                                        <Form.Control
+                                            type="text"
+                                            value={this.props.formEdit !== '' ? this.props.formEdit.config.aria_label : ''}
+                                            onChange={(e) => this.props.onUpdateEditTextField(e.currentTarget.value, 'aria_label', true)}
+                                            className="no-blur"
+                                            placeholder='aria-label'/>
+                                    </FloatingLabel>
+                                </div>
                             </>
                         ) : (<></>)
                     }

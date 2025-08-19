@@ -118,7 +118,7 @@ registerBlockType('hupa/accordion-item', {
                 data-scroll-to-item={scrollToItem ? 'true' : 'false'}
                 data-scroll-offset={scrollOffset}
             >
-                <h5 className="accordion-header" id={`heading-${itemId}`}>
+                <div className="accordion-header fs-5" id={`heading-${itemId}`}>
                     <button
                         className="accordion-button"
                         type="button"
@@ -129,7 +129,7 @@ registerBlockType('hupa/accordion-item', {
                     >
                         {title}
                     </button>
-                </h5>
+                </div>
                 <div id={`collapse-${itemId}`}
                      className={`accordion-collapse collapse${isOpen ? ' show' : ''}`}
                      aria-labelledby={`heading-${itemId}`}>
